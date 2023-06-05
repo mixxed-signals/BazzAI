@@ -78,4 +78,5 @@ group :test do
   gem "webdrivers"
 end
 
-  gem "dotenv-rails"
+gem "dotenv-rails"
+gem "ruby-openai"

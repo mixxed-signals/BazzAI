@@ -10,9 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_05_125654) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_05_130911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "queries", force: :cascade do |t|
+    t.string "medium"
+    t.integer "time"
+    t.string "audience"
+    t.string "genre"
+    t.integer "happiness"
+    t.integer "intensity"
+    t.integer "novelty"
+    t.string "recent_movie1"
+    t.string "recent_movie2"
+    t.string "recent_movie3"
+    t.text "other"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "recommendations", force: :cascade do |t|
+    t.string "movie_name"
+    t.bigint "query_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["query_id"], name: "index_recommendations_on_query_id"
+    t.index ["user_id"], name: "index_recommendations_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_125654) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "recommendations", "queries"
+  add_foreign_key "recommendations", "users"
 end

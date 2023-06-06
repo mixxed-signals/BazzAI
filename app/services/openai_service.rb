@@ -18,7 +18,7 @@ class OpenaiService
           stream: false,
 					max_tokens: 16 # might want to check this
       })
-    # you might want to inspect the response and see what the api is giving you
-    return response["choices"][0]["message"]["content"]
+    # to get just the response text from chat gpt + not truncated
+    return response#["choices"][0]["message"]["content"].html_safe
   end
 end

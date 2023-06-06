@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_151032) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_06_154112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,6 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_151032) do
     t.integer "year_before"
     t.integer "year_after"
     t.integer "year_option"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_queries_on_user_id"
   end
 
   create_table "recommendations", force: :cascade do |t|
@@ -55,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_151032) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "queries", "users"
   add_foreign_key "recommendations", "queries"
   add_foreign_key "recommendations", "users"
 end

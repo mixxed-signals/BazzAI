@@ -1,15 +1,74 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: black;
-  color: white;
-  position: sticky;
+.main-nav-bar {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  font-size: 14px;
+
+  background: rgba(241, 241, 241, 0.01);
+  mix-blend-mode: normal;
+  backdrop-filter: blur(12px);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.container-nav-bar {
+  border-bottom: 0.5px solid #d0d0d08e;
+  padding: 8px 0;
+  width: 100%;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 120px;
+.list-nav-bar-links {
+  font-weight: 600;
+
+  a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}
+
+.login-button {
+  color: #ffffff;
+
+  font-weight: 600;
+
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sign-up-button {
+  color: #ffffff;
+  padding: 12px 24px;
+
+  font-weight: 600;
+
+  background: linear-gradient(144.91deg, #efc956 19.04%, #e74f6a 93.8%);
+  border-radius: 9999px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.sign-up-button:hover {
+  background: linear-gradient(289.37deg, #efc956 0%, #e74f6a 100%);
+  color: #ffffff;
+}
+
+.logo {
+  width: 200px;
 }

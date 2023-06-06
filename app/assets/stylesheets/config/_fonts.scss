@@ -1,16 +1,14 @@
 // Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Gravitas+One|Poppins:400,700&display=swap');
 
 // Define fonts for body and headers
-$body-font: "Work Sans", "Helvetica", "sans-serif";
-$headers-font: "Nunito", "Helvetica", "sans-serif";
+$body-font: "Poppins", "Helvetica", "sans-serif";
+$headers-font: "Gravitas One", "Helvetica", "sans-serif";
 
-// To use a font file (.woff) uncomment following lines
-// @font-face {
-//   font-family: "Font Name";
-//   src: font-url('FontFile.eot');
-//   src: font-url('FontFile.eot?#iefix') format('embedded-opentype'),
-//        font-url('FontFile.woff') format('woff'),
-//        font-url('FontFile.ttf') format('truetype')
-// }
-// $my-font: "Font Name";
+// Set letter spacing for headers
+$h1-letter-spacing: -0.1em;
+$h2-letter-spacing: -0.1em;
+$h3-letter-spacing: -0.1em;
+$h4-letter-spacing: -0.1em;
+$h5-letter-spacing: -0.1em;
+$h6-letter-spacing: -0.1em;

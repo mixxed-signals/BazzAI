@@ -1,2 +1,64 @@
-<h1>Recommendations#search</h1>
-<p>Find me in app/views/recommendations/search.html.erb</p>
+<h1>Let's find the perfect movie for you</h1>
+
+
+<%= form_with(model: @query, url: recommendations_path, method: :post) do |form| %>
+  <div class="form-group">
+    <%= form.label :medium, "Medium:" %>
+    <%= form.select :medium, ["movie", "tvshow"], prompt: "Select a medium" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :time, "Time (in minutes):" %>
+    <%= form.range_field :time, min: 15, max: 120, step: 5 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :audience, "Audience:" %>
+    <%= form.select :audience, ["family", "couple", "just me"], prompt: "Select an audience" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :genre, "Genres (up to 5):" %>
+    <%= form.collection_check_boxes :genre, @genres.map(&:to_sym), :itself, :to_s, include_hidden: false %>
+  </div>
+
+
+
+  <div class="form-group">
+    <%= form.label :happiness, "Happiness Mood:" %>
+    <%= form.range_field :happiness, min: 0, max: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :intensity, "Intensity Level (0-10):" %>
+    <%= form.range_field :intensity, min: 0, max: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :novelty, "Novelty Level (0-10):" %>
+    <%= form.range_field :novelty, min: 0, max: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :recent_movie1, "Recently Watched Movie 1:" %>
+    <%= form.text_field :recent_movie1 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :recent_movie2, "Recently Watched Movie 2:" %>
+    <%= form.text_field :recent_movie2 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :recent_movie3, "Recently Watched Movie 3:" %>
+    <%= form.text_field :recent_movie3 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :other, "Other Preferences:" %>
+    <%= form.text_area :other %>
+  </div>
+
+  <%= form.submit "Search", class: "btn btn-primary", formaction: recommendations_path %>
+
+<% end %>

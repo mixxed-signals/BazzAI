@@ -88,3 +88,7 @@ I'm in the mood for a movie that makes me feel [happiness_level], and on a scale
 I also want the movie to be experimental and non-mainstream on a level [novelty_level].
 The most recent movies I watched were [recent_movie1], [recent_movie2], and [recent_movie3].
 Additionally, this is something you should know about my current situation [other]."
+
+3. Created a global constant variable in config/initializers/constants.rb to store
+- genre array
+- mood array

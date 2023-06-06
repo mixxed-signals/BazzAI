@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
   get 'recommendations/search'
-  resources :recommendations, only: %i[index show]
+  post '/recommendations', to: 'recommendations#create', as: 'recommendations'
+  resources :recommendations, only: %i[search index show]
 end

@@ -67,14 +67,17 @@ $LIGHTING_FLAT: 3;
 }
 
 .logo1 {
+  font-size: 200px;
   color: $yellow;
   line-height:1em;
   letter-spacing: -0.08em;
+  transition: all 0.2s ease-in-out;
   @include text3d(
     adjust-color($orange, $lightness: -8%),
     $depth: 8,
     $orange: adjust-color($orange, $lightness: -10%, $saturation: +20%),
     $shadowopacity: .3);
+
 }
 
 // Alternative logo - not used right now

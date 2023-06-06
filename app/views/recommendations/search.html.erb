@@ -18,10 +18,35 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :genre, "Genres (up to 5):" %>
+    <%= form.label :genres, "Genres (up to 5):" %>
     <%= form.collection_check_boxes :genre, @genres.map(&:to_sym), :itself, :to_s, include_hidden: false %>
   </div>
 
+  <div>
+
+    <div class="form-group w-25">
+      <%= form.label :year_option, "Year Option:" %>
+      <%= form.select :year_option, [['Only Before', 'only_before'], ['Only After', 'only_after'], ['In Between', 'in_between']], {}, class: 'form-control' %>
+    </div>
+
+    <div class="form-group w-25">
+      <%= form.label :year_from, "From:" %>
+      <% if @query.year_option == 'only_before' %>
+        <%= form.number_field :year_from, value: 1900, readonly: true, class: 'form-control' %>
+      <% elsif @query.year_option == 'only_after' %>
+        <%= form.number_field :year_from, value: 2024, readonly: true, class: 'form-control' %>
+      <% else %>
+        <%= form.number_field :year_from, in: 1900..2023, step: 1, class: 'form-control' %>
+      <% end %>
+    </div>
+
+    <div class="form-group w-25">
+      <%= form.label :year_to, "To:" %>
+      <%= form.number_field :year_to, in: 1900..2023, step: 1, class: 'form-control' %>
+    </div>
+
+
+  </div>
 
 
   <div class="form-group">

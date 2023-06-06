@@ -1,15 +1,23 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "https://cdn.discordapp.com/attachments/1105433122998325278/1115572539004031047/Screenshot_2023-06-06_at_11.26.21.png" %>
-    <% end %>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
+<div class="main-nav-bar">
+  <div class="container container-fluid d-flex justify-content-between align-items-center container-nav-bar">
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <%= link_to "/", class: "text-decoration-none" do %>
+        <h1 class="logo1 ">Movie Mate</h1>
+      <% end %>
+      <ul class="d-flex justify-content-center align-items-center gap-3 mb-0 list-style-none list-nav-bar-links">
+        <li>
+          <%= link_to "Searching", "#"  %>
+        </li>
+        <li>
+          <%= link_to "Searching", "#"  %>
+        </li>
+        <li>
+          <%= link_to "Searching", "#"  %>
+        </li>
+      </ul>
+    </div>
+    <div class="" id="navbarSupportedContent">
+      <ul class="d-flex justify-content-center align-items-center gap-3 mb-0 list-style-none">
         <% if user_signed_in? %>
           <li class="nav-item active">
             <%= link_to "Home", "#", class: "nav-link" %>
@@ -18,9 +26,9 @@
             <%= link_to "Messages", "#", class: "nav-link" %>
           </li>
           <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-          </a>
+            <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+            </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Action", "#", class: "dropdown-item" %>
               <%= link_to "Another action", "#", class: "dropdown-item" %>
@@ -29,7 +37,10 @@
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Log in", new_user_session_path, class: "login-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign up", new_user_registration_path, class: "sign-up-button" %>
           </li>
         <% end %>
       </ul>

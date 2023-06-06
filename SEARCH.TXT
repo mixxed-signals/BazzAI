@@ -89,6 +89,11 @@ I also want the movie to be experimental and non-mainstream on a level [novelty_
 The most recent movies I watched were [recent_movie1], [recent_movie2], and [recent_movie3].
 Additionally, this is something you should know about my current situation [other]."
 
-3. Created a global constant variable in config/initializers/constants.rb to store
+3. Created a global variables store
 - genre array
 - mood array
+-> how to create globals in config/initializers/constant.rb?
+
+Created a form in #search which allows our #create to store the columns of query and return them
+in a prompt on our index page.
+Now we can use and store this prompt as the prompt for chat gpt

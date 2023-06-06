@@ -2,12 +2,28 @@
 
 <h1>Recommendations</h1>
 <p> My prompt:</p>
-<p> “I want to watch a <%= @query.medium %> that lasts around <%= @query.time %> minutes, suitable for [audience] and falls into the genres of [genre1], [genre2], [genre3], [genre4], and [genre5].
+<p> “I want to watch a <%= @query.medium %> that lasts around <%= @query.time %> minutes, suitable for <%= @query.audience %> and falls into the genres of <%= @query.genre%>.
 
-I’m in the mood for a movie that makes me feel [happiness_level], and on a scale of 0 to 10 I want to concentrate on the movie [intensity].
+I'm in the mood for a movie that makes me feel <%= @mood %>, and on a scale of 0 to 10 I want to concentrate on the movie <%= @query.intensity %>/10.
 
-I also want the movie to be experimental and non-mainstream on a level [novelty_level].
+I also want the movie to be experimental and non-mainstream on a level <%= @query.novelty %>/10.
 
-The most recent movies I watched were [recent_movie1], [recent_movie2], and [recent_movie3].
+The most recent movies I enjoyed were <%= @query.recent_movie1 %>, <%= @query.recent_movie2 %>, and <%= @query.recent_movie3 %>.
 
-Additionally, this is something you should know about my current situation [other].”</p>
+Additionally, this is something you should know about my current situation is that "<%= @query.other %>.”</p>
+
+<p> My Recommendations from CHAT-GPT:</p>
+
+<% my_prompt = "I want to watch a #{ @query.medium } that lasts around #{ @query.time } minutes, suitable for #{ @query.audience } and falls into the genres of #{ @query.genre }.\n
+\n
+I'm in the mood for a movie that makes me feel #{ @mood }, and on a scale of 0 to 10 I want to concentrate on the movie #{ @query.intensity }/10.\n
+\n
+I also want the movie to be experimental and non-mainstream on a level #{ @query.novelty }/10.\n
+\n
+The most recent movies I enjoyed were #{ @query.recent_movie1 }, #{ @query.recent_movie2 }, and #{ @query.recent_movie3 }.\n
+\n
+Additionally, this is something you should know about my current situation: \"#{ @query.other }\". Return it as a hash in ruby " %>
+
+<%#  @response = OpenaiService.new(my_prompt).call %>
+<%# @response['choices'][0]['message']['content'].html_safe%>
+

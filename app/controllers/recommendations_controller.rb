@@ -5,6 +5,7 @@ class RecommendationsController < ApplicationController
     "Action",
     "Adventure",
     "Animation",
+    "Anime",
     "Award-Winning",
     "Biography",
     "Classic",
@@ -43,6 +44,20 @@ class RecommendationsController < ApplicationController
     "Western"
   ].freeze
 
+  MOOD = [
+    "Depressed",
+    "Sad",
+    "Melancholic",
+    "Bummed Out",
+    "Pensive",
+    "Meh",
+    "Chill",
+    "Neutral",
+    "Happy",
+    "Excited",
+    "Thrilled",
+    "Over the Moon"
+  ]
 
   def search
     @genres = GENRES
@@ -58,6 +73,7 @@ class RecommendationsController < ApplicationController
 
   def index
     @query = Query.last
+    @mood = MOOD[@query.happiness]
   end
 
   def show
@@ -66,6 +82,6 @@ class RecommendationsController < ApplicationController
   private
 
   def query_params
-    params.require(:query).permit(:medium, :time, :audience, :genres, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other)
+    params.require(:query).permit(:medium, :time, :audience, :genres, :year_option, :year_before, :year_after, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other)
   end
 end

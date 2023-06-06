@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_05_130911) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_06_151032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_130911) do
     t.text "other"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "year_before"
+    t.integer "year_after"
+    t.integer "year_option"
   end
 
   create_table "recommendations", force: :cascade do |t|

@@ -69,6 +69,7 @@ class RecommendationsController < ApplicationController
     @user = current_user
     @genres = GENRES
     @query = Query.new(query_params)
+    @query.user_id = @user.id
     @query.save!
     redirect_to recommendations_path
   end
@@ -85,6 +86,6 @@ class RecommendationsController < ApplicationController
 
   def query_params
     genres = Array(params[:query][:genre]).join(", ") # Convert the selected genres to a string
-    params.require(:query).permit(:medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: genres)
+    params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: genres)
   end
 end

@@ -4,6 +4,8 @@
 <p> My prompt:</p>
 <p> “I want to watch a <%= @query.medium %> that lasts around <%= @query.time %> minutes, suitable for <%= @query.audience %> and falls into the genres of <%= @query.genre%>.
 
+I only want movies published between <%= @query.year_before %> and <%= @query.year_after %>.
+
 I'm in the mood for a movie that makes me feel <%= @mood %>, and on a scale of 0 to 10 I want to concentrate on the movie <%= @query.intensity %>/10.
 
 I also want the movie to be experimental and non-mainstream on a level <%= @query.novelty %>/10.
@@ -26,4 +28,3 @@ Additionally, this is something you should know about my current situation: \"#{
 
 <%#  @response = OpenaiService.new(my_prompt).call %>
 <%# @response['choices'][0]['message']['content'].html_safe%>
-

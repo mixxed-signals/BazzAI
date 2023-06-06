@@ -5,10 +5,169 @@
 $body-font: "Poppins", "Helvetica", "sans-serif";
 $headers-font: "Gravitas One", "Helvetica", "sans-serif";
 
-// Set letter spacing for headers
-$h1-letter-spacing: -0.1em;
-$h2-letter-spacing: -0.1em;
-$h3-letter-spacing: -0.1em;
-$h4-letter-spacing: -0.1em;
-$h5-letter-spacing: -0.1em;
-$h6-letter-spacing: -0.1em;
+// Set color, shadow and letter-spacing for headers
+$pink: #E74F6A;
+$orange: #F25E3D;
+$beige: #F2D0A7;
+$yellow: #F2AC29;
+$sec_yellow: #EFC956;
+
+// h1, h2, h3, h4, h5, h6 {
+//   color: $yellow;
+//   text-shadow: 2px 2px 0px $orange;
+//   letter-spacing: -0.05em;
+// }
+
+// Bazzy Logo 1
+$LIGHTING_FLOOR: 1;
+$LIGHTING_CEIL: 2;
+$LIGHTING_FLAT: 3;
+
+@mixin text3d(
+  $primary,
+  $depth: 5,
+  $shadowsteps: 5,
+  $shadowincrementer: 3px,
+  $shadowopacity: .5,
+  $orange: $orange,
+  $lighting: $LIGHTING_CEIL) {
+  $predefinedShadows: (
+    0 0 5px rgba($orange, .05),
+    0 -1px 3px rgba($orange, .2),
+    0 3px 5px rgba($orange, .2));
+  $value: ();
+  @for $i from 1 through $depth {
+    $num: $i + px;
+    $hueadjust: $i;
+    @if($lighting == $LIGHTING_FLOOR) {
+      $hueadjust: ($i * 2 - $depth - 5) * 1%;
+    } @elseif($lighting == $LIGHTING_CEIL) {
+      $hueadjust: -($i*2 + $depth - 10) * 1%;
+    } @elseif($lighting == $LIGHTING_FLAT) {
+      $hueadjust: -$depth * 1%;
+    }
+    $colour: adjust-color($primary, $lightness: $hueadjust);
+    $theShadow: 0 $num 0 $colour;
+    $value: append($value, $theShadow, comma);
+  }
+
+  @for $i from 1 through $shadowsteps {
+    @if($i >= length($predefinedShadows)) {
+      $dist: $i * $shadowincrementer;
+      $value: append($value, 0 $dist $dist rgba($orange, $shadowopacity));
+    } @else {
+      $value: append($value, nth($predefinedShadows, $i));
+    }
+  }
+
+  text-shadow: $value;
+}
+
+.logo1 {
+  color: $beige;
+  line-height:1em;
+  letter-spacing: -0.08em;
+  @include text3d(
+    adjust-color($orange, $lightness: -8%),
+    $depth: 8,
+    $orange: adjust-color($orange, $lightness: -10%, $saturation: +20%),
+    $shadowopacity: .3);
+}
+
+.logo2 {
+	text-transform: uppercase;
+	line-height: 1;
+	margin: 0;
+  letter-spacing: -0.05em;
+  color: $beige;
+	text-shadow:
+			-1px -1px 0 $pink, 1px -1px 0 $pink, -1px 1px 0 $pink, 1px 1px 0 $pink,
+			1px 0px 0px $orange, 0px 1px 0px $orange, 2px 1px 0px $orange, 1px 2px 0px $orange, 3px 2px 0px $orange, 2px 3px 0px $orange, 4px 3px 0px $orange, 3px 4px 0px $orange, 5px 4px 0px $orange,
+			3px 5px 0px $pink, 6px 5px 0px $pink,
+			-1px 2px 0 black, 0 3px 0 $pink, 1px 4px 0 $pink, 2px 5px 0px $pink,
+			2px -1px 0 $pink, 3px 0 0 $pink, 4px 1px 0 $pink, 5px 2px 0px $pink, 6px 3px 0 $pink, 7px 4px 0 $pink;
+}
+
+$cubic-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+//initial text-shadow function
+@function textShadow($color){
+	//value variable: x-value, y-value, color value;
+	$val: 0px 0px $color;
+	//loop to create text-shadow variables moving 1px to the left and 1 down
+	@for $i from 1 through 50{
+		$val: #{$val}, -#{$i}px #{$i}px #{$color};
+	}
+	//return value
+	@return $val;
+}
+
+@function textAnimationShadow($orange, $beige,$pink,$yellow,$color5){
+	$val1: 0px 0px $orange;
+	$val2: 0px 0px $beige;
+	$val3: 0px 0px $pink;
+	$val4: 0px 0px $yellow;
+	$val5: 0px 0px $color5;
+	@for $i from 1 through 10{
+		$val1: #{$val1}, -#{$i}px #{$i}px #{$orange};
+	}
+	@for $i from 11 through 20{
+		$val2: #{$val2}, -#{$i}px #{$i}px #{$beige};
+	}
+	@for $i from 21 through 30{
+		$val3: #{$val3}, -#{$i}px #{$i}px #{$pink};
+	}
+	@for $i from 31 through 40{
+		$val4: #{$val4}, -#{$i}px #{$i}px #{$yellow};
+	}
+	@for $i from 41 through 50{
+		$val5: #{$val5}, -#{$i}px #{$i}px #{$color5};
+	}
+	@return $val1, $val2, $val3, $val4, $val5;
+}
+
+//mixin to create initial text-shadow
+@mixin shadow($shadow-color){
+	text-shadow: textShadow($shadow-color);
+}
+//mixin to create animation shadow, can enter 5 color variables
+@mixin animationShadow($shadow-color1, $shadow-color2,$shadow-color3, $shadow-color4, $shadow-color5){
+	text-shadow: textAnimationShadow($shadow-color1, $shadow-color2,$shadow-color3, $shadow-color4, $shadow-color5);
+}
+
+.logo3 {
+	color: $beige;
+	@include shadow($orange);
+	animation: color 2s ease-in infinite;
+}
+
+@keyframes color{
+	0%,10%{
+		color: $orange;
+		@include shadow($pink);
+	}
+	11%,20%{
+		color: $orange;
+		@include animationShadow($pink,$pink,$pink,$pink,$orange);
+	}
+	21%, 30%{
+		color: $orange;
+		@include animationShadow($pink,$pink,$pink,$orange,$orange);
+	}
+	31%, 40%{
+		color: $orange;
+		@include animationShadow($pink,$pink,$orange,$orange,$orange);
+	}
+	41%, 50%{
+		color: $orange;
+		@include animationShadow($pink,$orange,$orange,$orange,$orange);
+	}
+	51%,60%{
+		color: $beige;
+		@include animationShadow($orange,$orange,$orange,$orange,$orange);
+	}
+	61%,100%{
+		color: $beige;
+		@include animationShadow($orange,$orange,$orange,$orange,$orange);
+	}
+}

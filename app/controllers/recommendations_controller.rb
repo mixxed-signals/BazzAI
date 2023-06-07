@@ -66,16 +66,19 @@ class RecommendationsController < ApplicationController
   end
 
   def create
-    @user = current_user
     @genres = GENRES
+    @user = current_user
     @query = Query.new(query_params)
-    @query.user = @user
-    @query.save!
-    redirect_to recommendations_path
+    @query.user_id = @user.id
+    if @query.save
+      redirect_to search_result_path(@query)
+    else
+      render :search
+    end
   end
 
   def index
-    @query = Query.last
+    @query = Query.find(params[:id])
     @mood = MOOD[@query.happiness]
   end
 
@@ -85,7 +88,7 @@ class RecommendationsController < ApplicationController
   private
 
   def query_params
-    genres = Array(params[:query][:genre]).join(", ") # Convert the selected genres to a string
+    genres = Array(params[:query][:genre]).join(", ") # Convert the selected genres to a single string stored in column genre
     params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: genres)
   end
 end

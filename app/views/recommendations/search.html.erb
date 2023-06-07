@@ -1,11 +1,13 @@
 <div class="main-container">
 
-  <h3>Guide Bazzy with your mood, available time and genre preferences.
   <br>
-  Let us curate your perfect movie or TV show - all in a few click</h3>
+
+  <h5>Guide Bazzy with your mood, available time and genre preferences.</h5>
+  <h5>Let us curate your perfect movie or TV show - all in a few clicks</h5>
+
+  <br>
 
   <hr class="divider">
-
 
   <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
 
@@ -22,7 +24,9 @@
 
     <hr class="divider">
 
-    <h3> Got time to spare? </h3>
+    <h5> Got time to spare? </h5>
+
+    <br>
 
     <div class="form-group">
       <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range" %>
@@ -30,7 +34,9 @@
 
     <hr class="divider">
 
-    <h3> Who's joining the fun? </h3>
+    <h5> Who's joining the fun? </h5>
+
+    <br>
 
     <div class="form-group">
       <div class="form-buttons">
@@ -49,12 +55,14 @@
 
     <hr class="divider">
 
-    <h3> Favor Any Genres? </h3>
+    <h5> Favor Any Genres? </h5>
+
+    <br>
 
     <div class="form-group">
-      <div class="row row-cols-6">
+      <div class="row row-cols-4">
         <% @genres.each do |genre| %>
-          <div class="col-md-2 mb-2">
+          <div class="col-md-2 mb-4">
             <%= button_tag genre, type: 'button', class: 'form-button', name: 'query[genre][]', data: { toggle: 'button' } %>
           </div>
         <% end %>
@@ -68,26 +76,29 @@
 
     <div>
 
-      <div class="form-group w-25">
-        <%= form.label :year_option, "Year Option:" %>
-        <%= form.select :year_option, [['Only Before', 'only_before'], ['Only After', 'only_after'], ['In Between', 'in_between']], {}, class: 'form-control' %>
+      <div class="d-flex">
+        <div class="form-group w-25">
+          <%= form.label :year_from, "Select:" %>
+          <%= form.select :year_option, [['Only Before', 'only_before'], ['Only After', 'only_after'], ['Between', 'in_between']], {}, class: 'form-control' %>
+        </div>
+
+        <div class="form-group w-25">
+          <%= form.label :year_from, "From:" %>
+          <% if @query.year_option == 'only_before' %>
+            <%= form.number_field :year_before, value: 1900, readonly: true, class: 'form-control' %>
+          <% elsif @query.year_option == 'only_after' %>
+            <%= form.number_field :year_before, value: 2024, readonly: true, class: 'form-control' %>
+          <% else %>
+            <%= form.number_field :year_before, in: 1900..2023, step: 1, class: 'form-control' %>
+          <% end %>
+        </div>
+
+        <div class="form-group w-25">
+          <%= form.label :year_after, "To:" %>
+          <%= form.number_field :year_after, in: 1900..2023, step: 1, class: 'form-control' %>
+        </div>
       </div>
 
-      <div class="form-group w-25">
-        <%= form.label :year_from, "From:" %>
-        <% if @query.year_option == 'only_before' %>
-          <%= form.number_field :year_before, value: 1900, readonly: true, class: 'form-control' %>
-        <% elsif @query.year_option == 'only_after' %>
-          <%= form.number_field :year_before, value: 2024, readonly: true, class: 'form-control' %>
-        <% else %>
-          <%= form.number_field :year_before, in: 1900..2023, step: 1, class: 'form-control' %>
-        <% end %>
-      </div>
-
-      <div class="form-group w-25">
-        <%= form.label :year_after, "To:" %>
-        <%= form.number_field :year_after, in: 1900..2023, step: 1, class: 'form-control' %>
-      </div>
 
 
     </div>
@@ -99,9 +110,19 @@
       <%= form.range_field :happiness, min: 0, max: 10 %>
     </div>
 
+    <div class="help-icon">
+      <i class="fa-solid fa-circle-question"></i>
+      <div class="help-text">Tell us how you're feeling on a happiness scale</div>
+    </div>
+
     <div class="form-group">
       <%= form.label :intensity, "Intensity" %>
       <%= form.range_field :intensity, min: 0, max: 10 %>
+    </div>
+
+    <div class="help-icon">
+      <i class="fa-solid fa-circle-question"></i>
+      <div class="help-text">Tell us how much you want to focus</div>
     </div>
 
     <div class="form-group">
@@ -110,29 +131,81 @@
       <%= form.range_field :novelty, min: 0, max: 10 %>
     </div>
 
+    <div class="help-icon">
+      <i class="fa-solid fa-circle-question"></i>
+      <div class="help-text">Tell us how experimental you want our suggestion to be</div>
+    </div>
+
     <hr class="divider">
 
+    <h5>Any movies you recently enjoyed?</h5>
+
     <div class="form-group">
-      <%= form.label :recent_movie1, "Recently Watched Movie 1:" %>
-      <%= form.text_field :recent_movie1 %>
+      <%= form.label :recent_movie, "Search for a movie:" %>
+      <%= form.text_field :search_movie, class: 'form-control' %>
+    </div>
+
+    <br>
+
+    <div class="gray-boxes">
+      <div class="gray-box">
+        <% if @query.recent_movie1.present? %>
+          <span class="selected-movie"><%= @query.recent_movie1 %></span>
+        <% else %>
+          <span class="empty-box"></span>
+        <% end %>
+      </div>
+
+      <div class="gray-box">
+        <% if @query.recent_movie2.present? %>
+          <span class="selected-movie"><%= @query.recent_movie2 %></span>
+        <% else %>
+          <span class="empty-box"></span>
+        <% end %>
+      </div>
+
+      <div class="gray-box">
+        <% if @query.recent_movie3.present? %>
+          <span class="selected-movie"><%= @query.recent_movie3 %></span>
+        <% else %>
+          <span class="empty-box"></span>
+        <% end %>
+      </div>
+    </div>
+
+
+    <br>
+
+
+    <h5> Any movies you recently enjoyed?</h5>
+
+    <div class="form-group">
+      <%= form.label :recent_movie %>
+      <%= form.text_field :recent_movie1, class: 'form-control' %>
     </div>
 
     <div class="form-group">
       <%= form.label :recent_movie2, "Recently Watched Movie 2:" %>
-      <%= form.text_field :recent_movie2 %>
+      <%= form.text_field :recent_movie2, class: 'form-control' %>
     </div>
 
     <div class="form-group">
       <%= form.label :recent_movie3, "Recently Watched Movie 3:" %>
-      <%= form.text_field :recent_movie3 %>
+      <%= form.text_field :recent_movie3, class: 'form-control'%>
     </div>
 
     <hr class="divider">
 
+    <h5> Anyhting else we should know? </h5>
+    <p> Feel free to write your heart out</p>
+
+    <br>
+
     <div class="form-group">
-      <%= form.label :other, "Other Preferences:" %>
-      <%= form.text_area :other %>
+      <%= form.text_area :other, class: "form-text-area" %>
     </div>
+
+    <hr class="divider">
 
     <%= form.submit "Search", class: "btn btn-primary"%>
 

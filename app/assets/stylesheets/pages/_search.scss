@@ -1,7 +1,15 @@
 @import "components/index";
 
 body {
-  background-color: black;
+  background-image: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    asset-url('background-image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
 }
 
@@ -13,18 +21,11 @@ body {
 }
 
 .main-container {
-  background-image: linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.8) 100%
-    ),
-    asset-url('background-image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: transparent;
+  width: 80%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px; /* Add some padding for spacing */
 
-  width: 100%;
-  height: 100%;
+  max-width: 1200px; /* Set a maximum width if desired */
+  box-sizing: border-box; /* Include padding and border in the total width */
 }
-
-

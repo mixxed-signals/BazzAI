@@ -1,0 +1,23 @@
+.help-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.help-icon .help-text {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(5px, -50%);
+  display: none;
+  background-color: #504f4f;
+  padding: 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.help-icon:hover .help-text {
+  display: block;
+}

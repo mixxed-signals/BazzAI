@@ -5,6 +5,7 @@ class RecommendationsController < ApplicationController
     "Action",
     "Adventure",
     "Animation",
+    "Anime",
     "Award-Winning",
     "Biography",
     "Classic",
@@ -43,21 +44,39 @@ class RecommendationsController < ApplicationController
     "Western"
   ].freeze
 
+  MOOD = [
+    "Depressed",
+    "Sad",
+    "Melancholic",
+    "Bummed Out",
+    "Pensive",
+    "Meh",
+    "Chill",
+    "Neutral",
+    "Happy",
+    "Excited",
+    "Thrilled",
+    "Over the Moon"
+  ]
 
   def search
     @genres = GENRES
+    @user = current_user
     @query = Query.new
   end
 
   def create
+    @user = current_user
     @genres = GENRES
     @query = Query.new(query_params)
+    @query.user_id = @user.id
     @query.save!
     redirect_to recommendations_path
   end
 
   def index
     @query = Query.last
+    @mood = MOOD[@query.happiness]
   end
 
   def show
@@ -66,6 +85,7 @@ class RecommendationsController < ApplicationController
   private
 
   def query_params
-    params.require(:query).permit(:medium, :time, :audience, :genres, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other)
+    genres = Array(params[:query][:genre]).join(", ") # Convert the selected genres to a string
+    params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: genres)
   end
 end

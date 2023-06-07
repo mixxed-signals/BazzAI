@@ -1,0 +1,19 @@
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.form-button {
+  background-color: black;
+  color: white;
+  border-radius: 20px;
+  border: 1px solid rgb(248, 245, 245);
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:focus,
+  &:active,
+  &.selected {
+    border-color: $yellow;
+  }
+}

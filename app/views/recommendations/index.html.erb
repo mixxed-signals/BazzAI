@@ -26,5 +26,5 @@ The most recent movies I enjoyed were #{ @query.recent_movie1 }, #{ @query.recen
 \n
 Additionally, this is something you should know about my current situation: \"#{ @query.other }\". Just return the name of the Movie or Tv Show and the Year " %>
 
-<%  @response = OpenaiService.new(my_prompt).call %>
-<%= @response['choices'][0]['message']['content']%>
+<%#  @response = OpenaiService.new(my_prompt).call %>
+<%# @response['choices'][0]['message']['content']%>

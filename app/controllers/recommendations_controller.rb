@@ -69,7 +69,7 @@ class RecommendationsController < ApplicationController
     @genres = GENRES
     @user = current_user
     @query = Query.new(query_params)
-    @query.user_id = @user.id
+    @query.user = @user
     if @query.save
       redirect_to search_result_path(@query)
     else

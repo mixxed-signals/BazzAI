@@ -19,6 +19,6 @@ class OpenaiService
 					max_tokens: 16 # might want to check this
       })
     # to get just the response text from chat gpt + not truncated
-    return response#["choices"][0]["message"]["content"].html_safe
+    return response["choices"][0]["message"]["content"].html_safe
   end
 end

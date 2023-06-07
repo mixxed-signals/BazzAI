@@ -1,5 +1,4 @@
 
-
 <h1>Recommendations</h1>
 <p> My prompt:</p>
 <p> “I want to watch a <%= @query.medium %> that lasts around <%= @query.time %> minutes, suitable for <%= @query.audience %> and falls into the genres of <%= @query.genre%>.
@@ -26,5 +25,5 @@ The most recent movies I enjoyed were #{ @query.recent_movie1 }, #{ @query.recen
 \n
 Additionally, this is something you should know about my current situation: \"#{ @query.other }\". Return it as a hash in ruby " %>
 
-<%#  @response = OpenaiService.new(my_prompt).call %>
+<%=  @response = OpenaiService.new(my_prompt).call %>
 <%# @response['choices'][0]['message']['content'].html_safe%>

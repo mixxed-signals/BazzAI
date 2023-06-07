@@ -1,0 +1,99 @@
+1. QUERY
+
+- medium: [movie, tvshow]
+
+- time: range(15..120)
+  *step -> 5 for if statement + if >120
+
+- audience: [family, couple, just me ]
+
+- genres = [
+  "Action",
+  "Adventure",
+  "Animation",
+  "Award-Winning",
+  "Biography",
+  "Classic",
+  "Comedy",
+  "Coming-of-Age",
+  "Crime",
+  "Cult",
+  "Cult Classic",
+  "Documentary",
+  "Drama",
+  "Family",
+  "Fantasy",
+  "Film-Noir",
+  "History",
+  "Horror",
+  "Independent",
+  "International",
+  "Mystery",
+  "Musical",
+  "Noir",
+  "Psychological",
+  "Queer",
+  "Reality",
+  "Romance",
+  "Rom-Com",
+  "Science Fiction",
+  "Sci-Fi",
+  "Spy",
+  "Superhero",
+  "Supernatural",
+  "Suspense",
+  "Teen",
+  "Thriller",
+  "True Crime",
+  "War",
+  "Western"
+]
+
+
+* max 5
+
+- happiness: (0-10)
+* mood_scale = [
+  "Depressed",
+  "Sad"
+  "Melancholic",
+  "Bummed Out",
+  "Pensive",
+  "Meh",
+  "Chill",
+  "Neutral",
+  "Happy",
+  "Excited",
+  "Thrilled",
+  "Over the Moon"
+]
+
+- intensity: (0-10)
+* phrasing: "On a scale of 0 to ten i want to concentrate on the movie {}"
+
+- novelty: range(0-10)
+* phrasing: "On a scale of 0 to ten i want the movie to be experimental and non-mainstream on a level {}"
+
+- recent_movie1: title
+- recent_movie2: title
+- recent_movie3: title
+
+- other: text
+
+
+2. PROMPT
+
+"I want to watch a [medium] that lasts around [time] minutes, suitable for [audience] and falls into the genres of [genre1], [genre2], [genre3], [genre4], and [genre5].
+I'm in the mood for a movie that makes me feel [happiness_level], and on a scale of 0 to 10 I want to concentrate on the movie [intensity].
+I also want the movie to be experimental and non-mainstream on a level [novelty_level].
+The most recent movies I watched were [recent_movie1], [recent_movie2], and [recent_movie3].
+Additionally, this is something you should know about my current situation [other]."
+
+3. Created a global variables store
+- genre array
+- mood array
+-> how to create globals in config/initializers/constant.rb?
+
+Created a form in #search which allows our #create to store the columns of query and return them
+in a prompt on our index page.
+Now we can use and store this prompt as the prompt for chat gpt

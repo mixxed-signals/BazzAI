@@ -1,0 +1,79 @@
+// In bootstrap 5 legend floats left and requires the following element
+// to be cleared. In a radio button or checkbox group the element after
+// the legend will be the automatically generated hidden input; the fix
+// in https://github.com/twbs/bootstrap/pull/30345 applies to the hidden
+// input and has no visual effect. Here we try to fix matters by
+// applying the clear to the div wrapping the first following radio button
+// or checkbox.
+legend ~ div.form-check:first-of-type {
+  clear: left;
+}
+
+.form-text-area {
+  border-radius: 10px;
+  background-color: #060606;
+  border: 1px solid #cccccc;
+  color: rgb(244, 238, 238);
+  padding: 10px;
+  width: 30%;
+  height: 150px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+  border-radius: 20px;
+  background-color: #060606;
+  border: 1px solid #cccccc;
+  color: rgb(244, 238, 238);
+  padding: 10px;
+  width: 50%;
+  height: 45px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gray-boxes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.gray-box {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #535050;
+  border: 1px solid #ccc;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 10px;
+}
+
+.empty-box {
+  background-color: #535050;
+}
+
+.selected-movie,
+.empty-text {
+  color: #333;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.selected-movie {
+  z-index: 1;
+}
+
+.empty-text {
+  z-index: 2;
+}
+
+.gray-box {
+  background-size: cover;
+  background-position: center;
+}

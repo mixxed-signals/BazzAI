@@ -23,7 +23,7 @@ I also want the movie to be experimental and non-mainstream on a level #{ @query
 \n
 The most recent movies I enjoyed were #{ @query.recent_movie1 }, #{ @query.recent_movie2 }, and #{ @query.recent_movie3 }.\n
 \n
-Additionally, this is something you should know about my current situation: \"#{ @query.other }\". Return it as a hash in ruby " %>
+Additionally, this is something you should know about my current situation: \"#{ @query.other }\". Just return the name of the Movie or Tv Show and the Year " %>
 
-<%=  @response = OpenaiService.new(my_prompt).call %>
-<%# @response['choices'][0]['message']['content'].html_safe%>
+<%  @response = OpenaiService.new(my_prompt).call %>
+<%= @response['choices'][0]['message']['content']%>

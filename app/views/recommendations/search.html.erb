@@ -1,7 +1,7 @@
 <h1>Let's find the perfect movie for you</h1>
 
 
-<%= form_with(model: @query, url: recommendations_path, method: :post) do |form| %>
+<%= form_with(model: @query, url: search_path, method: :post) do |form| %>
   <div class="form-group">
     <%= form.label :medium, "Medium:" %>
     <%= form.select :medium, ["movie", "tvshow"], prompt: "Select a medium" %>
@@ -84,6 +84,6 @@
     <%= form.text_area :other %>
   </div>
 
-  <%= form.submit "Search", class: "btn btn-primary", formaction: recommendations_path %>
+  <%= form.submit "Search", class: "btn btn-primary"%>
 
 <% end %>

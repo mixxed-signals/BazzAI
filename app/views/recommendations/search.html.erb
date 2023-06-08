@@ -20,6 +20,19 @@
     </div>
     <hr class="divider">
 
+    <%# Medium Test %>
+
+    <%= form.collection_radio_buttons :medium, ["movie", "tv_show"], :to_s, :titleize,
+      item_wrapper_tag: 'div',
+      item_wrapper_class: 'category-item',
+      class: 'category-selector' do |b| %>
+        <%= b.label class: 'form-button' do %>
+          <%= b.radio_button + b.text %>
+        <% end %>
+    <% end %>
+
+
+
     <%# Time %>
     <h5> Got time to spare? </h5>
     <br>
@@ -51,18 +64,22 @@
     <%# Genre %>
     <h5> Favor Any Genres? </h5>
     <br>
-    <div class="form-group">
-      <div class="row">
-        <% @genres.each_slice(4) do |genres_group| %>
-          <% genres_group.each do |genre| %>
-            <div class="col-md-2 mb-4">
-              <%= button_tag genre, type: 'button', class: 'form-button', name: 'query[genre][]', data: { toggle: 'button' } %>
-            </div>
-          <% end %>
+    <%= form.fields_for :genre do |genre_form| %>
+      <div class="row"  data-controller="genre-selection" data-genre-selection-target="container">
+        <% @genres.each_slice(6) do |genres_row| %>
+          <div class="row">
+            <% genres_row.each do |genre| %>
+              <div class="tag-item col-md-2 mb-4" data-controller="genre-selection" data-genre-selection-target="checkbox">
+                <%= genre_form.check_box genre.to_sym, { class: "tag-selector", style: "display: none;" , data: { action: "click->genre-selection#updateSelectedCount" }}, genre %>
+                <%= genre_form.label genre %>
+              </div>
+            <% end %>
+          </div>
         <% end %>
       </div>
-    </div>
-    <hr class="divider">
+    <% end %>
+
+
 
     <%# Year %>
     <div>

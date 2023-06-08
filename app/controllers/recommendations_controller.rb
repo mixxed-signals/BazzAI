@@ -69,6 +69,7 @@ class RecommendationsController < ApplicationController
     @query.user = @user
     # raise
     if @query.save
+      raise
       redirect_to search_result_path(@query)
     else
       render :search

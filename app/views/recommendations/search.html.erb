@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" data-controller="movie-search">
 
   <br>
 
@@ -140,7 +140,7 @@
 
     <h5>Any movies you recently enjoyed?</h5>
 
-    <div class="form-group">
+    <div class="form-group" data-action="input->movie-search#handleInput" data-search-target="input">
       <%= form.label :recent_movie, "Search for a movie:" %>
       <%= form.text_field :search_movie, class: 'form-control' %>
     </div>

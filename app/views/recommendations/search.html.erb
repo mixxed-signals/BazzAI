@@ -6,25 +6,31 @@
   <br>
   <hr class="divider">
   <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
+
+    <%# Medium %>
     <div class="form-group">
       <div class="form-buttons">
-        <%= form.button :medium, value: "movie", class: "form-button", type: "button" do %>
+        <%= form.button :medium, value: "movie", class: "form-button", type: "button", name: "query[medium]" do %>
           Movie
         <% end %>
-        <%= form.button :medium, value: "tvshow", class: "form-button", type: "button" do %>
+        <%= form.button :medium, value: "tvshow", class: "form-button", type: "button", name: "query[medium]" do %>
           TV Show
         <% end %>
       </div>
     </div>
     <hr class="divider">
+
+    <%# Time %>
     <h5> Got time to spare? </h5>
     <br>
     <div class="form-group" data-controller="slider">
-      <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range", data: {action: "change->slider#updateValue", slider_target: "input"}%>
+      <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range", data: {action: "change->slider#updateValue", slider_target: "input"}, name: "query[time]"%>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span>min</span>
     </div>
     <hr class="divider">
+
+    <%# Audience %>
     <h5> Who's joining the fun? </h5>
     <br>
     <div class="form-group">
@@ -41,6 +47,8 @@
       </div>
     </div>
     <hr class="divider">
+
+    <%# Genre %>
     <h5> Favor Any Genres? </h5>
     <br>
     <div class="form-group">
@@ -55,6 +63,8 @@
       </div>
     </div>
     <hr class="divider">
+
+    <%# Year %>
     <div>
       <div class="d-flex">
         <div class="form-group w-25">
@@ -78,33 +88,56 @@
       </div>
     </div>
     <hr class="divider">
-    <div class="form-group">
-      <%= form.label :happiness, "Mood" %>
-      <%= form.range_field :happiness, min: 0, max: 10 %>
+
+    <%# Mood %>
+    <div>
+      <h6> Mood</h6>
+      <div class="help-icon">
+        <i class="fa-solid fa-circle-question"></i>
+        <div class="help-text">Tell us how you're feeling on a happiness scale</div>
+      </div>
     </div>
-    <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how you're feeling on a happiness scale</div>
+
+    <div class="form-group" data-controller="slider">
+      <%= form.range_field :happiness, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
+      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+      <span> / 10</span>
     </div>
-    <div class="form-group">
-      <%= form.label :intensity, "Intensity" %>
-      <%= form.range_field :intensity, min: 0, max: 10 %>
+
+    <%# Intensity %>
+    <div>
+      <h6> Intensity</h6>
+      <div class="help-icon">
+        <i class="fa-solid fa-circle-question"></i>
+        <div class="help-text">Tell us how much you want to focus</div>
+      </div>
     </div>
-    <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how much you want to focus</div>
+
+    <div class="form-group" data-controller="slider">
+      <%= form.range_field :intensity, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
+      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+      <span> / 10</span>
     </div>
-    <div class="form-group">
-      <%= form.label :novelty, "Novelty" %>
-      <i class="bi bi-question-circle"></i>
-      <%= form.range_field :novelty, min: 0, max: 10 %>
+
+    <%# Novelty %>
+    <div>
+      <h6> Novelty</h6>
+      <div class="help-icon">
+        <i class="fa-solid fa-circle-question"></i>
+        <div class="help-text">Tell us how experimental you want our suggestion to be</div>
+      </div>
     </div>
-    <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how experimental you want our suggestion to be</div>
+
+    <div class="form-group" data-controller="slider">
+      <%= form.range_field :novelty, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
+      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+      <span> / 10</span>
     </div>
+
+    <%# Recent Movies %>
     <hr class="divider">
     <h5>Any movies you recently enjoyed?</h5>
+
     <%# Movie search start %>
     <div data-controller="movie-search">
       <div class="form-group">
@@ -156,6 +189,7 @@
     </div>
     <%# Movie search end %>
     <br>
+    <%# Other %>
     <hr class="divider">
     <h5> Anyhting else we should know? </h5>
     <p> Feel free to write your heart out</p>
@@ -163,6 +197,7 @@
     <div class="form-group">
       <%= form.text_area :other, class: "form-text-area" %>
     </div>
+
     <hr class="divider">
     <%= form.submit "Search", class: "search-button"%>
   <% end %>

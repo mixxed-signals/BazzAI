@@ -15,16 +15,13 @@
   &:focus,
   &:active,
   &.selected {
-    background: linear-gradient(90deg, #e2691d 0%, #f2c12e 100%);
+    background: linear-gradient(90deg, pink 0%, $pink 100%);
     border: none;
-  }
-  &:hover {
-    color: black;
   }
 }
 
 .search-button {
-  background: linear-gradient(90deg, #e74f6a 0%, #f2c12e 100%);
+  background: linear-gradient(90deg, pink 0%, $pink 100%);
   width: 170px;
   color: white;
   border-radius: 20px;

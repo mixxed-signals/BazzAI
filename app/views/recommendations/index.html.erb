@@ -1,3 +1,18 @@
+
+<%= render "shared/navbar" %>
+<div class="container my-2">
+  <h1>Recommendations</h1>
+  <p> My prompt:</p>
+  <p><%= @prompt %></p>
+  <p> My Recommendations from CHAT-GPT:</p>
+  <div class="d-flex flex-column align-item-start justify-content-start gap-3 w-100">
+    <% @response.each_with_index do |movie| %>
+      <div data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3">
+        <input data-omdb-request-target="movie_name" class="d-none" type="hidden" value="<%= movie %>">
+        <input data-omdb-request-target="omdb" class="d-none" type="hidden" value="<%= @omdb_key %>">
+        <%= render "recommendations/movie_card" %>
+      </div>
+
 <div class="container my-2 p-0 min-vh-100">
   <h1>Your personal recommendations:</h1>
   <hr class="w-75"/>

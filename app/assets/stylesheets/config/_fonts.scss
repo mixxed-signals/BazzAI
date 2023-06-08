@@ -1,5 +1,5 @@
 // Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Gravitas+One|Poppins:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Gravitas+One|Poppins:100,200,300,400,500,600,700,800&display=swap');
 
 // Define fonts for body and headers
 $body-font: "Poppins", "Helvetica", "sans-serif";
@@ -9,10 +9,10 @@ $headers-font: "Gravitas One", "Helvetica", "sans-serif";
 $pink: #E74F6A;
 $orange: #F25E3D;
 $beige: #F2D0A7;
-$yellow: #F2AC29;
+$yellow: pink;
 $sec_yellow: #EFC956;
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   color: white;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
@@ -77,7 +77,9 @@ $LIGHTING_FLAT: 3;
     $depth: 8,
     $orange: adjust-color($orange, $lightness: -10%, $saturation: +20%),
     $shadowopacity: .3);
-
+  &:hover {
+    color: pink;
+  }
 }
 
 // Alternative logo - not used right now

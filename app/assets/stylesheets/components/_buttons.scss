@@ -1,25 +1,28 @@
 .magic-button {
-  background: linear-gradient(90deg, #e74f6a 0%, #f2c12e 100%);
+  background: linear-gradient(90deg, $pink 0%, $yellow 100%);
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 16px;
   border: none;
 
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
 
   color: #ffffff;
 
-  padding: 20px 72px;
+  padding: 20px 40px;
   transition: background 0.2s ease-in-out;
 
   &:hover {
-    background: linear-gradient(180deg, #e74f6a 0%, #f2c12e 100%);
+    background: linear-gradient(180deg, #e74f6a 0%, pink 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: 1px 4px 12px rgba(228, 28, 28, 1);
   }
 }
 
 .generic-button {
   background: #000000;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 12px rgba(242, 94, 61, 0.15);
   border-radius: 16px;
   border: none;
 

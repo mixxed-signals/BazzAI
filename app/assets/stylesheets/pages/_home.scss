@@ -31,11 +31,12 @@
 
     height: 100vh;
 
-    h1 {
+    h2 {
       text-align: center;
-      text-shadow: 2px 2px 0px #e74f6a;
+      text-shadow: 2px 2px 0px $pink;
     }
   }
+
 
   &-buttons-container {
     align-items: center;
@@ -45,4 +46,8 @@
 
     width: 100%;
   }
+}
+
+.font-size-70 {
+  font-size: 70px;
 }

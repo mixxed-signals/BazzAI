@@ -2,32 +2,15 @@
   <div class="container container-fluid d-flex justify-content-between align-items-center container-nav-bar">
     <div class="d-flex justify-content-center align-items-center gap-3">
       <%= link_to "/", class: "text-decoration-none" do %>
-        <h1 class="logo1 font-size-48">Movie Mate</h1>
+        <h1 class="logo1 font-size-30">Movie Mate</h1>
       <% end %>
-      <ul class="d-flex justify-content-center align-items-center gap-3 mb-0 list-style-none list-nav-bar-links">
-        <li>
-          <%= link_to "Searching", "#"  %>
-        </li>
-        <li>
-          <%= link_to "Searching", "#"  %>
-        </li>
-        <li>
-          <%= link_to "Searching", "#"  %>
-        </li>
-      </ul>
     </div>
     <div class="" id="navbarSupportedContent">
       <ul class="d-flex justify-content-center align-items-center gap-3 mb-0 list-style-none">
         <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Messages", "#", class: "nav-link" %>
-          </li>
           <li class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+              <%= image_tag "https://cdn.discordapp.com/attachments/1105433122998325278/1109114959243255958/niklas_movie_poster_representation_horror_movie_genre_b7939019-7bbf-4a2e-ab79-63527af56a2a.png", class: "avatar", alt: "dropdown menu" %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Action", "#", class: "dropdown-item" %>

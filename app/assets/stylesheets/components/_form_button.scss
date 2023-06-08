@@ -18,6 +18,9 @@
     background: linear-gradient(90deg, #e2691d 0%, #f2c12e 100%);
     border: none;
   }
+  &:hover {
+    color: black;
+  }
 }
 
 .search-button {

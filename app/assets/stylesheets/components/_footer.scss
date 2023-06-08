@@ -1,0 +1,24 @@
+@import "./../config/colors";
+
+footer {
+  // position: fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background-color: black;
+  color: white;
+
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.container-footer {
+  border-top: 0.5px solid #d0d0d08e;
+  padding: 30px 0;
+  width: 100%;
+}
+
+.text-start {
+  margin: 0;
+}

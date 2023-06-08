@@ -109,51 +109,53 @@
     <div data-controller="movie-search">
       <div class="form-group">
         <%= form.label :recent_movie, "Search for a movie:" %>
-        <%= form.text_field :search_movie, class: 'form-control' , data: {target: "search", action: 'keyup->movie-search#handleInput'}%>
+        <%= form.text_field :search_movie, class: 'form-control' , data: { action: 'keyup->movie-search#handleInput'}%>
       </div>
       <br>
       <div class="search-boxes-container" data-movie-search-target="results">
       </div>
       <br>
-      <div class="gray-boxes">
-        <div class="gray-box">
+      <div class="search-boxes-container select-movies">
+        <div class="search-boxes-container-results-card">
           <% if @query.recent_movie1.present? %>
-            <span class="selected-movie"><%= @query.recent_movie1 %></span>
+            <img src="" class="search-boxes-container-results-card-image" />
+            <p class="search-boxes-container-results-card-infos">
+              Movie Title
+              <br/>
+              ( Movie Year )
+            </p>
           <% else %>
-            <span class="empty-box"></span>
+            <p class="search-boxes-container-results-card-infos">Select a movie</p>
           <% end %>
         </div>
-        <div class="gray-box">
+        <div class="search-boxes-container-results-card">
           <% if @query.recent_movie2.present? %>
-            <span class="selected-movie"><%= @query.recent_movie2 %></span>
+            <img src="" class="search-boxes-container-results-card-image" />
+            <p class="search-boxes-container-results-card-infos">
+              Movie Title
+              <br/>
+              ( Movie Year )
+            </p>
           <% else %>
-            <span class="empty-box"></span>
+            <p class="search-boxes-container-results-card-infos">Select a movie</p>
           <% end %>
         </div>
-        <div class="gray-box">
+        <div class="search-boxes-container-results-card">
           <% if @query.recent_movie3.present? %>
-            <span class="selected-movie"><%= @query.recent_movie3 %></span>
+            <img src="" class="search-boxes-container-results-card-image" />
+            <p class="search-boxes-container-results-card-infos">
+              Movie Title
+              <br/>
+              ( Movie Year )
+            </p>
           <% else %>
-            <span class="empty-box"></span>
+            <p class="search-boxes-container-results-card-infos">Select a movie</p>
           <% end %>
         </div>
       </div>
     </div>
     <%# Movie search end %>
     <br>
-    <h5> Any movies you recently enjoyed?</h5>
-    <div class="form-group">
-      <%= form.label :recent_movie %>
-      <%= form.text_field :recent_movie1, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= form.label :recent_movie2, "Recently Watched Movie 2:" %>
-      <%= form.text_field :recent_movie2, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= form.label :recent_movie3, "Recently Watched Movie 3:" %>
-      <%= form.text_field :recent_movie3, class: 'form-control'%>
-    </div>
     <hr class="divider">
     <h5> Anyhting else we should know? </h5>
     <p> Feel free to write your heart out</p>

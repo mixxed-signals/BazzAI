@@ -29,3 +29,15 @@ body {
   max-width: 1200px; /* Set a maximum width if desired */
   box-sizing: border-box; /* Include padding and border in the total width */
 }
+
+.search-boxes-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  &-results-card-image {
+
+  }
+}

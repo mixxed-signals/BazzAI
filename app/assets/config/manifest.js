@@ -5,3 +5,4 @@
 //= link popper.js
 //= link bootstrap.min.js
 //= link config/_fonts.css
+//= link application.css

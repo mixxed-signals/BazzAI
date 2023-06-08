@@ -39,5 +39,3 @@ const searchMovies = () => {
       console.error(error);
     });
 };
-
-searchForm.addEventListener("keyup", searchMovies);

@@ -1,14 +1,13 @@
 class RecommendationsController < ApplicationController
   GENRES = [
+    "Acclaimed",
     "Action",
     "Adventure",
     "Animation",
     "Anime",
-    "Award-Winning",
     "Biography",
     "Classic",
     "Comedy",
-    "Coming-of-Age",
     "Crime",
     "Cult",
     "Cult Classic",
@@ -29,7 +28,6 @@ class RecommendationsController < ApplicationController
     "Reality",
     "Romance",
     "Rom-Com",
-    "Science Fiction",
     "Sci-Fi",
     "Spy",
     "Superhero",
@@ -39,7 +37,8 @@ class RecommendationsController < ApplicationController
     "Thriller",
     "True Crime",
     "War",
-    "Western"
+    "Western",
+    "Youth"
   ].freeze
 
   MOOD = [

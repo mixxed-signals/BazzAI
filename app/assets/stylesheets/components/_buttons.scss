@@ -43,9 +43,9 @@
   background: #1a1a1a;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 16px;
-  border: none;
+  border: white 1px solid;
 
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
 
   color: #ffffff;
@@ -55,5 +55,6 @@
 
   &:hover {
     background: #2b2b2b;
+    border: white 1px solid;
   }
 }

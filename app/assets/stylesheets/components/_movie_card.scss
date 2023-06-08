@@ -19,21 +19,21 @@
   width: 100%;
 
   &-delete-button {
-    background: rgb(187, 0, 0);
+    background: rgb(255, 255, 255);
 
     border-radius: 50%;
     border: none;
 
-    color: white;
+    color: rgb(0, 0, 0);
     font-family: Poppins, sans-serif;
-    font-size: 1rem;
+    font-size: 0.6rem;
     font-weight: bold;
-    padding: 0.75rem 1.15rem;
+    padding: 0.5rem 0.8rem;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
 
-    top: -16px;
-    right: -24px;
+    top: -10px;
+    right: -10px;
 
     position: absolute;
 
@@ -72,9 +72,9 @@
       width: 100%;
 
       &-button {
-        background-image: linear-gradient(to right, $pink 0%, $yellow 100%);
+        // background-image: linear-gradient(to right, $pink 0%, $yellow 100%);
         border-radius: 40px;
-        border: none;
+        border: white 1px solid;
 
         box-sizing: border-box;
 
@@ -84,7 +84,7 @@
 
         font-family: Poppins, sans-serif;
         font-size: 1rem;
-        font-weight: bold;
+        font-weight: 400;
         letter-spacing: 1px;
         text-decoration: none;
 
@@ -99,6 +99,9 @@
 
         &:hover {
           background-image: linear-gradient(to left, $pink 0%, $yellow 100%);
+          font-weight: 600;
+          color: white;
+          border: pink 1px solid;
         }
       }
     }

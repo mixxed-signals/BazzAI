@@ -1,9 +1,17 @@
 // Import your components CSS files here.
 @import "alert";
 @import "avatar";
-@import "form_legend_clear";
+@import "form_inputs";
 @import "navbar";
 @import "buttons";
+
+@import "movie_card";
+
+@import "slider";
+@import "form_button";
+@import "help_icon";
+@import "footer";
+
 
 .list-style-none {
   list-style: none;

@@ -105,17 +105,18 @@ class RecommendationsController < ApplicationController
   end
 
   def create_prompt(query, mood)
-    request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separetes the movies using ',', and never put the #{query.medium} year or episode, use this informations about me:"
+    request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separated by ',', and never put the #{query.medium} year or episode, use this information about me:"
 
-    movie_time = "Movie time: #{query.time} minutes"
-    movie_genre = "Genre: #{query.genre}"
-    movie_mood = "Movie that makes me feel: #{mood}"
-    movie_audience = "I gonna watch this movie: #{query.audience}"
-    movie_concetrate = "Concentrate i need to watch the movie: #{query.intensity}"
-    movie_novelty = "Non-mainstream on a leve: #{query.novelty}"
-    recent_movies = "I watched this movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}"
-    other = "Other informations to filter this movie: #{query.other}"
+    movie_time = "Movie time: #{query.time} minutes." if query.time.present?
+    movie_genre = "Genre: #{query.genre}." if query.genre.present?
+    movie_mood = "Movie that makes me feel: #{mood}." if mood.present?
+    movie_audience = "I'm going to watch this movie: #{query.audience}." if query.audience.present?
+    movie_concentrate = "Concentrate, I need to watch the movie: #{query.intensity}/10." if query.intensity.present?
+    movie_novelty = "Non-mainstream on a level: #{query.novelty}/10." if query.novelty.present?
+    recent_movies = "I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
+    other = "Other information to filter this movie: #{query.other}." if query.other.present?
 
-    return request_part + "\n" + movie_time + "\n" + movie_genre + "\n" + movie_mood + "\n" + movie_audience + "\n" + movie_concetrate + "\n" + movie_novelty + "\n" + recent_movies + "\n" + other
+    return "#{request_part}\n#{movie_time}\n#{movie_genre}\n#{movie_mood}\n#{movie_audience}\n#{movie_concentrate}\n#{movie_novelty}\n#{recent_movies}\n#{other}"
+
   end
 end

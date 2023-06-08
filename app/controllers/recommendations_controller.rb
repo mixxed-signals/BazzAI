@@ -25,7 +25,6 @@ GENRES = [
   "Mystery",
   "Musical",
   "Noir",
-  "Paranormal",
   "Psychological",
   "Queer",
   "Reality",
@@ -39,14 +38,11 @@ GENRES = [
   "Superhero",
   "Supernatural",
   "Suspense",
-  "Teen",
   "Thriller",
   "True Crime",
-  "War",
   "Western",
   "Youth"
 ].freeze
-
 
   MOOD = [
     "Depressed",

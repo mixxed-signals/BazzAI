@@ -1,5 +1,6 @@
+
 <%= render "shared/navbar" %>
-<div class="main-container">
+<div class="main-container" data-controller="movie-search">
 
   <br>
 
@@ -29,9 +30,12 @@
 
     <br>
 
-    <div class="form-group">
-      <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range" %>
+    <div class="form-group" data-controller="slider">
+      <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range", data: {action: "change->slider#updateValue", slider_target: "input"}%>
+      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+      <span>min</span>
     </div>
+
 
     <hr class="divider">
 
@@ -61,19 +65,22 @@
     <br>
 
     <div class="form-group">
-      <div class="row row-cols-4">
-        <% @genres.each do |genre| %>
-          <div class="col-md-2 mb-4">
-            <%= button_tag genre, type: 'button', class: 'form-button', name: 'query[genre][]', data: { toggle: 'button' } %>
-          </div>
+      <div class="row">
+        <% @genres.each_slice(4) do |genres_group| %>
+          <% genres_group.each do |genre| %>
+            <div class="col-md-2 mb-4">
+              <%= button_tag genre, type: 'button', class: 'form-button', name: 'query[genre][]', data: { toggle: 'button' } %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
 
 
 
-    <hr class="divider">
 
+
+    <hr class="divider">
 
     <div>
 
@@ -141,7 +148,7 @@
 
     <h5>Any movies you recently enjoyed?</h5>
 
-    <div class="form-group">
+    <div class="form-group" data-action="input->movie-search#handleInput" data-search-target="input">
       <%= form.label :recent_movie, "Search for a movie:" %>
       <%= form.text_field :search_movie, class: 'form-control' %>
     </div>
@@ -208,7 +215,7 @@
 
     <hr class="divider">
 
-    <%= form.submit "Search", class: "btn btn-primary"%>
+    <%= form.submit "Search", class: "search-button"%>
 
   <% end %>
 

@@ -5,19 +5,23 @@ input[type=range] {
   margin: 10px 0;
   width: 20%;
 }
+
 input[type=range]:focus {
   outline: none;
 }
+
+/* WebKit */
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 1px 1px 1px #000000;
-  background: $yellow;
+  background: pink;
   border-radius: 5px;
   border: 1px solid #000000;
 }
+
 input[type=range]::-webkit-slider-thumb {
   box-shadow: 1px 1px 1px #000000;
   border: 1px solid #000000;
@@ -29,28 +33,34 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -6px;
 }
+
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: $yellow;
+  background: pink;
 }
+
+/* Firefox */
 input[type=range]::-moz-range-track {
   width: 100%;
-  height: 10px;
+  height: 5px;
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 1px 1px 1px #000000;
-  background: $yellow;
+  background: pink;
   border-radius: 5px;
   border: 1px solid #000000;
 }
+
 input[type=range]::-moz-range-thumb {
   box-shadow: 1px 1px 1px #000000;
   border: 1px solid #000000;
-  height: 30px;
+  height: 15px;
   width: 15px;
   border-radius: 5px;
-  background: transparent;
+  background: white; /* Updated color */
   cursor: pointer;
 }
+
+/* Edge */
 input[type=range]::-ms-track {
   width: 100%;
   height: 10px;
@@ -60,18 +70,21 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
+
 input[type=range]::-ms-fill-lower {
-  background: $yellow;
+  background: pink;
   border: 1px solid #000000;
   border-radius: 10px;
   box-shadow: 1px 1px 1px #000000;
 }
+
 input[type=range]::-ms-fill-upper {
-  background: $yellow;
+  background: pink;
   border: 1px solid #000000;
   border-radius: 10px;
   box-shadow: 1px 1px 1px #000000;
 }
+
 input[type=range]::-ms-thumb {
   margin-top: 1px;
   box-shadow: 1px 1px 1px #000000;
@@ -82,9 +95,11 @@ input[type=range]::-ms-thumb {
   background: black;
   cursor: pointer;
 }
+
 input[type=range]:focus::-ms-fill-lower {
-  background: $yellow;
+  background: pink;
 }
+
 input[type=range]:focus::-ms-fill-upper {
-  background: $yellow;
+  background: pink;
 }

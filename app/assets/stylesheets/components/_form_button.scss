@@ -16,4 +16,7 @@
   &.selected {
     border-color: $yellow;
   }
+  &:hover {
+    color: black;
+  }
 }

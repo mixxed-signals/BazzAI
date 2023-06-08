@@ -1,4 +1,3 @@
-
 <%= render "shared/navbar" %>
 <div class="container my-2">
   <h1>Recommendations</h1>
@@ -12,6 +11,9 @@
         <input data-omdb-request-target="omdb" class="d-none" type="hidden" value="<%= @omdb_key %>">
         <%= render "recommendations/movie_card" %>
       </div>
+    <% end %>
+  </div>
+</div>
 
 <div class="container my-2 p-0 min-vh-100">
   <h1>Your personal recommendations:</h1>

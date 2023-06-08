@@ -7,7 +7,11 @@ const createMovieCard = (movie) => {
   return `
   <div class="search-boxes-container-results-card">
     <img src="${movie.Poster}" class="search-boxes-container-results-card-image" />
-    <p class="search-boxes-container-results-card-infos">${movie.Title} ( ${movie.Year} )</p>
+    <p class="search-boxes-container-results-card-infos">
+      ${movie.Title}
+      <br/>
+      ( ${movie.Year} )
+    </p>
   </div>
   `;
 };
@@ -25,14 +29,14 @@ export default class extends Controller {
   static targets = ['search', 'results', 'selected'];
 
   connect() {
-    console.log('Search controller connected');
+    this.resultsTarget.innerHTML = '';
   }
 
   handleInput(event) {
     fetch(createUrl(event.target.value))
       .then((response) => response.json())
       .then((data) => {
-        if (data.Search) return this.resultsTarget.innerHTML = createContent(data);
+        if (data.Search) return (this.resultsTarget.innerHTML = createContent(data));
         this.resultsTarget.innerHTML = '';
       });
   }

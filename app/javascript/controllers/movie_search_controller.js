@@ -17,7 +17,10 @@ const createMovieCard = (movie) => {
 };
 
 const createContent = (data) => {
-  return data.Search.map((movie) => createMovieCard(movie)).join('');
+  const cards = data.Search.filter((movie, index) => {
+    if (index < 5) return movie;
+  });
+  return cards.map((movie) => createMovieCard(movie)).join('');
 };
 
 const createUrl = (search) => {

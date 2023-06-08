@@ -6,6 +6,8 @@
   <br>
   <hr class="divider">
   <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
+
+    <%# Medium %>
     <div class="form-group">
       <div class="form-buttons">
         <%= form.button :medium, value: "movie", class: "form-button", type: "button", name: "query[medium]" do %>
@@ -14,19 +16,21 @@
         <%= form.button :medium, value: "tvshow", class: "form-button", type: "button", name: "query[medium]" do %>
           TV Show
         <% end %>
-        <%= form.hidden_field :medium %>
       </div>
     </div>
     <hr class="divider">
+
+    <%# Time %>
     <h5> Got time to spare? </h5>
     <br>
     <div class="form-group" data-controller="slider">
       <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range", data: {action: "change->slider#updateValue", slider_target: "input"}, name: "query[time]"%>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span>min</span>
-      <%= form.hidden_field :time %>
     </div>
     <hr class="divider">
+
+    <%# Audience %>
     <h5> Who's joining the fun? </h5>
     <br>
     <div class="form-group">
@@ -40,10 +44,11 @@
         <%= form.button :audience, value: "family", class: "form-button", type: "button" do %>
           Family
         <% end %>
-        <%= form.hidden_field :audience %>
       </div>
     </div>
     <hr class="divider">
+
+    <%# Genre %>
     <h5> Favor Any Genres? </h5>
     <br>
     <div class="form-group">
@@ -55,12 +60,11 @@
             </div>
           <% end %>
         <% end %>
-        <%= form.hidden_field :genre, multiple: true %>
       </div>
     </div>
-
-
     <hr class="divider">
+
+    <%# Year %>
     <div>
       <div class="d-flex">
         <div class="form-group w-25">
@@ -82,10 +86,10 @@
           <%= form.number_field :year_after, in: 1900..2023, step: 1, class: 'form-control' %>
         </div>
       </div>
-
     </div>
     <hr class="divider">
 
+    <%# Mood %>
     <div>
       <h6> Mood</h6>
       <div class="help-icon">
@@ -98,26 +102,24 @@
       <%= form.range_field :happiness, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span> / 10</span>
-      <%= form.hidden_field :happiness %>
     </div>
 
-
+    <%# Intensity %>
     <div>
       <h6> Intensity</h6>
       <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how much you want to focus</div>
-    </div>
-
+        <i class="fa-solid fa-circle-question"></i>
+        <div class="help-text">Tell us how much you want to focus</div>
+      </div>
     </div>
 
     <div class="form-group" data-controller="slider">
       <%= form.range_field :intensity, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span> / 10</span>
-      <%= form.hidden_field :intensity %>
     </div>
 
+    <%# Novelty %>
     <div>
       <h6> Novelty</h6>
       <div class="help-icon">
@@ -130,50 +132,12 @@
       <%= form.range_field :novelty, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span> / 10</span>
-      <%= form.hidden_field :novelty %>
-    <div class="form-group">
-      <%= form.label :happiness, "Mood" %>
-      <%= form.range_field :happiness, min: 0, max: 10 %>
     </div>
-    <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how you're feeling on a happiness scale</div>
-    </div>
-    <div class="form-group">
-      <%= form.label :intensity, "Intensity" %>
-      <%= form.range_field :intensity, min: 0, max: 10 %>
-    </div>
-    <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how much you want to focus</div>
-    </div>
-    <div class="form-group">
-      <%= form.label :novelty, "Novelty" %>
-      <i class="bi bi-question-circle"></i>
-      <%= form.range_field :novelty, min: 0, max: 10 %>
-    </div>
-    <div class="help-icon">
-      <i class="fa-solid fa-circle-question"></i>
-      <div class="help-text">Tell us how experimental you want our suggestion to be</div>
-    </div>
+
+    <%# Recent Movies %>
     <hr class="divider">
     <h5>Any movies you recently enjoyed?</h5>
 
-    <div class="form-group" data-action="input->movie-search#handleInput" data-search-target="input">
-      <%= form.label :recent_movie, "Search for a movie:" %>
-      <%= form.text_field :search_movie, class: 'form-control' %>
-      <%= form.hidden_field :search_movie %>
-    </div>
-
-    <br>
-
-    <div class="gray-boxes">
-      <div class="gray-box">
-        <% if @query.recent_movie1.present? %>
-          <span class="selected-movie"><%= @query.recent_movie1 %></span>
-        <% else %>
-          <span class="empty-box"></span>
-        <% end %>
     <%# Movie search start %>
     <div data-controller="movie-search">
       <div class="form-group">
@@ -209,28 +173,16 @@
       </div>
     </div>
     <%# Movie search end %>
-    <br>
-    <h5> Any movies you recently enjoyed?</h5>
-    <div class="form-group">
-      <%= form.label :recent_movie %>
-      <%= form.text_field :recent_movie1, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= form.label :recent_movie2, "Recently Watched Movie 2:" %>
-      <%= form.text_field :recent_movie2, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= form.label :recent_movie3, "Recently Watched Movie 3:" %>
-      <%= form.text_field :recent_movie3, class: 'form-control'%>
-    </div>
+
+    <%# Other %>
     <hr class="divider">
     <h5> Anyhting else we should know? </h5>
     <p> Feel free to write your heart out</p>
     <br>
     <div class="form-group">
       <%= form.text_area :other, class: "form-text-area" %>
-      <%= form.hidden_field :other %>
     </div>
+
     <hr class="divider">
     <%= form.submit "Search", class: "search-button"%>
   <% end %>

@@ -6,7 +6,6 @@
   <br>
   <hr class="divider">
   <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
-
     <%# Medium %>
     <div class="form-group">
       <div class="form-buttons">
@@ -19,7 +18,6 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Time %>
     <h5> Got time to spare? </h5>
     <br>
@@ -29,7 +27,6 @@
       <span>min</span>
     </div>
     <hr class="divider">
-
     <%# Audience %>
     <h5> Who's joining the fun? </h5>
     <br>
@@ -47,7 +44,6 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Genre %>
     <h5> Favor Any Genres? </h5>
     <br>
@@ -63,7 +59,6 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Year %>
     <div>
       <h5> Publishing Year</h5>
@@ -80,8 +75,6 @@
     </div>
     <hr class="divider">
 
-
-
     <%# Mood %>
     <div>
       <h6> Mood</h6>
@@ -90,13 +83,11 @@
         <div class="help-text">Tell us how you're feeling on a happiness scale</div>
       </div>
     </div>
-
     <div class="form-group" data-controller="slider">
       <%= form.range_field :happiness, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span> / 10</span>
     </div>
-
     <%# Intensity %>
     <div>
       <h6> Intensity</h6>
@@ -105,13 +96,11 @@
         <div class="help-text">Tell us how much you want to focus</div>
       </div>
     </div>
-
     <div class="form-group" data-controller="slider">
       <%= form.range_field :intensity, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span> / 10</span>
     </div>
-
     <%# Novelty %>
     <div>
       <h6> Novelty</h6>
@@ -120,17 +109,14 @@
         <div class="help-text">Tell us how experimental you want our suggestion to be</div>
       </div>
     </div>
-
     <div class="form-group" data-controller="slider">
       <%= form.range_field :novelty, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span> / 10</span>
     </div>
-
     <%# Recent Movies %>
     <hr class="divider">
     <h5>Any movies you recently enjoyed?</h5>
-
     <%# Movie search start %>
     <div data-controller="movie-search">
       <div class="form-group">
@@ -142,41 +128,26 @@
       </div>
       <br>
       <div class="search-boxes-container select-movies">
-        <div class="search-boxes-container-results-card">
-          <% if @query.recent_movie1.present? %>
-            <img src="" class="search-boxes-container-results-card-image" />
-            <p class="search-boxes-container-results-card-infos">
-              Movie Title
-              <br/>
-              ( Movie Year )
-            </p>
-          <% else %>
-            <p class="search-boxes-container-results-card-infos">Select a movie</p>
-          <% end %>
+        <div class="search-boxes-container-results-card" data-movie-search-target="selectedOne" data-action="click->movie-search#removeMovie">
+          <%= form.text_field :recent_movie1, value: "", class: "d-none", data: { target: "movie-search.recentOne"} %>
+          <img src="" class="search-boxes-container-results-card-image" />
+          <p class="search-boxes-container-results-card-infos">
+            Select a movie
+          </p>
         </div>
-        <div class="search-boxes-container-results-card">
-          <% if @query.recent_movie2.present? %>
-            <img src="" class="search-boxes-container-results-card-image" />
-            <p class="search-boxes-container-results-card-infos">
-              Movie Title
-              <br/>
-              ( Movie Year )
-            </p>
-          <% else %>
-            <p class="search-boxes-container-results-card-infos">Select a movie</p>
-          <% end %>
+        <div class="search-boxes-container-results-card" data-movie-search-target="selectedTwo" data-action="click->movie-search#removeMovie">
+          <%= form.text_field :recent_movie2, value: "", class: "d-none",  data: { target: "movie-search.recentTwo"} %>
+          <img src="" class="search-boxes-container-results-card-image" />
+          <p class="search-boxes-container-results-card-infos">
+            Select a movie
+          </p>
         </div>
-        <div class="search-boxes-container-results-card">
-          <% if @query.recent_movie3.present? %>
-            <img src="" class="search-boxes-container-results-card-image" />
-            <p class="search-boxes-container-results-card-infos">
-              Movie Title
-              <br/>
-              ( Movie Year )
-            </p>
-          <% else %>
-            <p class="search-boxes-container-results-card-infos">Select a movie</p>
-          <% end %>
+        <div class="search-boxes-container-results-card" data-movie-search-target="selectedThree" data-action="click->movie-search#removeMovie">
+          <%= form.text_field :recent_movie3, value: "", class: "d-none",  data: { target: "movie-search.recentThree"} %>
+          <img src="" class="search-boxes-container-results-card-image" />
+          <p class="search-boxes-container-results-card-infos">
+            Select a movie
+          </p>
         </div>
       </div>
     </div>
@@ -190,7 +161,6 @@
     <div class="form-group">
       <%= form.text_area :other, class: "form-text-area" %>
     </div>
-
     <hr class="divider">
     <%= form.submit "Search", class: "search-button"%>
   <% end %>

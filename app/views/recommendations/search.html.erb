@@ -5,11 +5,8 @@
   <h5>Let us curate your perfect movie or TV show - all in a few clicks</h5>
   <br>
   <hr class="divider">
-  <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
-
-
-    <%# Mediums Checkbox %>
-
+  <%= form_with(model: @query, url: search_path, method: :post) do |form| %
+  
     <%# Medium %>
     <h5>Choose Medium:</h5>
     <br>
@@ -23,7 +20,6 @@
         <% end %>
       </div>
     <% end %>
-
     <%# Time %>
     <h5> Got time to spare? </h5>
     <br>
@@ -48,7 +44,6 @@
     <% end %>
     </div>
     <hr class="divider">
-
     <%# Genre %>
     <h5> Favor Any Genres? </h5>
     <br>
@@ -66,16 +61,13 @@
         <% end %>
       </div>
     <% end %>
-
-
-
     <%# Year %>
     <div>
       <h5> Publishing Year</h5>
       <div class="d-flex">
         <div class="form-group w-25">
           <%= form.label :year_from, "From:" %>
-            <%= form.number_field :year_after, value: 1888, in: 1888..2024, step: 1, class: 'form-control', placeholder: 1888 %>
+          <%= form.number_field :year_after, value: 1888, in: 1888..2024, step: 1, class: 'form-control', placeholder: 1888 %>
         </div>
         <div class="form-group w-25">
           <%= form.label :year_before, "To:" %>
@@ -84,7 +76,6 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Mood %>
     <div>
       <h6> Mood</h6>

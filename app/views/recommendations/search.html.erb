@@ -25,9 +25,9 @@
     <%= form.collection_radio_buttons :medium, ["movie", "tv_show"], :to_s, :titleize,
       item_wrapper_tag: 'div',
       item_wrapper_class: 'category-item',
-      class: 'category-selector' do |b| %>
-        <%= b.label class: 'form-button' do %>
-          <%= b.radio_button + b.text %>
+      class: 'category-selector button-selector' do |b| %>
+        <%= b.label class: 'button-selector' do %>
+        <%= b.radio_button + b.text %>
         <% end %>
     <% end %>
 

@@ -29,7 +29,8 @@
   transform: scale(0);
 }
 
-.form-button {
+.button-selector + label {
+  cursor: pointer;
   background-color: black;
   width: 170px;
   color: white;
@@ -37,19 +38,13 @@
   border: 1px solid rgb(248, 245, 245);
   padding: 10px 20px;
   cursor: pointer;
-
-  &.checked {
-    background: linear-gradient(90deg, pink 0%, $pink 100%);
-    border: none;
-  }
 }
 
-
-.category-selector:checked + label {
+.button-selector:checked + label {
   background: linear-gradient(90deg, pink 0%, $pink 100%);
   border: none;
-  color: white !important;
 }
+
 
 
 .tag-item {

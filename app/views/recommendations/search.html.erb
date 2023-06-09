@@ -18,20 +18,15 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Medium Test %>
-
     <%= form.collection_radio_buttons :medium, ["movie", "tv_show"], :to_s, :titleize,
       item_wrapper_tag: 'div',
       item_wrapper_class: 'category-item',
       class: 'category-selector button-selector' do |b| %>
-        <%= b.label class: 'button-selector' do %>
+      <%= b.label class: 'button-selector' do %>
         <%= b.radio_button + b.text %>
-        <% end %>
+      <% end %>
     <% end %>
-
-
-
     <%# Time %>
     <h5> Got time to spare? </h5>
     <br>
@@ -58,7 +53,6 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Genre %>
     <h5> Favor Any Genres? </h5>
     <br>
@@ -76,16 +70,13 @@
         <% end %>
       </div>
     <% end %>
-
-
-
     <%# Year %>
     <div>
       <h5> Publishing Year</h5>
       <div class="d-flex">
         <div class="form-group w-25">
           <%= form.label :year_from, "From:" %>
-            <%= form.number_field :year_after, value: 1888, in: 1888..2024, step: 1, class: 'form-control', placeholder: 1888 %>
+          <%= form.number_field :year_after, value: 1888, in: 1888..2024, step: 1, class: 'form-control', placeholder: 1888 %>
         </div>
         <div class="form-group w-25">
           <%= form.label :year_before, "To:" %>
@@ -94,7 +85,6 @@
       </div>
     </div>
     <hr class="divider">
-
     <%# Mood %>
     <div>
       <h6> Mood</h6>

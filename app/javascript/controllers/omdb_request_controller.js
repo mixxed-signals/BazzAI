@@ -21,5 +21,7 @@ export default class extends Controller {
         this.movie_postTarget.src = data.Poster;
         this.movie_postTarget.alt = data.Title;
       });
+
+
   }
 }

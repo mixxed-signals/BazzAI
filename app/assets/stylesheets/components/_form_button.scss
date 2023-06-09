@@ -3,6 +3,15 @@
   gap: 10px;
 }
 
+.form-button {
+  cursor: pointer;
+  background-color: black;
+  width: 170px;
+  color: white;
+  border-radius: 20px;
+  border: 1px solid rgb(248, 245, 245);
+  padding: 10px 20px;
+}
 
 .search-button {
   background: linear-gradient(90deg, pink 0%, $pink 100%);
@@ -37,7 +46,6 @@
   border-radius: 20px;
   border: 1px solid rgb(248, 245, 245);
   padding: 10px 20px;
-  cursor: pointer;
 }
 
 .button-selector:checked + label {

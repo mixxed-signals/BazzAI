@@ -86,8 +86,8 @@ class RecommendationsController < ApplicationController
     @query = Query.find(params[:id])
     @mood = MOOD[@query.happiness]
     @prompt = create_prompt(@query, @mood)
-    # @response = 'Lion King, The Godfather, The Shawshank Redemption, The Dark Knight, Pulp Fiction, Schindler\'s List'
-    @response = OpenaiService.new(create_prompt(@query, @mood)).call
+    @response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
+    # @response = OpenaiService.new(create_prompt(@query, @mood)).call
     @response = @response.gsub(/\.\d+/, '')
     @response = @response.gsub(/(\.\d+|\n)/, '')
     @response = @response.split(". ")
@@ -160,6 +160,15 @@ class RecommendationsController < ApplicationController
       )
       recommendation.save!
     end
+  end
+
+  def getlink(imdbID)
+    url = "https://api.kinocheck.de/movies?imdb_id=#{imdbID}&categories=trailer"
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    data = JSON.parse(response)
+    return nil if data['trailer'].nil?
+    "https://www.youtube.com/watch?v=#{data['trailer']['youtube_video_id']}"
   end
 
 end

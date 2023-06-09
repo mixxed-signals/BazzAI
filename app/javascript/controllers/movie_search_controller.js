@@ -6,10 +6,15 @@ const numberCounters = ['one', 'two', 'three'];
 let counter = 0;
 
 const createMovieCard = (movie) => {
+  let poster = movie.Poster;
+  if (poster === "N/A") {
+    poster =
+      "https://cdn.discordapp.com/attachments/1105433122998325278/1116723284348772453/Group_46.png";
+  }
   return `
   <div class="search-boxes-container-results-card" data-action='click->movie-search#selectMovie'>
     <input type="hidden" value="${movie.Title}">
-    <img src="${movie.Poster}" class="search-boxes-container-results-card-image" />
+    <img src="${poster}" class="search-boxes-container-results-card-image" />
     <p class="search-boxes-container-results-card-infos">
       ${movie.Title}
       <br/>
@@ -81,7 +86,8 @@ export default class extends Controller {
     const title = selected.querySelector('p');
 
     counter -= 1;
-    image.src = '';
-    title.innerHTML = 'Select a movie';
+    image.src =
+      "https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png";
+    title.innerHTML = 'Pick a movie';
   }
 }

@@ -5,27 +5,20 @@
   <h5>Let us curate your perfect movie or TV show - all in a few clicks</h5>
   <br>
   <hr class="divider">
-  <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
+  <%= form_with(model: @query, url: search_path, method: :post) do |form| %
+  
     <%# Medium %>
-    <div class="form-group">
-      <div class="form-buttons">
-        <%= form.button :medium, value: "movie", class: "form-button", type: "button", name: "query[medium]" do %>
-          Movie
-        <% end %>
-        <%= form.button :medium, value: "tvshow", class: "form-button", type: "button", name: "query[medium]" do %>
-          TV Show
+    <h5>Choose Medium:</h5>
+    <br>
+    <%= form.fields_for :medium do |medium_form| %>
+      <div class="row" data-controller="medium-selection" data-medium-selection-target="container">
+        <% Query::MEDIUMS.each do |medium| %>
+          <div class="tag-item col-md-2 mb-4" data-controller="medium-selection" data-medium-selection-target="checkbox">
+            <%= medium_form.check_box medium.to_sym, { class: "tag-selector", style: "display: none;", data: { action: "click->medium-selection#updateSelectedCount" } }, medium %>
+            <%= medium_form.label medium %>
+          </div>
         <% end %>
       </div>
-    </div>
-    <hr class="divider">
-    <%# Medium Test %>
-    <%= form.collection_radio_buttons :medium, ["movie", "tv_show"], :to_s, :titleize,
-      item_wrapper_tag: 'div',
-      item_wrapper_class: 'category-item',
-      class: 'category-selector button-selector' do |b| %>
-      <%= b.label class: 'button-selector' do %>
-        <%= b.radio_button + b.text %>
-      <% end %>
     <% end %>
     <%# Time %>
     <h5> Got time to spare? </h5>
@@ -39,18 +32,16 @@
     <%# Audience %>
     <h5> Who's joining the fun? </h5>
     <br>
-    <div class="form-group">
-      <div class="form-buttons">
-        <%= form.button :audience, value: "justme", class: "form-button", type: "button" do %>
-          Just Me
-        <% end %>
-        <%= form.button :audience, value: "couple", class: "form-button", type: "button" do %>
-          Couple
-        <% end %>
-        <%= form.button :audience, value: "family", class: "form-button", type: "button" do %>
-          Family
+    <%= form.fields_for :audience do |audience_form| %>
+      <div class="row" data-controller="audience-selection" data-medium-selection-target="container">
+        <% Query::AUDIENCE.each do |audience| %>
+          <div class="tag-item col-md-2 mb-4" data-controller="medium-selection" data-medium-selection-target="checkbox">
+            <%= audience_form.check_box audience.to_sym, { class: "tag-selector", style: "display: none;", data: { action: "click->medium-selection#updateSelectedCount" } }, audience %>
+            <%= audience_form.label audience %>
+          </div>
         <% end %>
       </div>
+    <% end %>
     </div>
     <hr class="divider">
     <%# Genre %>
@@ -90,7 +81,7 @@
       <h6> Mood</h6>
       <div class="help-icon">
         <i class="fa-solid fa-circle-question"></i>
-        <div class="help-text">Tell us how you're feeling on a happiness scale</div>
+        <div class="help-text">Tell us how you're feeling on a happiness scale going from "Miserable" to "Over the Moon"</div>
       </div>
     </div>
     <div class="form-group" data-controller="slider">
@@ -103,7 +94,7 @@
       <h6> Intensity</h6>
       <div class="help-icon">
         <i class="fa-solid fa-circle-question"></i>
-        <div class="help-text">Tell us how much you want to focus</div>
+        <div class="help-text">Tell us how much you want to focus on a scale of 1 to 10</div>
       </div>
     </div>
     <div class="form-group" data-controller="slider">
@@ -116,7 +107,7 @@
       <h6> Novelty</h6>
       <div class="help-icon">
         <i class="fa-solid fa-circle-question"></i>
-        <div class="help-text">Tell us how experimental you want our suggestion to be</div>
+        <div class="help-text">Tell us how experimental you want our suggestion to be on a scale of 1 to 10</div>
       </div>
     </div>
     <div class="form-group" data-controller="slider">

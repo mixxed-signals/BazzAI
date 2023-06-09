@@ -95,7 +95,9 @@ class RecommendationsController < ApplicationController
 
   def query_params
     selected_genres = params[:query][:genre].reject { |_, value| value == "0" }.keys.join(", ")
-    params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: selected_genres)
+    selected_medium = params[:query][:medium].reject { |_, value| value == "0" }.keys.join(", ")
+    selected_audience = params[:query][:audience].reject { |_, value| value == "0" }.keys.join(", ")
+    params.require(:query).permit(:user_id, :time, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(medium: selected_medium, audience: selected_audience, genre: selected_genres)
   end
 
   def create_prompt(query, mood)
@@ -116,10 +118,10 @@ class RecommendationsController < ApplicationController
   end
 
   def create_display_prompt(query, mood)
-    my_prompt = "Hey Bazzy! Can you recommend me #{query.medium}? \n \
+    my_prompt = "Hey Bazzy! Can you recommend me #{query.medium}? \ \n
     I only have around #{query.time} minutes to spare, and I'll be watching this movie as \"#{query.audience}\" \n \
     The genres I'm in the mood for are: #{query.genre}. And I'm willing to focus on a level of #{query.intensity}/10. \n \
-    My general mood right now could be descrribed ad \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10. \n \
+    My general mood right now could be described as \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10. \n \
     By the way, I enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}. \n \
     Also, this is a bit more information about myself and my day: #{query.other}."
     return my_prompt

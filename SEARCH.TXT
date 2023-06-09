@@ -97,3 +97,17 @@ Additionally, this is something you should know about my current situation [othe
 Created a form in #search which allows our #create to store the columns of query and return them
 in a prompt on our index page.
 Now we can use and store this prompt as the prompt for chat gpt
+
+
+
+radio buttons
+
+ <%= form.collection_radio_buttons :medium, Query::MEDIUMS, :to_s, :titleize,
+          item_wrapper_tag: 'div',
+          item_wrapper_class: 'category-item',
+          class: 'category-selector' do |b| %>
+          <div class="form-button">
+            <%= b.text %>
+            <%= b.radio_button(class: 'hidden radio-button')%>
+            </div>
+    <% end %>

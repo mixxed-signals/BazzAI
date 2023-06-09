@@ -83,7 +83,7 @@ class RecommendationsController < ApplicationController
     @query = Query.find(params[:id])
     @mood = MOOD[@query.happiness]
     @display_prompt = create_display_prompt(@query, @mood)
-    
+
     @recommendations = Recommendation.where(query_id: @query.id)
   end
 
@@ -184,9 +184,9 @@ class RecommendationsController < ApplicationController
 
   def create_openai_request(query)
     mood = MOOD[@query.happiness]
-    prompt = create_prompt(query, mood)
-    response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
-    # @response = OpenaiService.new(create_prompt(query, mood)).call
+    # prompt = create_prompt(query, mood)
+    # response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
+    response = OpenaiService.new(create_prompt(query, mood)).call
     create_recomedation(create_response_arr(response), query.id)
   end
 end

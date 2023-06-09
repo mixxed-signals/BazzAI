@@ -13,6 +13,12 @@
   padding: 10px 20px;
 }
 
+.form-button input[type="radio"]:checked + label {
+  background: linear-gradient(90deg, pink 0%, pink 100%);
+  border: none;
+}
+
+
 .search-button {
   background: linear-gradient(90deg, pink 0%, $pink 100%);
   width: 170px;
@@ -38,17 +44,13 @@
   transform: scale(0);
 }
 
-.button-selector + label {
-  cursor: pointer;
-  background-color: black;
-  width: 170px;
-  color: white;
-  border-radius: 20px;
-  border: 1px solid rgb(248, 245, 245);
-  padding: 10px 20px;
+.hidden {
+  position: absolute;
+  transform: scale(0);
 }
 
-.button-selector:checked + label {
+
+.radio-button:checked .form-button {
   background: linear-gradient(90deg, pink 0%, $pink 100%);
   border: none;
 }

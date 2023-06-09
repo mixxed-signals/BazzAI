@@ -37,7 +37,6 @@
         <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
         <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
         <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
-        <p><strong>Rotten Tomatoes:</strong> <%= @recommendation.rotten_score %>%</p>
         <p>
           <strong>
             <%= link_to image_tag("https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1150px-IMDB_Logo_2016.svg.png?20200406194337", alt: "IMDb Logo", class: "imdb-logo", style: "width: 10%;"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>

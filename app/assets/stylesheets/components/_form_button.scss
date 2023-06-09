@@ -3,22 +3,6 @@
   gap: 10px;
 }
 
-.form-button {
-  background-color: black;
-  width: 170px;
-  color: white;
-  border-radius: 20px;
-  border: 1px solid rgb(248, 245, 245);
-  padding: 10px 20px;
-  cursor: pointer;
-
-  &:focus,
-  &:active,
-  &.selected {
-    background: linear-gradient(90deg, pink 0%, $pink 100%);
-    border: none;
-  }
-}
 
 .search-button {
   background: linear-gradient(90deg, pink 0%, $pink 100%);
@@ -28,4 +12,62 @@
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+}
+
+.category-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  flex: 0 0 30%;
+}
+
+.category-selector {
+  position: absolute;
+  transform: scale(0);
+}
+
+.button-selector + label {
+  cursor: pointer;
+  background-color: black;
+  width: 170px;
+  color: white;
+  border-radius: 20px;
+  border: 1px solid rgb(248, 245, 245);
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button-selector:checked + label {
+  background: linear-gradient(90deg, pink 0%, $pink 100%);
+  border: none;
+}
+
+
+
+.tag-item {
+  display: inline-block;
+}
+
+.tag-selector {
+  position: absolute;
+  transform: scale(0);
+}
+
+.tag-selector + label {
+  cursor: pointer;
+  background-color: black;
+  width: 170px;
+  color: white;
+  border-radius: 20px;
+  border: 1px solid rgb(248, 245, 245);
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.tag-selector:checked + label {
+  background: linear-gradient(90deg, pink 0%, $pink 100%);
+  border: none;
 }

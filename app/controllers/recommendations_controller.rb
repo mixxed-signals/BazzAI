@@ -2,49 +2,49 @@ class RecommendationsController < ApplicationController
   OMDB_API_KEY = ENV['OMDB_API_KEY']
 
   GENRES = [
-  "Acclaimed",
-  "Action",
-  "Adventure",
-  "Animation",
-  "Anime",
-  "Biography",
-  "Classic",
-  "Comedy",
-  "Crime",
-  "Cult",
-  "Documentary",
-  "Drama",
-  "Experimental",
-  "Family",
-  "Fantasy",
-  "Film-Noir",
-  "Gangster",
-  "History",
-  "Horror",
-  "Independent",
-  "International",
-  "Music",
-  "Mystery",
-  "Musical",
-  "Noir",
-  "Psychological",
-  "Queer",
-  "Reality",
-  "Romance",
-  "Rom-Com",
-  "Satire",
-  "Sci-Fi",
-  "Space",
-  "Sports",
-  "Spy",
-  "Superhero",
-  "Supernatural",
-  "Suspense",
-  "Thriller",
-  "True Crime",
-  "Western",
-  "Youth"
-].freeze
+    "Acclaimed",
+    "Action",
+    "Adventure",
+    "Animation",
+    "Anime",
+    "Biography",
+    "Classic",
+    "Comedy",
+    "Crime",
+    "Cult",
+    "Documentary",
+    "Drama",
+    "Experimental",
+    "Family",
+    "Fantasy",
+    "Film-Noir",
+    "Gangster",
+    "History",
+    "Horror",
+    "Independent",
+    "International",
+    "Music",
+    "Mystery",
+    "Musical",
+    "Noir",
+    "Psychological",
+    "Queer",
+    "Reality",
+    "Romance",
+    "Rom-Com",
+    "Satire",
+    "Sci-Fi",
+    "Space",
+    "Sports",
+    "Spy",
+    "Superhero",
+    "Supernatural",
+    "Suspense",
+    "Thriller",
+    "True Crime",
+    "Western",
+    "Youth"
+  ].freeze
 
   MOOD = [
     "Depressed",
@@ -74,6 +74,11 @@ class RecommendationsController < ApplicationController
     @query.user = @user
     if @query.save
       redirect_to search_result_path(@query)
+      @mood = MOOD[@query.happiness]
+      @prompt = create_prompt(@query, @mood)
+      @response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
+      # @response = OpenaiService.new(create_prompt(@query, @mood)).call
+      create_recomedation(create_response_arr(@response), @query.id)
     else
       render :search
     end
@@ -81,11 +86,6 @@ class RecommendationsController < ApplicationController
 
   def index
     @query = Query.find(params[:id])
-    @mood = MOOD[@query.happiness]
-    @prompt = create_prompt(@query, @mood)
-    @response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
-    # @response = OpenaiService.new(create_prompt(@query, @mood)).call
-    create_recomedation(create_response_arr(@response), @query.id)
     @recommendations = Recommendation.where(query_id: @query.id)
   end
 

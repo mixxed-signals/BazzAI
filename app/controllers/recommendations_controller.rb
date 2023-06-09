@@ -1,5 +1,8 @@
 class RecommendationsController < ApplicationController
-GENRES = [
+
+  OMDB_API_KEY = ENV['OMDB_API_KEY']
+
+  GENRES = [
   "Acclaimed",
   "Action",
   "Adventure",
@@ -83,9 +86,14 @@ GENRES = [
     @query = Query.find(params[:id])
     @mood = MOOD[@query.happiness]
     @prompt = create_prompt(@query, @mood)
-    @response = 'Lion King, The Godfather, The Shawshank Redemption, The Dark Knight, Pulp Fiction, Schindler\'s List'
-    # @response = OpenaiService.new(create_prompt(@query, @mood)).call
-    @response = @response.split(", ")
+    # @response = 'Lion King, The Godfather, The Shawshank Redemption, The Dark Knight, Pulp Fiction, Schindler\'s List'
+    @response = OpenaiService.new(create_prompt(@query, @mood)).call
+    @response = @response.gsub(/\.\d+/, '')
+    @response = @response.gsub(/(\.\d+|\n)/, '')
+    @response = @response.split(". ")
+    @response.each do |movie_name|
+      createRecomedation(movie_name, @query.id)
+    end
     respond_to do |format|
       format.html
       format.js
@@ -108,7 +116,7 @@ GENRES = [
   end
 
   def create_prompt(query, mood)
-    request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separated by ',', and never put the #{query.medium} year or episode, use this information about me:"
+    request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separated by a dot and a space '. ', and never put the #{query.medium} year or episode, use this information about me:"
 
     movie_time = "Movie time: #{query.time} minutes." if query.time.present?
     movie_genre = "Genre: #{query.genre}." if query.genre.present?
@@ -119,7 +127,39 @@ GENRES = [
     recent_movies = "I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
     other = "Other information to filter this movie: #{query.other}." if query.other.present?
 
-    return "#{request_part}\n#{movie_time}\n#{movie_genre}\n#{movie_mood}\n#{movie_audience}\n#{movie_concentrate}\n#{movie_novelty}\n#{recent_movies}\n#{other}"
+    separate_part = "Separate the movies with a dot and a space '. '."
 
+    return "#{request_part}\n#{movie_time}\n#{movie_genre}\n#{movie_mood}\n#{movie_audience}\n#{movie_concentrate}\n#{movie_novelty}\n#{recent_movies}\n#{other}\n#{separate_part}"
   end
+
+  def createRecomedation(movie_name, query)
+    url = "http://www.omdbapi.com/?t=#{movie_name}&apikey=#{OMDB_API_KEY}"
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    data = JSON.parse(response)
+    if data['Response'] == 'False'
+      return
+    else
+      recommendation = Recommendation.new(
+        user: current_user,
+        movie_name: movie_name,
+        imdbID: data['imdbID'],
+        genre: data['Genre'],
+        rating: data['Rated'],
+        image: data['Poster'],
+        awards: data['Awards'],
+        runtime: data['Runtime'],
+        synopsis: data['Plot'],
+        director: data['Director'],
+        writer: data['Writer'],
+        actors: data['Actors'],
+        trailer_link: getlink(data['imdbID']),
+        rotten_score: '99%', # We need to fix this
+        imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
+        query_id: query
+      )
+      recommendation.save!
+    end
+  end
+
 end

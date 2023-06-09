@@ -10,8 +10,8 @@ class AddColumnsToRecommendations < ActiveRecord::Migration[7.0]
     add_column :recommendations, :director, :string
     add_column :recommendations, :writer, :string
     add_column :recommendations, :actors, :string
-    add_column :recommendations, :rotten_score, :float
-    add_column :recommendations, :imdb_score, :float
+    add_column :recommendations, :rotten_score, :string
+    add_column :recommendations, :imdb_score, :string
     add_column :recommendations, :trailer_link, :string
   end
 end

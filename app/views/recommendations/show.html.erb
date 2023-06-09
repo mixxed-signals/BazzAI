@@ -37,14 +37,21 @@
         <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
         <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
         <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
+        <br>
         <p>
           <strong>
             <%= link_to image_tag("https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1150px-IMDB_Logo_2016.svg.png?20200406194337", alt: "IMDb Logo", class: "imdb-logo", style: "width: 10%;"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
           </strong>
         </p>
-        <p>
+        <%# <p>
           <strong>
-            <%= link_to "Find your Movie Mate", "https://moviemate-nikspr.herokuapp.com/", target: "_blank", class: "text-decoration-none" %>
+            <%= link_to "Find your", "https://moviemate-nikspr.herokuapp.com/", target: "_blank", class: "text-decoration-none text-white" %>
+            <strong>
+        </p>
+        <br>
+        <p>
+            <%= link_to image_tag("https://cdn.discordapp.com/attachments/1105433122998325278/1113050154845605941/moviemate-28893-0-removebg-preview.png", alt: "IMDb Logo", class: "imdb-logo", style: "width: 10%;"), "https://moviemate-nikspr.herokuapp.com/", target: "_blank" %>
+          </strong>
           </strong>
         </p>
       </div>

@@ -1,63 +1,54 @@
 <%= render "shared/navbar" %>
 <div class="container my-4 min-vh-100 align-content-center">
   <div class="row">
-    <div class="col-lg-8">
-      <div class="banner trailer iframe">
-        <% if @recommendation.trailer_link.present? %>
-          <iframe width="100%" height="400" src="<%=@recommendation.trailer_link%>" frameborder="0" allowfullscreen></iframe>
-        <% else %>
-          <p>No trailer available</p>
-        <% end %>
+    <% if @recommendation.trailer_link.present? %>
+      <div class="col-lg-12 mb-4">
+        <div class="banner trailer">
+          <div class="trailer-content">
+            <iframe src="<%=@recommendation.trailer_link%>" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
+    <% end %>
 
-<%# <iframe width="420" height="315"
-src="https://www.youtube.com/embed/tgbNymZ7vqY">
-</iframe> %>
-
-      <div class="recommendation-content my-5">
-        <h1><%= "#{@recommendation.movie_name} (2008)" %></h1>
+    <div class="col-lg-8">
+      <div class="recommendation-content">
+        <h1><%= "#{@recommendation.movie_name} (#{@recommendation.year})" %></h1>
         <p><strong>Genres:</strong></p>
-<div class="d-flex flex-wrap my-4">
-  <% @recommendation.genre.split(',').each do |genre| %>
-    <div class="p-1">
-      <%= content_tag :span, genre.strip, class: "form-button" %>
-    </div>
-  <% end %>
-</div>
-
-        <p><strong>Rating:</strong> <%= @recommendation.rating %></p>
-
-        <h2>Synopsis</h2>
-
-        <p><%= @recommendation.trailer_link %></p>
-        <p><%= @recommendation.synopsis %></p>
-
-        <h2>Director</h2>
-        <p><%= @recommendation.director %></p>
-
-        <h2>Writer</h2>
-        <p><%= @recommendation.writer %></p>
-
-        <h2>Actors</h2>
-        <p><%= @recommendation.actors %></p>
-
-        <h2>Awards</h2>
-        <p><%= @recommendation.awards %></p>
-
-        <h2>Runtime</h2>
-        <p><%= @recommendation.runtime %></p>
-
-        <h2>Rotten Score</h2>
-        <p><%= @recommendation.rotten_score %></p>
-
-        <h2>IMDB Score</h2>
-        <p><%= @recommendation.imdb_score %></p>
+        <div class="d-flex flex-wrap my-4">
+          <% @recommendation.genre.split(',').each do |genre| %>
+            <div class="p-1">
+              <%= content_tag :span, genre.strip, class: "genre-button" %>
+            </div>
+          <% end %>
+        </div>
+        <p><strong>Runtime:</strong> <%= @recommendation.runtime %></p>
+        <p><strong>imdB Score:</strong>
+          <% @recommendation.imdb_score.to_i.times do %>
+            ⭐️
+          <% end %>
+          <% (10 - @recommendation.imdb_score.to_i).times do %>
+            ☆
+          <% end %>
+          (<%= @recommendation.imdb_score %> out of 10)
+        </p>
+        <p><strong>Synopsis:</strong> <%= @recommendation.synopsis %></p>
+        <p><strong>Director(s):</strong> <%= @recommendation.director %></p>
+        <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
+        <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
+        <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
+        <p><strong>Rotten Tomatoes:</strong> <%= @recommendation.rotten_score %>%</p>
+        <p>
+          <strong>
+            <%= link_to image_tag("https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1150px-IMDB_Logo_2016.svg.png?20200406194337", alt: "IMDb Logo", class: "imdb-logo", style: "width: 10%;"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
+          </strong>
+        </p>
       </div>
     </div>
 
     <div class="col-lg-4">
       <div class="sticky-poster">
-        <img src="<%= @recommendation.image %>" alt="<%= @recommendation.movie_name %> Poster">
+        <%= link_to image_tag(@recommendation.image, alt: "#{@recommendation.movie_name} Poster"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
       </div>
     </div>
   </div>

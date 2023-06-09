@@ -3,6 +3,7 @@
   <h1>Bazzy's Picks:</h1>
   <p> What you told Bazzy: <em> "<%=  @display_prompt%>" </em> </p>
   <hr class="w-75"/>-
+
   <div class="container d-flex">
     <div data-controller="view-more" class="d-flex flex-column align-item-start justify-content-start gap-4 w-100 my-4">
       <% @recommendations.each_with_index do |movie, index| %>

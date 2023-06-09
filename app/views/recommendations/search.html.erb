@@ -1,14 +1,16 @@
 <%= render "shared/navbar" %>
 <div class="main-container">
   <br>
-  <h5>Guide Bazzy with your mood, available time and genre preferences.</h5>
+  <h5>Guide Bazzy with your mood, available time, and genre preferences.</h5>
   <h5>Let us curate your perfect movie or TV show - all in a few clicks</h5>
   <br>
   <hr class="divider">
-  <%= form_with(model: @query, url: search_path, method: :post) do |form| %
-  
+  <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
+
+    <%# Mediums Checkbox %>
+
     <%# Medium %>
-    <h5>Choose Medium:</h5>
+    <h5>Choose a medium:</h5>
     <br>
     <%= form.fields_for :medium do |medium_form| %>
       <div class="row" data-controller="medium-selection" data-medium-selection-target="container">
@@ -21,16 +23,17 @@
       </div>
     <% end %>
     <%# Time %>
-    <h5> Got time to spare? </h5>
+    <h5>Got time to spare?</h5>
     <br>
     <div class="form-group" data-controller="slider">
-      <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range", data: {action: "change->slider#updateValue", slider_target: "input"}, name: "query[time]"%>
+      <%= form.range_field :time, min: 15, max: 120, step: 5, class: "custom-range", data: { action: "change->slider#updateValue", slider_target: "input" }, name: "query[time]" %>
       <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
       <span>min</span>
     </div>
     <hr class="divider">
+
     <%# Audience %>
-    <h5> Who's joining the fun? </h5>
+    <h5>Who's joining the fun?</h5>
     <br>
     <%= form.fields_for :audience do |audience_form| %>
       <div class="row" data-controller="audience-selection" data-medium-selection-target="container">
@@ -42,7 +45,7 @@
         <% end %>
       </div>
     <% end %>
-    </div>
+
     <hr class="divider">
     <%# Genre %>
     <h5> Favor Any Genres? </h5>
@@ -61,108 +64,113 @@
         <% end %>
       </div>
     <% end %>
-    <%# Year %>
-    <div>
-      <h5> Publishing Year</h5>
-      <div class="d-flex">
-        <div class="form-group w-25">
-          <%= form.label :year_from, "From:" %>
-          <%= form.number_field :year_after, value: 1888, in: 1888..2024, step: 1, class: 'form-control', placeholder: 1888 %>
-        </div>
-        <div class="form-group w-25">
-          <%= form.label :year_before, "To:" %>
-          <%= form.number_field :year_before, value: 2024, in: 1888..2024, step: 1, class: 'form-control', placeholder: 2024 %>
-        </div>
-      </div>
+    
+<%# Year %>
+<div>
+  <h5>Publishing Year</h5>
+  <div class="d-flex">
+    <div class="form-group w-25">
+      <%= form.label :year_from, "From:" %>
+      <%= form.number_field :year_after, value: 1888, in: 1888..2024, step: 1, class: 'form-control', placeholder: 1888 %>
     </div>
-    <hr class="divider">
-    <%# Mood %>
-    <div>
-      <h6> Mood</h6>
-      <div class="help-icon">
-        <i class="fa-solid fa-circle-question"></i>
-        <div class="help-text">Tell us how you're feeling on a happiness scale going from "Miserable" to "Over the Moon"</div>
-      </div>
+    <div class="form-group w-25">
+      <%= form.label :year_before, "To:" %>
+      <%= form.number_field :year_before, value: 2024, in: 1888..2024, step: 1, class: 'form-control', placeholder: 2024 %>
     </div>
-    <div class="form-group" data-controller="slider">
-      <%= form.range_field :happiness, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
-      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
-      <span> / 10</span>
+  </div>
+</div>
+<hr class="divider">
+
+<%# Mood %>
+<div>
+  <h6>Mood</h6>
+  <div class="help-icon">
+    <i class="fa-solid fa-circle-question"></i>
+    <div class="help-text">Tell us how you're feeling on a happiness scale going from "Miserable" to "Over the Moon"</div>
+  </div>
+</div>
+<div class="form-group" data-controller="slider">
+  <%= form.range_field :happiness, min: 0, max: 10, data: { action: "change->slider#updateValue", slider_target: "input" } %>
+  <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+  <span>/ 10</span>
+</div>
+
+<%# Intensity %>
+<div>
+  <h6>Intensity</h6>
+  <div class="help-icon">
+    <i class="fa-solid fa-circle-question"></i>
+    <div class="help-text">Tell us how much you want to focus on a scale of 1 to 10</div>
+  </div>
+</div>
+<div class="form-group" data-controller="slider">
+  <%= form.range_field :intensity, min: 0, max: 10, data: { action: "change->slider#updateValue", slider_target: "input" } %>
+  <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+  <span>/ 10</span>
+</div>
+
+<%# Novelty %>
+<div>
+  <h6>Novelty</h6>
+  <div class="help-icon">
+    <i class="fa-solid fa-circle-question"></i>
+    <div class="help-text">Tell us how experimental you want our suggestion to be on a scale of 1 to 10</div>
+  </div>
+</div>
+<div class="form-group" data-controller="slider">
+  <%= form.range_field :novelty, min: 0, max: 10, data: { action: "change->slider#updateValue", slider_target: "input" } %>
+  <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+  <span>/ 10</span>
+</div>
+
+<%# Recent Movies %>
+<hr class="divider">
+<h5>Any movies you recently enjoyed?</h5>
+<%# Movie search start %>
+<div data-controller="movie-search">
+  <div class="form-group">
+    <%= form.label :recent_movie, "Search for a movie:" %>
+    <%= form.text_field :search_movie, class: 'form-control', data: { action: 'keyup->movie-search#handleInput' } %>
+  </div>
+  <br>
+  <div class="search-boxes-container" data-movie-search-target="results">
+  </div>
+  <br>
+  <div class="search-boxes-container select-movies">
+    <div class="search-boxes-container-results-card" data-movie-search-target="selectedOne" data-action="click->movie-search#removeMovie">
+      <%= form.text_field :recent_movie1, value: "", class: "d-none", data: { target: "movie-search.recentOne" } %>
+      <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
+      <p class="search-boxes-container-results-card-infos">
+        Pick a movie
+      </p>
     </div>
-    <%# Intensity %>
-    <div>
-      <h6> Intensity</h6>
-      <div class="help-icon">
-        <i class="fa-solid fa-circle-question"></i>
-        <div class="help-text">Tell us how much you want to focus on a scale of 1 to 10</div>
-      </div>
+    <div class="search-boxes-container-results-card" data-movie-search-target="selectedTwo" data-action="click->movie-search#removeMovie">
+      <%= form.text_field :recent_movie2, value: "", class: "d-none", data: { target: "movie-search.recentTwo" } %>
+      <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
+      <p class="search-boxes-container-results-card-infos">
+        Just start to type..
+      </p>
     </div>
-    <div class="form-group" data-controller="slider">
-      <%= form.range_field :intensity, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
-      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
-      <span> / 10</span>
+    <div class="search-boxes-container-results-card" data-movie-search-target="selectedThree" data-action="click->movie-search#removeMovie">
+      <%= form.text_field :recent_movie3, value: "", class: "d-none", data: { target: "movie-search.recentThree" } %>
+      <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
+      <p class="search-boxes-container-results-card-infos">
+        Choose up to three!
+      </p>
     </div>
-    <%# Novelty %>
-    <div>
-      <h6> Novelty</h6>
-      <div class="help-icon">
-        <i class="fa-solid fa-circle-question"></i>
-        <div class="help-text">Tell us how experimental you want our suggestion to be on a scale of 1 to 10</div>
-      </div>
-    </div>
-    <div class="form-group" data-controller="slider">
-      <%= form.range_field :novelty, min: 0, max: 10, data: {action: "change->slider#updateValue", slider_target: "input"} %>
-      <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
-      <span> / 10</span>
-    </div>
-    <%# Recent Movies %>
-    <hr class="divider">
-    <h5>Any movies you recently enjoyed?</h5>
-    <%# Movie search start %>
-    <div data-controller="movie-search">
-      <div class="form-group">
-        <%= form.label :recent_movie, "Search for a movie:" %>
-        <%= form.text_field :search_movie, class: 'form-control' , data: { action: 'keyup->movie-search#handleInput'}%>
-      </div>
-      <br>
-      <div class="search-boxes-container" data-movie-search-target="results">
-      </div>
-      <br>
-      <div class="search-boxes-container select-movies">
-        <div class="search-boxes-container-results-card" data-movie-search-target="selectedOne" data-action="click->movie-search#removeMovie">
-          <%= form.text_field :recent_movie1, value: "", class: "d-none", data: { target: "movie-search.recentOne"} %>
-          <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
-          <p class="search-boxes-container-results-card-infos">
-            Pick a movie
-          </p>
-        </div>
-        <div class="search-boxes-container-results-card" data-movie-search-target="selectedTwo" data-action="click->movie-search#removeMovie">
-          <%= form.text_field :recent_movie2, value: "", class: "d-none",  data: { target: "movie-search.recentTwo"} %>
-          <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
-          <p class="search-boxes-container-results-card-infos">
-            Just start to type..
-          </p>
-        </div>
-        <div class="search-boxes-container-results-card" data-movie-search-target="selectedThree" data-action="click->movie-search#removeMovie">
-          <%= form.text_field :recent_movie3, value: "", class: "d-none",  data: { target: "movie-search.recentThree"} %>
-          <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
-          <p class="search-boxes-container-results-card-infos">
-            Choose up to three!
-          </p>
-        </div>
-      </div>
-    </div>
-    <%# Movie search end %>
-    <br>
-    <%# Other %>
-    <hr class="divider">
-    <h5> Anyhting else we should know? </h5>
-    <p> Feel free to write your heart out</p>
-    <br>
-    <div class="form-group">
-      <%= form.text_area :other, class: "form-text-area" %>
-    </div>
-    <hr class="divider">
-    <%= form.submit "Search", class: "search-button"%>
-  <% end %>
+  </div>
+</div>
+<%# Movie search end %>
+<br>
+<%# Other %>
+<hr class="divider">
+<h5>Anything else we should know?</h5>
+<p>Feel free to write your heart out</p>
+<br>
+<div class="form-group">
+  <%= form.text_area :other, class: "form-text-area" %>
+</div>
+<hr class="divider">
+<%= form.submit "Search", class: "search-button" %>
+<% end %>
 </div>

@@ -2,33 +2,29 @@
 <div class="container my-4 min-vh-100 align-content-center">
   <div class="row">
     <div class="col-lg-8">
-      <div class="banner trailer iframe">
-        <% if @recommendation.trailer_link.present? %>
-          <iframe width="100%" height="400" src="<%=@recommendation.trailer_link%>" frameborder="0" allowfullscreen></iframe>
-        <% else %>
+      <% if @recommendation.trailer_link.present? %>
+        <div class="banner trailer mb-4">
+          <div class="trailer-content">
+            <iframe src="<%=@recommendation.trailer_link%>" frameborder="0" allowfullscreen></iframe>
+          </div>
           <p>No trailer available</p>
+        </div>
+        <% else %>
         <% end %>
-      </div>
-
-<%# <iframe width="420" height="315"
-src="https://www.youtube.com/embed/tgbNymZ7vqY">
-</iframe> %>
-
-      <div class="recommendation-content my-5">
-        <h1><%= "#{@recommendation.movie_name} (2008)" %></h1>
+      <div class="recommendation-content">
+        <h1><%= "#{@recommendation.movie_name} (#{@recommendation.year})" %></h1>
         <p><strong>Genres:</strong></p>
-<div class="d-flex flex-wrap my-4">
-  <% @recommendation.genre.split(',').each do |genre| %>
-    <div class="p-1">
-      <%= content_tag :span, genre.strip, class: "form-button" %>
-    </div>
-  <% end %>
-</div>
+        <div class="d-flex flex-wrap my-4">
+          <% @recommendation.genre.split(',').each do |genre| %>
+            <div class="p-1">
+              <%= content_tag :span, genre.strip, class: "form-button" %>
+            </div>
+          <% end %>
+        </div>
 
         <p><strong>Rating:</strong> <%= @recommendation.rating %></p>
 
         <h2>Synopsis</h2>
-
         <p><%= @recommendation.trailer_link %></p>
         <p><%= @recommendation.synopsis %></p>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_151656) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_09_085648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_151656) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "imdbID"
+    t.string "genre"
+    t.string "rating"
+    t.string "image"
+    t.string "awards"
+    t.string "runtime"
+    t.text "synopsis"
+    t.string "director"
+    t.string "writer"
+    t.string "actors"
+    t.float "rotten_score"
+    t.float "imdb_score"
+    t.string "trailer_link"
     t.index ["query_id"], name: "index_recommendations_on_query_id"
     t.index ["user_id"], name: "index_recommendations_on_user_id"
   end

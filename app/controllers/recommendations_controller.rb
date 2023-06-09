@@ -90,6 +90,7 @@ class RecommendationsController < ApplicationController
   end
 
   def show
+    @recommendation = Recommendation.find(params[:id])
   end
 
   private
@@ -133,8 +134,7 @@ class RecommendationsController < ApplicationController
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
     return nil if data['trailer'].nil?
-
-    "https://www.youtube.com/watch?v=#{data['trailer']['youtube_video_id']}"
+    "https://www.youtube.com/embed/#{data['trailer']['youtube_video_id']}"
   end
 
   def create_response_arr(response)

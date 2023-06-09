@@ -1,0 +1,30 @@
+.trailer {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (change as needed) */
+  border-radius: 15px;
+  border: 1px solid #ebebeb;
+  overflow: hidden;
+}
+
+.trailer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* CSS class for the sticky poster */
+.sticky-poster {
+  position: sticky;
+  top: 95px; /* Adjust the top position as needed */
+}
+
+.sticky-poster img {
+  height: 100%;
+  width: auto;
+  border-radius: 15px;
+  border: 1px solid #ebebeb;
+}

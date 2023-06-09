@@ -69,16 +69,11 @@ class RecommendationsController < ApplicationController
 
   def create
     @genres = GENRES
-    @user = current_user
     @query = Query.new(query_params)
-    @query.user = @user
+    @query.user = current_user
     if @query.save
       redirect_to search_result_path(@query)
-      @mood = MOOD[@query.happiness]
-      @prompt = create_prompt(@query, @mood)
-      @response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
-      # @response = OpenaiService.new(create_prompt(@query, @mood)).call
-      create_recomedation(create_response_arr(@response), @query.id)
+      create_openai_request(@query)
     else
       render :search
     end
@@ -100,7 +95,6 @@ class RecommendationsController < ApplicationController
     params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: selected_genres)
   end
 
-
   def create_prompt(query, mood)
     request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separated by a dot and a space '. ', and never put the #{query.medium} year or episode, use this information about me:"
 
@@ -120,36 +114,13 @@ class RecommendationsController < ApplicationController
 
   def create_recomedation(response, query)
     movies = response.map do |movie_name|
-      data = create_request(movie_name)
+      data = create_omdb_request(movie_name)
       break if data['Response'] == 'False'
 
       recommendation = create_recomedation_class(movie_name, data, query)
       recommendation.save
     end
     return movies
-  end
-
-  def get_link(imdb_id)
-    url = "https://api.kinocheck.de/movies?imdb_id=#{imdb_id}&categories=trailer"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    data = JSON.parse(response)
-    return nil if data['trailer'].nil?
-    "https://www.youtube.com/embed/#{data['trailer']['youtube_video_id']}"
-  end
-
-  def create_response_arr(response)
-    response = response.gsub(/\.\d+/, '')
-    response = response.gsub(/(\.\d+|\n)/, '')
-    response = response.split(". ")
-    return response
-  end
-
-  def create_request(movie_name)
-    url = "http://www.omdbapi.com/?t=#{movie_name}&apikey=#{OMDB_API_KEY}"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    return JSON.parse(response)
   end
 
   def create_recomedation_class(movie_name, data, query)
@@ -167,10 +138,42 @@ class RecommendationsController < ApplicationController
       director: data['Director'],
       writer: data['Writer'],
       actors: data['Actors'],
-      trailer_link: get_link(data['imdbID']),
+      trailer_link: get_trailer_link(data['imdbID']),
       rotten_score: '99%', # We need to fix this
       imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
       query_id: query
     )
+  end
+
+  def get_trailer_link(imdb_id)
+    url = "https://api.kinocheck.de/movies?imdb_id=#{imdb_id}&categories=trailer"
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    data = JSON.parse(response)
+    return nil if data['trailer'].nil?
+
+    "https://www.youtube.com/embed/#{data['trailer']['youtube_video_id']}"
+  end
+
+  def create_response_arr(response)
+    response = response.gsub(/\.\d+/, '')
+    response = response.gsub(/(\.\d+|\n)/, '')
+    response = response.split(". ")
+    return response
+  end
+
+  def create_omdb_request(movie_name)
+    url = "http://www.omdbapi.com/?t=#{movie_name}&apikey=#{OMDB_API_KEY}"
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    return JSON.parse(response)
+  end
+
+  def create_openai_request(query)
+    mood = MOOD[@query.happiness]
+    prompt = create_prompt(query, mood)
+    response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
+    # @response = OpenaiService.new(create_prompt(query, mood)).call
+    create_recomedation(create_response_arr(response), query.id)
   end
 end

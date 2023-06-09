@@ -177,12 +177,13 @@ class RecommendationsController < ApplicationController
     return response
   end
 
-  def create_omdb_request(movie_name)
-    url = "http://www.omdbapi.com/?t=#{movie_name}&apikey=#{OMDB_API_KEY}"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    return JSON.parse(response)
-  end
+def create_omdb_request(movie_name)
+  formatted_movie_name = movie_name.gsub(' ', '+')
+  url = "http://www.omdbapi.com/?t=#{formatted_movie_name}&apikey=#{OMDB_API_KEY}"
+  uri = URI(url)
+  response = Net::HTTP.get(uri)
+  return JSON.parse(response)
+end
 
   def create_openai_request(query)
     mood = MOOD[@query.happiness]

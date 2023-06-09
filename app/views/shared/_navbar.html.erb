@@ -10,11 +10,9 @@
         <% if user_signed_in? %>
           <li class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= image_tag "https://cdn.discordapp.com/attachments/1105433122998325278/1109114959243255958/niklas_movie_poster_representation_horror_movie_genre_b7939019-7bbf-4a2e-ab79-63527af56a2a.png", class: "avatar", alt: "dropdown menu" %>
+              <%= image_tag "bazzy_avatar.png", class: "avatar", alt: "dropdown menu" %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>

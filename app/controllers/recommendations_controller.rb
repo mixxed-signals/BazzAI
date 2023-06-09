@@ -186,6 +186,7 @@ class RecommendationsController < ApplicationController
 
   def create_openai_request(query)
     mood = MOOD[@query.happiness]
+    # prompt = create_prompt(query, mood)
     # response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
     response = OpenaiService.new(create_prompt(query, mood)).call
     create_recomedation(create_response_arr(response), query.id)

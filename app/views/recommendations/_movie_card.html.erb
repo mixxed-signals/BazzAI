@@ -1,6 +1,6 @@
 <div class="movie-card">
   <button data-view-more-target="remove" data-action="click->view-more#remove" data-index="<%= index %>" class="movie-card-delete-button">X</button>
-  <%= image_tag movie['image'], alt: movie['movie_name']  %>
+  <%= image_tag movie['image'] ? movie['image'] : '', alt: movie['movie_name']  %>
   <div class="movie-card-infos-container">
     <h1 class="movie-card-infos-container-title"><%= movie['movie_name'] %></h1>
     <p class="movie-card-infos-container-description"><%= movie['synopsis'] %></p>

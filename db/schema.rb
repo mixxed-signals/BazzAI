@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_085648) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_09_110420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_085648) do
     t.float "rotten_score"
     t.float "imdb_score"
     t.string "trailer_link"
+    t.string "year"
     t.index ["query_id"], name: "index_recommendations_on_query_id"
     t.index ["user_id"], name: "index_recommendations_on_user_id"
   end

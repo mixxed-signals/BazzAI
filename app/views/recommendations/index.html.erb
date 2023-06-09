@@ -4,18 +4,14 @@
   <hr class="w-75"/>-
   <div class="container d-flex">
     <div data-controller="view-more" class="d-flex flex-column align-item-start justify-content-start gap-4 w-100 my-4">
-      <% @response.each_with_index do |movie, index| %>
+      <% @recommendations.each_with_index do |movie, index| %>
         <% if index < 3 %>
           <div data-view-more-target="cards" data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3">
-            <input data-omdb-request-target="movie_name" class="d-none" type="hidden" value="<%= movie %>">
-            <input data-omdb-request-target="omdb" class="d-none" type="hidden" value="<%= @omdb_key %>">
-            <%= render "recommendations/movie_card", index: index %>
+            <%= render "recommendations/movie_card",movie: movie, index: index %>
           </div>
         <% else %>
           <div data-view-more-target="cards" data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3 d-none">
-            <input data-omdb-request-target="movie_name" class="d-none" type="hidden" value="<%= movie %>">
-            <input data-omdb-request-target="omdb" class="d-none" type="hidden" value="<%= @omdb_key %>">
-            <%= render "recommendations/movie_card", index: index %>
+            <%= render "recommendations/movie_card", movie: movie, index: index %>
           </div>
         <% end %>
       <% end %>

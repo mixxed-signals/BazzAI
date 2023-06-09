@@ -1,5 +1,4 @@
 class RecommendationsController < ApplicationController
-
   OMDB_API_KEY = ENV['OMDB_API_KEY']
 
   GENRES = [
@@ -73,7 +72,6 @@ class RecommendationsController < ApplicationController
     @user = current_user
     @query = Query.new(query_params)
     @query.user = @user
-    # raise
     if @query.save
       redirect_to search_result_path(@query)
     else
@@ -82,23 +80,13 @@ class RecommendationsController < ApplicationController
   end
 
   def index
-    @omdb_key = omdb_key
     @query = Query.find(params[:id])
     @mood = MOOD[@query.happiness]
     @prompt = create_prompt(@query, @mood)
     @response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
     # @response = OpenaiService.new(create_prompt(@query, @mood)).call
-    @response = @response.gsub(/\.\d+/, '')
-    @response = @response.gsub(/(\.\d+|\n)/, '')
-    @response = @response.split(". ")
-    @response.each do |movie_name|
-      createRecomedation(movie_name, @query.id)
-    end
-    respond_to do |format|
-      format.html
-      format.js
-      format.json
-    end
+    create_recomedation(create_response_arr(@response), @query.id)
+    @recommendations = Recommendation.where(query_id: @query.id)
   end
 
   def show
@@ -106,10 +94,6 @@ class RecommendationsController < ApplicationController
   end
 
   private
-
-  def omdb_key
-    ENV.fetch('OMDB_API_KEY')
-  end
 
   def query_params
     genres = Array(params[:query][:genre]).join(", ") # Convert the selected genres to a single string stored in column genre
@@ -133,38 +117,19 @@ class RecommendationsController < ApplicationController
     return "#{request_part}\n#{movie_time}\n#{movie_genre}\n#{movie_mood}\n#{movie_audience}\n#{movie_concentrate}\n#{movie_novelty}\n#{recent_movies}\n#{other}\n#{separate_part}"
   end
 
-  def createRecomedation(movie_name, query)
-    url = "http://www.omdbapi.com/?t=#{movie_name}&apikey=#{OMDB_API_KEY}"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    data = JSON.parse(response)
-    if data['Response'] == 'False'
-      return
-    else
-      recommendation = Recommendation.new(
-        user: current_user,
-        movie_name: movie_name,
-        imdbID: data['imdbID'],
-        genre: data['Genre'],
-        rating: data['Rated'],
-        image: data['Poster'],
-        awards: data['Awards'],
-        runtime: data['Runtime'],
-        synopsis: data['Plot'],
-        director: data['Director'],
-        writer: data['Writer'],
-        actors: data['Actors'],
-        trailer_link: getlink(data['imdbID']),
-        rotten_score: '99%', # We need to fix this
-        imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
-        query_id: query
-      )
-      recommendation.save!
+  def create_recomedation(response, query)
+    movies = response.map do |movie_name|
+      data = create_request(movie_name)
+      break if data['Response'] == 'False'
+
+      recommendation = create_recomedation_class(movie_name, data, query)
+      recommendation.save
     end
+    return movies
   end
 
-  def getlink(imdbID)
-    url = "https://api.kinocheck.de/movies?imdb_id=#{imdbID}&categories=trailer"
+  def get_link(imdb_id)
+    url = "https://api.kinocheck.de/movies?imdb_id=#{imdb_id}&categories=trailer"
     uri = URI(url)
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
@@ -172,4 +137,39 @@ class RecommendationsController < ApplicationController
     "https://www.youtube.com/embed/#{data['trailer']['youtube_video_id']}"
   end
 
+  def create_response_arr(response)
+    response = response.gsub(/\.\d+/, '')
+    response = response.gsub(/(\.\d+|\n)/, '')
+    response = response.split(". ")
+    return response
+  end
+
+  def create_request(movie_name)
+    url = "http://www.omdbapi.com/?t=#{movie_name}&apikey=#{OMDB_API_KEY}"
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    return JSON.parse(response)
+  end
+
+  def create_recomedation_class(movie_name, data, query)
+    Recommendation.new(
+      user: current_user,
+      movie_name: movie_name,
+      imdbID: data['imdbID'],
+      genre: data['Genre'],
+      year: data['Year'],
+      rating: data['Rated'],
+      image: data['Poster'],
+      awards: data['Awards'],
+      runtime: data['Runtime'],
+      synopsis: data['Plot'],
+      director: data['Director'],
+      writer: data['Writer'],
+      actors: data['Actors'],
+      trailer_link: get_link(data['imdbID']),
+      rotten_score: '99%', # We need to fix this
+      imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
+      query_id: query
+    )
+  end
 end

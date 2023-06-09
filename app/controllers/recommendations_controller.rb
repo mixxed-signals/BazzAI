@@ -96,9 +96,10 @@ class RecommendationsController < ApplicationController
   private
 
   def query_params
-    genres = Array(params[:query][:genre]).join(", ") # Convert the selected genres to a single string stored in column genre
-    params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: genres)
+    selected_genres = params[:query][:genre].reject { |_, value| value == "0" }.keys.join(", ")
+    params.require(:query).permit(:user_id, :medium, :time, :audience, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(genre: selected_genres)
   end
+
 
   def create_prompt(query, mood)
     request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separated by a dot and a space '. ', and never put the #{query.medium} year or episode, use this information about me:"

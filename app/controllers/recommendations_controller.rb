@@ -1,5 +1,7 @@
 class RecommendationsController < ApplicationController
   OMDB_API_KEY = ENV['OMDB_API_KEY']
+  X_RAPIDAPI_KEY = ENV['X_RAPIDAPI_KEY']
+  X_RAPIDAPI_HOST = ENV['X_RAPIDAPI_HOST']
 
   GENRES = [
     "Acclaimed",
@@ -89,6 +91,7 @@ class RecommendationsController < ApplicationController
 
   def show
     @recommendation = Recommendation.find(params[:id])
+    get_streaming_availability(@recommendation.imdbID)
   end
 
   private
@@ -169,6 +172,18 @@ class RecommendationsController < ApplicationController
 
     "https://www.youtube.com/embed/#{data['trailer']['youtube_video_id']}"
   end
+
+def get_streaming_availability(imdbID)
+  url = URI("https://streaming-availability.p.rapidapi.com/v2/get/basic?country=de&imdb_id=#{imdbID}&output_language=en")
+  request = Net::HTTP::Get.new(url)
+  request["X-RapidAPI-Key"] = X_RAPIDAPI_KEY
+  request["X-RapidAPI-Host"] = X_RAPIDAPI_HOST
+  response = Net::HTTP.start(url.hostname, url.port, use_ssl: true) do |http|
+    http.request(request)
+  end
+  @data = JSON.parse(response.body)
+end
+
 
   def create_response_arr(response)
     response = response.gsub(/\.\d+/, '')

@@ -150,9 +150,8 @@ class RecommendationsController < ApplicationController
 
 
   def create_more_like_this_prompt(query, mood)
+
     my_prompt = "Can you recommend me 3 more #{query.medium} like #{@recommendations.last.movie_name}?"
-
-
     return my_prompt
   end
 

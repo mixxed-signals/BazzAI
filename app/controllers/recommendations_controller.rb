@@ -130,16 +130,22 @@ class RecommendationsController < ApplicationController
   end
 
   def create_display_prompt(query, mood)
-    "Hey Bazzy! Can you recommend me #{query.medium}?\n" \
-    "I only have around #{query.time} minutes to spare, and I'll be watching this movie as \"#{query.audience}\"\n" \
-    "The genres I'm in the mood for are: #{query.genre}. And I'm willing to focus on a level of #{query.intensity}/10.\n" \
-    "My general mood right now could be described as \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10.\n" \
-    "By the way, I enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" \
-    "Also, this is a bit more information about myself and my day: #{query.other}."
+    prompt = ""
+
+    prompt += "Hey! Seems like you're looking for a #{query.medium} recommendation.\n" if query.medium.present?
+    prompt += "You only have around #{query.time} minutes to spare, and you'll be watching this movie as \"#{query.audience}\".\n" if query.time.present? && query.audience.present?
+    prompt += "You're in the mood for #{query.genre}, and your general mood right now could be described as \"#{mood}\".\n" if query.genre.present? && mood.present?
+    prompt += "You feel like watching something experimental on a level of #{query.novelty}/10.\n" if query.novelty.present?
+    prompt += "I'll take into account that you enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
+    prompt += "And that this is how you're feeling today: #{query.other}.\n" if query.other.present?
+
+    prompt
   end
 
+
+
   def create_more_like_this_prompt(query, mood)
-    my_prompt = "Can you recommend me 3 more #{query.medium} like #{recommendation.movie_name}?"
+    my_prompt = "Can you recommend me 3 more #{query.medium}?"
     return my_prompt
   end
 

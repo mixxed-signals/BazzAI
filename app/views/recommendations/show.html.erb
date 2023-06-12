@@ -44,8 +44,8 @@
         <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
         <% streaming_info = @data['result']['streamingInfo'] %>
         <% if streaming_info.present? %>
-        <div class="d-flex flex-wrap my-4 justify-content-between">
           <div class="section">
+            Subscriptions:
             <div class="d-flex flex-wrap my-4">
               <% subscriptions = [] %>
               <% streaming_info.each do |country, platforms| %>
@@ -56,6 +56,8 @@
                         <% image = image_tag "Apple.png", class: "better-streaming-logo" %>
                       <% when 'disney' %>
                         <% image = image_tag "Disney.png", class: "better-streaming-logo" %>
+                      <% when 'mubi' %>
+                        <% image = image_tag "mubi.png", class: "better-streaming-logo" %>
                       <% when 'netflix' %>
                         <% image = image_tag "Netflix.png", class: "better-streaming-logo" %>
                       <% when 'prime' %>
@@ -68,8 +70,9 @@
                         <% image = image_tag "Peacock.png", class: "better-streaming-logo" %>
                       <% when 'youtube' %>
                         <% image = image_tag "YouTube.png", class: "better-streaming-logo" %>
+                      <% when 'wow' %>
+                        <% image = image_tag "wow.png", class: "better-streaming-logo" %>
                     <% end %>
-                    <% has_subscription = false %>
                     <% options.each do |option| %>
                       <% if option['type'] == 'subscription' %>
                         <% has_subscription = true %>
@@ -79,16 +82,13 @@
                         <% availability_text = "Subscription (#{availability_quality}):" %>
                         <% if link.present? && !subscriptions.include?(platform)  %>
                           <div class="platform">
-                            <%= link_to image, link, target: "_blank"%>
+                            <%= link_to image, link, target: "_blank" %>
                             <br>
-                            <%= link_to "Watch Now", link, target: "_blank", class: "text-decoration-none text-white"%>
+                            <%= link_to "Watch Now", link, target: "_blank", class: "text-decoration-none text-white" %>
                           </div>
                           <% subscriptions << platform %>
                         <% end %>
                       <% end %>
-                    <% end %>
-                    <% if has_subscription %>
-                      <% break %>
                     <% end %>
                   <% end %>
                 <% end %>
@@ -96,6 +96,7 @@
             </div>
           </div>
           <div class="section">
+            Rentals:
             <div class="d-flex flex-wrap my-4">
               <% rentals = [] %>
               <% streaming_info.each do |country, platforms| %>
@@ -106,6 +107,8 @@
                         <% image = image_tag "Apple.png", class: "better-streaming-logo" %>
                       <% when 'disney' %>
                         <% image = image_tag "Disney.png", class: "better-streaming-logo" %>
+                      <% when 'mubi' %>
+                        <% image = image_tag "mubi.png", class: "better-streaming-logo" %>
                       <% when 'netflix' %>
                         <% image = image_tag "Netflix.png", class: "better-streaming-logo" %>
                       <% when 'prime' %>
@@ -118,8 +121,9 @@
                         <% image = image_tag "Peacock.png", class: "better-streaming-logo" %>
                       <% when 'youtube' %>
                         <% image = image_tag "YouTube.png", class: "better-streaming-logo" %>
+                      <% when 'wow' %>
+                        <% image = image_tag "wow.png", class: "better-streaming-logo" %>
                     <% end %>
-                    <% has_rent = false %>
                     <% options.each do |option| %>
                       <% if option['type'] == 'rent' %>
                         <% has_rent = true %>
@@ -139,15 +143,13 @@
                         <% end %>
                       <% end %>
                     <% end %>
-                    <% if has_rent %>
-                      <% break %>
-                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             </div>
           </div>
           <div class="section">
+            Purchases:
             <div class="d-flex flex-wrap my-4">
               <% purchases = [] %>
               <% streaming_info.each do |country, platforms| %>
@@ -158,6 +160,8 @@
                         <% image = image_tag "Apple.png", class: "better-streaming-logo" %>
                       <% when 'disney' %>
                         <% image = image_tag "Disney.png", class: "better-streaming-logo" %>
+                      <% when 'mubi' %>
+                        <% image = image_tag "mubi.png", class: "better-streaming-logo" %>
                       <% when 'netflix' %>
                         <% image = image_tag "Netflix.png", class: "better-streaming-logo" %>
                       <% when 'prime' %>
@@ -170,8 +174,9 @@
                         <% image = image_tag "Peacock.png", class: "better-streaming-logo" %>
                       <% when 'youtube' %>
                         <% image = image_tag "YouTube.png", class: "better-streaming-logo" %>
+                      <% when 'wow' %>
+                        <% image = image_tag "wow.png", class: "better-streaming-logo" %>
                     <% end %>
-                    <% has_buy = false %>
                     <% options.each do |option| %>
                       <% if option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') %>
                         <% has_buy = true %>
@@ -191,20 +196,16 @@
                         <% end %>
                       <% end %>
                     <% end %>
-                    <% if has_buy %>
-                      <% break %>
-                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             </div>
           </div>
-        </div>
         <% end %>
         <br>
         <br>
         <p>
-          <%= image_tag"bazzy_avatar.png", alt: "cutest mascot in the wolrd", class: "bazzy-display", id: "bazzy-index"%>
+          <%= image_tag "bazzy_avatar.png", alt: "cutest mascot in the world", class: "bazzy-display", id: "bazzy-index" %>
         </p>
       </div>
     </div>

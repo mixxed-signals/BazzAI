@@ -85,6 +85,9 @@ class RecommendationsController < ApplicationController
     @display_prompt = create_display_prompt(@query, @mood)
 
     @recommendations = Recommendation.where(query_id: @query.id)
+    @more_prompt = create_more_like_this_prompt(@query, @mood)
+    @more_recommendations = create_more_like_this_openai_request(@query)
+
   end
 
   def show
@@ -97,7 +100,8 @@ class RecommendationsController < ApplicationController
     selected_genres = params[:query][:genre].reject { |_, value| value == "0" }.keys.join(", ")
     selected_medium = params[:query][:medium].reject { |_, value| value == "0" }.keys.join(", ")
     selected_audience = params[:query][:audience].reject { |_, value| value == "0" }.keys.join(", ")
-    params.require(:query).permit(:user_id, :time, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(medium: selected_medium, audience: selected_audience, genre: selected_genres)
+    selected_platforms = params[:query][:streaming_platform].reject { |_, value| value == "0" }.keys.join(", ")
+    params.require(:query).permit(:user_id, :time, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(medium: selected_medium, audience: selected_audience, genre: selected_genres, streaming_platform: selected_platforms)
   end
 
   def create_prompt(query, mood)
@@ -110,9 +114,10 @@ class RecommendationsController < ApplicationController
     movie_concentrate = "Level of concentration I need to watch the movie: #{query.intensity}/10." if query.intensity.present?
     movie_novelty = "I want the movie to be experimental and non-mainstream on a level: #{query.novelty}/10." if query.novelty.present?
     recent_movies = "I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3} and I enjoyed them. Take them into account but don't suggest them to me again." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
+    streaming_platform = "I want to watch this movie on: #{query.streaming_platform}." if query.streaming_platform.present?
     other = "Other information about myself and my day to filter this movie: #{query.other}." if query.other.present?
 
-    separate_part = "Separate the movies with a dot and a space '. '."
+    separate_part = "Separate the titles with a dot and a space '. '."
 
     return "#{request_part}\n#{movie_time}\n#{movie_genre}\n#{movie_mood}\n#{movie_audience}\n#{movie_concentrate}\n#{movie_novelty}\n#{recent_movies}\n#{other}\n#{separate_part}"
   end
@@ -124,6 +129,11 @@ class RecommendationsController < ApplicationController
     My general mood right now could be described as \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10. \n \
     By the way, I enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}. \n \
     Also, this is a bit more information about myself and my day: #{query.other}."
+    return my_prompt
+  end
+
+  def create_more_like_this_prompt(query, mood)
+    my_prompt = "Can you recommend me 3 more #{query.medium} like #{recommendation.movie_name}?"
     return my_prompt
   end
 
@@ -190,6 +200,12 @@ end
     # prompt = create_prompt(query, mood)
     # response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
     response = OpenaiService.new(create_prompt(query, mood)).call
+    create_recomedation(create_response_arr(response), query.id)
+  end
+
+  def create_more_like_this_openai_request(query)
+    mood = MOOD[@query.happiness]
+    response = OpenaiService.new(create_more_like_this_prompt(query, mood)).call
     create_recomedation(create_response_arr(response), query.id)
   end
 end

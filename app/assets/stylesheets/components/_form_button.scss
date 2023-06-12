@@ -81,3 +81,42 @@
   background: linear-gradient(90deg, pink 0%, $pink 100%);
   border: none;
 }
+
+.streaming-item {
+  display: inline-block;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.streaming-logo {
+  margin-right: 0.5rem;
+  width: 90px;
+  height: 50px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.streaming-selector {
+  position: absolute;
+  /* transform: scale(0); */
+}
+
+.streaming-selector + label {
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 600px;
+  height: 100px;
+  font-size: 12px;
+  text-align: left;
+  padding: 10px 10px 30px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: black;
+  color: black;
+}
+
+.streaming-selector:checked + label .streaming-logo {
+  filter: none;
+}

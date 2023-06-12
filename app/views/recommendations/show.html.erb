@@ -24,8 +24,6 @@
         </div>
         <p><strong>Runtime:</strong> <%= @recommendation.runtime %></p>
         <p><strong>imdB Score:</strong>
-        <%# available: %>
-        <%#  %>
           <% @recommendation.imdb_score.to_i.times do %>
             ⭐️
           <% end %>
@@ -39,7 +37,6 @@
         <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
         <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
         <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
-        <%= @data %>
         <% streaming_info = @data['result']['streamingInfo'] %>
         <% if streaming_info.present? %>
           <p><strong>Streaming:</strong></p>

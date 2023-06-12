@@ -6,7 +6,7 @@
       <% end %>
       <% if action_name == 'show' %>
         <%= link_to search_result_path(@recommendation.query.id), class: "back-button" do %>
-          Back
+          <i class="fa-solid fa-arrow-left"></i>
         <% end %>
       <% end %>
     </div>

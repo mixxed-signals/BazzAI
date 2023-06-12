@@ -78,20 +78,19 @@
 
 .back-button {
   color: #ffffff;
-  padding: 6px 24px;
-  border: #ffffff 1px solid;
-  font-weight: 600;
+  padding: 6px 12px;
+  font-weight: 800;
   margin-left: 10px;
   // background: linear-gradient(144.91deg, $pink 19.04%, $yellow 93.8%);
   border-radius: 9999px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-
+  font-size: 16px;
   text-decoration: none;
-  font-weight: 300;
+  font-weight: 900;
   transition: all 0.2s ease-in-out;
   &:hover {
-    background: linear-gradient(289.37deg, $pink 0%, $yellow 100%);
+    border: #ffffff 1px solid;
     color: #ffffff;
-    font-weight: 400;
+    font-weight: 600;
   }
 }

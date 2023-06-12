@@ -86,6 +86,7 @@ class RecommendationsController < ApplicationController
 
     @recommendations = Recommendation.where(query_id: @query.id)
     @more_prompt = create_more_like_this_prompt(@query, @mood)
+    @more_recommendations = create_more_like_this_openai_request(@query)
 
   end
 
@@ -202,9 +203,8 @@ end
     create_recomedation(create_response_arr(response), query.id)
   end
 
-  def create_more_like_this_openai_request(query, recommendation)
+  def create_more_like_this_openai_request(query)
     mood = MOOD[@query.happiness]
-    prompt = create_more_like_this_prompt(query, mood)
     response = OpenaiService.new(create_more_like_this_prompt(query, mood)).call
     create_recomedation(create_response_arr(response), query.id)
   end

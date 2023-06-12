@@ -24,6 +24,8 @@
         </div>
         <p><strong>Runtime:</strong> <%= @recommendation.runtime %></p>
         <p><strong>imdB Score:</strong>
+        <%# available: %>
+        <%#  %>
           <% @recommendation.imdb_score.to_i.times do %>
             ⭐️
           <% end %>

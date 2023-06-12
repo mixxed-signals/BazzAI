@@ -85,6 +85,9 @@ class RecommendationsController < ApplicationController
     @display_prompt = create_display_prompt(@query, @mood)
 
     @recommendations = Recommendation.where(query_id: @query.id)
+    @more_prompt = create_more_like_this_prompt(@query, @mood)
+    @more_recommendations = create_more_like_this_openai_request(@query)
+
   end
 
   def show
@@ -100,6 +103,7 @@ class RecommendationsController < ApplicationController
       :other, :audience, :medium
     ).tap do |query_params|
       query_params[:genre] = sanitize_genre_params(params[:query][:genre])
+      query_params[:streaming_platform] = sanitize_genre_params(params[:query][:streaming_platform])
     end
   end
 
@@ -133,6 +137,11 @@ class RecommendationsController < ApplicationController
     "My general mood right now could be described as \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10.\n" \
     "By the way, I enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" \
     "Also, this is a bit more information about myself and my day: #{query.other}."
+  end
+
+  def create_more_like_this_prompt(query, mood)
+    my_prompt = "Can you recommend me 3 more #{query.medium} like #{recommendation.movie_name}?"
+    return my_prompt
   end
 
   def create_recomedation(response, query)
@@ -197,6 +206,12 @@ class RecommendationsController < ApplicationController
   def create_openai_request(query)
     mood = MOOD[query.happiness]
     response = OpenaiService.new(create_prompt(query, mood)).call
+    create_recomedation(create_response_arr(response), query.id)
+  end
+
+  def create_more_like_this_openai_request(query)
+    mood = MOOD[@query.happiness]
+    response = OpenaiService.new(create_more_like_this_prompt(query, mood)).call
     create_recomedation(create_response_arr(response), query.id)
   end
 end

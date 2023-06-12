@@ -97,39 +97,46 @@ class RecommendationsController < ApplicationController
   private
 
   def query_params
-    selected_genres = params[:query][:genre].reject { |_, value| value == "0" }.keys.join(", ")
-    selected_medium = params[:query][:medium].reject { |_, value| value == "0" }.keys.join(", ")
-    selected_audience = params[:query][:audience].reject { |_, value| value == "0" }.keys.join(", ")
-    selected_platforms = params[:query][:streaming_platform].reject { |_, value| value == "0" }.keys.join(", ")
-    params.require(:query).permit(:user_id, :time, :year_after, :year_before, :year_option, :happiness, :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3, :other).merge(medium: selected_medium, audience: selected_audience, genre: selected_genres, streaming_platform: selected_platforms)
+    params.require(:query).permit(
+      :user_id, :time, :year_after, :year_before, :year_option, :happiness,
+      :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3,
+      :other, :audience, :medium
+    ).tap do |query_params|
+      query_params[:genre] = sanitize_genre_params(params[:query][:genre])
+      query_params[:streaming_platform] = sanitize_genre_params(params[:query][:streaming_platform])
+    end
+  end
+
+  def sanitize_genre_params(genre_params)
+    genre_params.reject { |_, value| value == "0" }.keys.join(", ")
   end
 
   def create_prompt(query, mood)
-    request_part = "Show me a list of 10 real #{query.medium}, just the titles in a string separated by a dot and a space '. ', and never put the #{query.medium} year or episode, use this information about me:"
+    prompt_parts = [
+      "Show me a list of 10 real #{query.medium}, just the titles in a string separated by a dot and a space '. ',",
+      "and never put the #{query.medium} year or episode, use this information about me:",
+      ("Movie time: #{query.time} minutes." if query.time.present?),
+      ("Genres: #{query.genre}." if query.genre.present?),
+      ("I want a movie that makes me feel: #{mood}." if mood.present?),
+      ("I'm going to watch this movie as: #{query.audience}." if query.audience.present?),
+      ("Level of concentration I need to watch the movie: #{query.intensity}/10." if query.intensity.present?),
+      ("I want the movie to be experimental and non-mainstream on a level: #{query.novelty}/10." if query.novelty.present?),
+      ("I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3} and I enjoyed them."),
+      ("Take them into account but don't suggest them to me again." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?),
+      ("Other information about myself and my day to filter this movie: #{query.other}." if query.other.present?),
+      "Separate the movies with a dot and a space '. '."
+    ]
 
-    movie_time = "Movie time: #{query.time} minutes." if query.time.present?
-    movie_genre = "Genres: #{query.genre}." if query.genre.present?
-    movie_mood = "I want a movie that makes me feel: #{mood}." if mood.present?
-    movie_audience = "I'm going to watch this movie as: #{query.audience}." if query.audience.present?
-    movie_concentrate = "Level of concentration I need to watch the movie: #{query.intensity}/10." if query.intensity.present?
-    movie_novelty = "I want the movie to be experimental and non-mainstream on a level: #{query.novelty}/10." if query.novelty.present?
-    recent_movies = "I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3} and I enjoyed them. Take them into account but don't suggest them to me again." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
-    streaming_platform = "I want to watch this movie on: #{query.streaming_platform}." if query.streaming_platform.present?
-    other = "Other information about myself and my day to filter this movie: #{query.other}." if query.other.present?
-
-    separate_part = "Separate the titles with a dot and a space '. '."
-
-    return "#{request_part}\n#{movie_time}\n#{movie_genre}\n#{movie_mood}\n#{movie_audience}\n#{movie_concentrate}\n#{movie_novelty}\n#{recent_movies}\n#{other}\n#{separate_part}"
+    prompt_parts.compact.join("\n")
   end
 
   def create_display_prompt(query, mood)
-    my_prompt = "Hey Bazzy! Can you recommend me #{query.medium}? \ \n
-    I only have around #{query.time} minutes to spare, and I'll be watching this movie as \"#{query.audience}\" \n \
-    The genres I'm in the mood for are: #{query.genre}. And I'm willing to focus on a level of #{query.intensity}/10. \n \
-    My general mood right now could be described as \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10. \n \
-    By the way, I enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}. \n \
-    Also, this is a bit more information about myself and my day: #{query.other}."
-    return my_prompt
+    "Hey Bazzy! Can you recommend me #{query.medium}?\n" \
+    "I only have around #{query.time} minutes to spare, and I'll be watching this movie as \"#{query.audience}\"\n" \
+    "The genres I'm in the mood for are: #{query.genre}. And I'm willing to focus on a level of #{query.intensity}/10.\n" \
+    "My general mood right now could be described as \"#{mood}\", and I'm feeling like watching something experimental on a level of #{query.novelty}/10.\n" \
+    "By the way, I enjoyed these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" \
+    "Also, this is a bit more information about myself and my day: #{query.other}."
   end
 
   def create_more_like_this_prompt(query, mood)
@@ -140,12 +147,11 @@ class RecommendationsController < ApplicationController
   def create_recomedation(response, query)
     movies = response.map do |movie_name|
       data = create_omdb_request(movie_name)
-      break if data['Response'] == 'False'
+      next if data.nil?
 
-      recommendation = create_recomedation_class(movie_name, data, query)
-      recommendation.save
+      create_recomedation_class(movie_name, data, query)&.tap(&:save)
     end
-    return movies
+    movies.compact
   end
 
   def create_recomedation_class(movie_name, data, query)
@@ -175,30 +181,30 @@ class RecommendationsController < ApplicationController
     uri = URI(url)
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
-    return nil if data['trailer'].nil?
-
-    "https://www.youtube.com/embed/#{data['trailer']['youtube_video_id']}"
+    data['trailer']&.fetch('youtube_video_id', nil) { |trailer| "https://www.youtube.com/embed/#{trailer['youtube_video_id']}" }
+  rescue StandardError => e
+    Rails.logger.error("Error fetching movie details: #{e.message}")
+    nil
   end
 
   def create_response_arr(response)
-    response = response.gsub(/\.\d+/, '')
-    response = response.gsub(/(\.\d+|\n)/, '')
-    response = response.split(". ")
-    return response
+    response.gsub(/(\A[\d.,]+|\n)/, '').split(". ").map { |movie| movie.gsub(/\A[\d.,]+/, '').strip }
   end
 
-def create_omdb_request(movie_name)
-  formatted_movie_name = movie_name.gsub(' ', '+')
-  url = "http://www.omdbapi.com/?t=#{formatted_movie_name}&apikey=#{OMDB_API_KEY}"
-  uri = URI(url)
-  response = Net::HTTP.get(uri)
-  return JSON.parse(response)
-end
+  def create_omdb_request(movie_name)
+    formatted_movie_name = URI.encode_www_form_component(movie_name)
+    url = "http://www.omdbapi.com/?t=#{formatted_movie_name}&apikey=#{OMDB_API_KEY}"
+    uri = URI(url)
+
+    response = Net::HTTP.get(uri)
+    JSON.parse(response)
+  rescue StandardError => e
+    Rails.logger.error("Error fetching movie details: #{e.message}")
+    nil
+  end
 
   def create_openai_request(query)
-    mood = MOOD[@query.happiness]
-    # prompt = create_prompt(query, mood)
-    # response = 'Lion King. The Godfather. The Shawshank Redemption. The Dark Knight. Pulp Fiction. Schindler\'s List'
+    mood = MOOD[query.happiness]
     response = OpenaiService.new(create_prompt(query, mood)).call
     create_recomedation(create_response_arr(response), query.id)
   end

@@ -1,12 +1,14 @@
+<% if movie['movie_name'] != nil %>
 <div class="movie-card">
   <button data-view-more-target="remove" data-action="click->view-more#remove" data-index="<%= index %>" class="movie-card-delete-button">X</button>
-  <%= image_tag movie['image'] ? movie['image'] : '', alt: movie['movie_name']  %>
+  <%= image_tag movie['image'] && movie['image'] != 'N/A' ? movie['image'] : '', alt: movie['movie_name']  %>
   <div class="movie-card-infos-container">
-    <h1 class="movie-card-infos-container-title"><%= movie['movie_name'] %></h1>
-    <p class="movie-card-infos-container-description"><%= movie['synopsis'] %></p>
+    <h1 class="movie-card-infos-container-title"><%= movie['movie_name'] %> ( <%= movie['year'] %> )</h1>
+    <p class="movie-card-infos-container-description"><%= movie['synopsis'] && movie['synopsis'] != 'N/A' ? movie['synopsis'] : "The #{ movie['movie_name'] } no have description for now!" %></p>
     <div class="movie-card-infos-container-buttons-container">
       <%= link_to "Learn more", "/search/#{@query.id}/recommendations/#{movie.id}", class: "movie-card-infos-container-buttons-container-button"%>
       <%= link_to "More like this", '', class: "movie-card-infos-container-buttons-container-button"%>
     </div>
   </div>
 </div>
+<% end %>

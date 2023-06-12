@@ -1,7 +1,18 @@
 <%= render "shared/navbar" %>
 <div class="container my-2 p-0 min-vh-100">
-  <h1>Bazzy's Picks:</h1>
-  <p> What you told Bazzy: <em> "<%=  @display_prompt%>" </em> </p>
+
+  <div class="prompt-container">
+    <div class="bazzy-display">
+      <%= image_tag "bazzy_avatar.png", alt: "Show case of BazzAI", id: "bazzy-index" %>
+    </div>
+
+    <div data-controller="typewriter" class="typewriter-container">
+      <div data-typewriter-target="text">
+        <em>"<%= @display_prompt %>"</em>
+      </div>
+    </div>
+  </div>
+
   <hr class="w-75"/>
   <div class="container d-flex">
     <div data-controller="view-more" class="d-flex flex-column align-item-start justify-content-start gap-4 w-100 my-4">

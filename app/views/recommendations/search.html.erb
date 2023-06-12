@@ -172,7 +172,7 @@
           <div class="row">
             <% Query::STREAMING_PLATFORMS.each do |streaming_platform| %>
               <div class="streaming-item col-md-1 mb-4">
-                <%= streaming_platform_form.check_box streaming_platform.to_sym, { class: "streaming-selector", disabled: false}, streaming_platform %>
+                <%= streaming_platform_form.check_box streaming_platform.to_sym, { class: "streaming-selector"}, streaming_platform %>
                 <label for="<%= streaming_platform %>">
                   <%= image_tag "#{streaming_platform}.png", class: "streaming-logo" %>
                 </label>

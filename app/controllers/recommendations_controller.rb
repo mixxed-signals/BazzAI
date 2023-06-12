@@ -87,7 +87,6 @@ class RecommendationsController < ApplicationController
     @recommendations = Recommendation.where(query_id: @query.id)
     @more_prompt = create_more_like_this_prompt(@query, @mood)
     @more_recommendations = create_more_like_this_openai_request(@query)
-
   end
 
   def show

@@ -85,8 +85,8 @@ class RecommendationsController < ApplicationController
     @display_prompt = create_display_prompt(@query, @mood)
 
     @recommendations = Recommendation.where(query_id: @query.id)
-    @more_prompt = create_more_like_this_prompt(@query, @mood)
-    @more_recommendations = create_more_like_this_openai_request(@query)
+    # @more_prompt = create_more_like_this_prompt(@query, @mood)
+    # @more_recommendations = create_more_like_this_openai_request(@query)
   end
 
   def show
@@ -101,18 +101,20 @@ class RecommendationsController < ApplicationController
       :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3,
       :other, :audience, :medium
     ).tap do |query_params|
-      query_params[:genre] = sanitize_genre_params(params[:query][:genre])
-      query_params[:streaming_platform] = sanitize_genre_params(params[:query][:streaming_platform])
+      query_params[:genre] = sanitize_params(params[:query][:genre])
+      query_params[:streaming_platform] = sanitize_params(params[:query][:streaming_platform])
     end
   end
 
-  def sanitize_genre_params(genre_params)
-    genre_params.reject { |_, value| value == "0" }.keys.join(", ")
+  def sanitize_params(params)
+    params.reject { |_, value| value == "0" }.keys.join(", ")
   end
 
   def create_prompt(query, mood)
     prompt_parts = [
-      "Show me a list of 10 real #{query.medium}, just the titles in a string separated by a dot and a space '. ',",
+      "Show me a list of 10 real #{query.medium}, just the titles of the movie in a hash format like:{\"movie1\":\"Movie name\", ...}.",
+      "Always list real movies, NEVER your preference.",
+      "And, always use double quotion to wrap the movie name but use single quotes in the movie names.",
       "and never put the #{query.medium} year or episode, use this information about me:",
       ("Movie time: #{query.time} minutes." if query.time.present?),
       ("Genres: #{query.genre}." if query.genre.present?),
@@ -120,12 +122,11 @@ class RecommendationsController < ApplicationController
       ("I'm going to watch this movie as: #{query.audience}." if query.audience.present?),
       ("Level of concentration I need to watch the movie: #{query.intensity}/10." if query.intensity.present?),
       ("I want the movie to be experimental and non-mainstream on a level: #{query.novelty}/10." if query.novelty.present?),
-      ("I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3} and I enjoyed them."),
+      "I watched these movies recently: #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3} and I enjoyed them.",
       ("Take them into account but don't suggest them to me again." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?),
       ("Other information about myself and my day to filter this movie: #{query.other}." if query.other.present?),
-      "Separate the movies with a dot and a space '. '."
+      ("I want to watch this movie on: #{query.streaming_platform}." if query.streaming_platform.present?)
     ]
-
     prompt_parts.compact.join("\n")
   end
 
@@ -138,25 +139,25 @@ class RecommendationsController < ApplicationController
     "Also, this is a bit more information about myself and my day: #{query.other}."
   end
 
-  def create_more_like_this_prompt(query, mood)
+  def create_more_like_this_prompt(query)
     my_prompt = "Can you recommend me 3 more #{query.medium} like #{recommendation.movie_name}?"
     return my_prompt
   end
 
   def create_recomedation(response, query)
-    movies = response.map do |movie_name|
-      data = create_omdb_request(movie_name)
+    p response
+    response.each do |_key, value|
+      data = create_omdb_request(value)
       next if data.nil?
 
-      create_recomedation_class(movie_name, data, query)&.tap(&:save)
+      create_recomedation_class(data, query)&.tap(&:save)
     end
-    movies.compact
   end
 
-  def create_recomedation_class(movie_name, data, query)
+  def create_recomedation_class(data, query)
     Recommendation.new(
       user: current_user,
-      movie_name: movie_name,
+      movie_name: data['Title'],
       imdbID: data['imdbID'],
       genre: data['Genre'],
       year: data['Year'],
@@ -186,12 +187,12 @@ class RecommendationsController < ApplicationController
     nil
   end
 
-  def create_response_arr(response)
-    response.gsub(/(\A[\d.,]+|\n)/, '').split(". ").map { |movie| movie.gsub(/\A[\d.,]+/, '').strip }
+  def create_response_hash(response)
+    JSON.parse(response)
   end
 
   def create_omdb_request(movie_name)
-    formatted_movie_name = URI.encode_www_form_component(movie_name)
+    formatted_movie_name = movie_name.gsub(" ", '+')
     url = "http://www.omdbapi.com/?t=#{formatted_movie_name}&apikey=#{OMDB_API_KEY}"
     uri = URI(url)
 
@@ -205,12 +206,12 @@ class RecommendationsController < ApplicationController
   def create_openai_request(query)
     mood = MOOD[query.happiness]
     response = OpenaiService.new(create_prompt(query, mood)).call
-    create_recomedation(create_response_arr(response), query.id)
+    create_recomedation(create_response_hash(response), query.id)
   end
 
   def create_more_like_this_openai_request(query)
     mood = MOOD[@query.happiness]
     response = OpenaiService.new(create_more_like_this_prompt(query, mood)).call
-    create_recomedation(create_response_arr(response), query.id)
+    create_recomedation(create_response_hash(response), query.id)
   end
 end

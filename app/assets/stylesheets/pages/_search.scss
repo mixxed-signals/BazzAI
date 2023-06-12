@@ -24,10 +24,11 @@ body {
   background-color: transparent;
   width: 80%; /* Adjust the width as needed */
   margin: 0 auto; /* Center the container horizontally */
-  padding: 20px; /* Add some padding for spacing */
+  padding: 40px; /* Add some padding for spacing */
 
-  max-width: 1200px; /* Set a maximum width if desired */
+  max-width: 1900px; /* Set a maximum width if desired */
   box-sizing: border-box; /* Include padding and border in the total width */
+
 }
 
 .search-boxes-container {
@@ -81,4 +82,51 @@ body {
     justify-content: center;
     min-height: 220px;
   }
+}
+
+h5 {
+  font-size: 40px; /* Increase the font size for <h5> tags */
+}
+
+h6 {
+  font-size: 23px; /* Increase the font size for <h5> tags */
+}
+
+.text {
+  font-size: 23px; /* Increase the font size for <h5> tags */
+}
+
+
+.tag-item {
+  width: 205px; /* increase the width of the genre buttons */
+  height: 90px; /* Increase the height of the genre buttons */
+  font-size: 18px; /* Increase the font size of the genre buttons */
+  justify-content: center;
+  margin-right: 5px; /* Reduce the right margin between the buttons */
+
+  text-align: center; /* Center the text horizontally */
+  display: flex; /* Enable flexbox for vertical centering */
+  align-items: center; /* Center the text vertically */
+}
+
+.form-group label {
+  font-size: 23px; /* Change the font size of the label */
+  padding-bottom: 10px;
+
+}
+
+.form-group span {
+  font-size: 20px;
+}
+
+.row-g {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px; /* Reduce the bottom margin between rows of buttons */
+}
+
+.search-button {
+  width: 200px; /* Increase the width of the button */
+  height: 50px; /* Increase the height of the button */
+  font-size: 21px; /* Adjust the font size if needed */
 }

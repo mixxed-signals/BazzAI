@@ -1,14 +1,14 @@
 <%= render "shared/navbar" %>
 <div class="main-container">
   <br>
-  <h5>Guide Bazzy with your mood, available time, and genre preferences.</h5>
-  <h5>Let us curate your perfect movie or TV show - all in a few clicks</h5>
+  <%# <h5>Guide Bazzy with your mood, available time, and genre preferences.</h5> %>
+  <h5>Let Bazzy curate your perfect movie or TV show - all in a few clicks</h5>
   <br>
   <hr class="divider">
   <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
 
     <%# Mediums Checkbox %>
-
+    <br>
     <%# Medium %>
     <h5>Choose a medium:</h5>
     <br>
@@ -22,6 +22,7 @@
         <% end %>
       </div>
     <% end %>
+    <br>
     <%# Time %>
     <h5>Got time to spare?</h5>
     <br>
@@ -31,8 +32,8 @@
       <span>min</span>
     </div>
     <hr class="divider">
-
     <%# Audience %>
+    <br>
     <h5>Who's joining the fun?</h5>
     <br>
     <%= form.fields_for :audience do |audience_form| %>
@@ -51,9 +52,9 @@
     <h5> Favor Any Genres? </h5>
     <br>
     <%= form.fields_for :genre do |genre_form| %>
-      <div class="row"  data-controller="genre-selection" data-genre-selection-target="container">
+      <div class="row-g row"  data-controller="genre-selection" data-genre-selection-target="container">
         <% @genres.each_slice(6) do |genres_row| %>
-          <div class="row">
+          <div class="row-g row">
             <% genres_row.each do |genre| %>
               <div class="tag-item col-md-2 mb-4" data-controller="genre-selection" data-genre-selection-target="checkbox">
                 <%= genre_form.check_box genre.to_sym, { class: "tag-selector", style: "display: none;" , data: { action: "click->genre-selection#updateSelectedCount" }}, genre %>
@@ -64,7 +65,7 @@
         <% end %>
       </div>
     <% end %>
-    
+
 <%# Year %>
 <div>
   <h5>Publishing Year</h5>
@@ -83,6 +84,9 @@
 
 <%# Mood %>
 <div>
+  <%# <br> %>
+  <h5>How do you feel?</h5>
+  <br>
   <h6>Mood</h6>
   <div class="help-icon">
     <i class="fa-solid fa-circle-question"></i>
@@ -165,7 +169,7 @@
 <%# Other %>
 <hr class="divider">
 <h5>Anything else we should know?</h5>
-<p>Feel free to write your heart out</p>
+<p class="text" >Feel free to write your heart out</p>
 <br>
 <div class="form-group">
   <%= form.text_area :other, class: "form-text-area" %>

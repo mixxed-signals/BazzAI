@@ -39,13 +39,37 @@
         <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
         <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
         <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
-
+        <%= @data %>
         <% streaming_info = @data['result']['streamingInfo'] %>
         <% if streaming_info.present? %>
           <p><strong>Streaming:</strong></p>
           <% streaming_info.each do |country, platforms| %>
 
             <% platforms.each do |platform, options| %>
+              <% case platform
+              when "apple"
+
+              when "disney"
+
+              when "hbo"
+
+              when "hulu"
+
+              when "netflix"
+
+              when "paramount"
+
+              when "peacock"
+
+              when "prime"
+
+              when "tubi"
+
+              when "wow"
+
+              else
+
+              end %>
             <p><strong><%= platform %></strong></p>
               <% options.each do |option| %>
                 <% link = option['link'] %>

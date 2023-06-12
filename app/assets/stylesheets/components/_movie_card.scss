@@ -38,8 +38,9 @@
     position: absolute;
 
     &:hover {
-      background: rgb(146, 0, 0);
+      background: rgb(0, 0, 0);
       color: #fff;
+      border: #fff 1px solid;
     }
   }
 

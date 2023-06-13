@@ -353,8 +353,8 @@ class RecommendationsController < ApplicationController
 
   def create_openai_request(query)
     mood = MOOD[query.happiness]
-    response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
-    # response = OpenaiService.new(create_prompt(query, mood)).call
+    # response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
+    response = OpenaiService.new(create_prompt(query, mood)).call
     create_recomedation(create_response_hash(response), query.id)
   end
 

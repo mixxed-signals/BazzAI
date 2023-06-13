@@ -91,9 +91,23 @@ class RecommendationsController < ApplicationController
     # @more_recommendations = create_more_like_this_openai_request(@query)
   end
 
+  def destroy
+    @recommendation = Recommendation.find(params[:id])
+    @recommendation.destroy
+    redirect_to search_result_path(@recommendation.query)
+  end
+
   def show
     @recommendation = Recommendation.find(params[:id])
     get_streaming_availability(@recommendation.imdbID)
+    @watch_list = WatchList.find_by_id(1)
+
+    if @watch_list
+      @watch_list = WatchList.find(1)
+    else
+      @watch_list = WatchList.new
+    end
+    @watch_list.user = current_user
   end
 
   private
@@ -145,8 +159,6 @@ class RecommendationsController < ApplicationController
 
     prompt
   end
-
-
 
   def create_more_like_this_prompt(query, mood)
 

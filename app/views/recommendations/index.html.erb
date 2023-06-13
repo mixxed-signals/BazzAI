@@ -1,33 +1,28 @@
 <%= render "shared/navbar" %>
 <div class="container my-2 p-0 min-vh-100">
-
   <div class="prompt-container">
     <div class="bazzy-display">
       <%= image_tag "bazzy_avatar.png", alt: "Show case of BazzAI", id: "bazzy-index" %>
     </div>
-
     <div data-controller="typewriter" class="typewriter-container">
       <div data-typewriter-target="text">
         <em>"<%= @display_prompt %>"</em>
       </div>
     </div>
   </div>
-
   <hr class="w-75"/>
   <div class="container d-flex">
     <div data-controller="view-more" class="d-flex flex-column align-item-start justify-content-start gap-4 w-100 my-4">
       <% @recommendations.each_with_index do |movie, index| %>
-
-          <% if index < 3 %>
-            <div data-view-more-target="cards" data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3">
-              <%= render "recommendations/movie_card",movie: movie, index: index %>
-            </div>
-          <% else %>
-            <div data-view-more-target="cards" data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3 d-none">
-              <%= render "recommendations/movie_card", movie: movie, index: index %>
-            </div>
-          <% end %>
-
+        <% if index < 3 %>
+          <div data-view-more-target="cards" data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3">
+            <%= render "recommendations/movie_card",movie: movie, index: index %>
+          </div>
+        <% else %>
+          <div data-view-more-target="cards" data-controller="omdb-request" class="d-flex flex-column align-item-center justify-content-center gap-3 d-none">
+            <%= render "recommendations/movie_card", movie: movie, index: index %>
+          </div>
+        <% end %>
       <% end %>
       <div class="w-100 d-flex flex-wrap gap-3">
         <button data-view-more-target="more" data-action="click->view-more#more" class="view-button">View more</button>

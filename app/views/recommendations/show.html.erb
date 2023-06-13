@@ -9,8 +9,17 @@
           </div>
         </div>
       </div>
+    <% elsif %>
+      <div class="col-lg-12 mb-4">
+        <div class="banner trailer">
+          <div class="trailer-content">
+            <iframe src="<%="https://www.youtube.com/embed/#{@data['result']['youtubeTrailerVideoId']}"%>" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    <% else %>
+    <div></div>
     <% end %>
-
     <div class="col-lg-8">
       <div class="recommendation-content">
         <h1><%= "#{@recommendation.movie_name} (#{@recommendation.year})" %></h1>
@@ -42,186 +51,87 @@
         <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
         <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
         <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
-        <% streaming_info = @data['result']['streamingInfo'] %>
+        <br>
+        <% streaming_info = @data['result']['streamingInfo']['de'] %>
         <% if streaming_info.present? %>
-          <% subscriptions_present = false %>
-          <% streaming_info.each do |country, platforms| %>
-            <% platforms.each do |platform, options| %>
-              <% if options.any? { |option| option['type'] == 'subscription' } %>
-                <% subscriptions_present = true %>
-                <% break %>
-              <% end %>
-            <% end %>
-            <% break if subscriptions_present %>
-          <% end %>
-          <% if subscriptions_present %>
-            <div class="section gap-3">
-              <div class="d-flex flex-wrap my-4 gap-3">
-                <% subscriptions = [] %>
-                <% streaming_info.each do |country, platforms| %>
-                  <% platforms.each do |platform, options| %>
-                    <% if options.any? { |option| option['type'] == 'subscription' } %>
-                      <% image = case platform
-                        when 'apple'
-                          image_tag "Apple.png", class: "better-streaming-logo"
-                        when 'disney'
-                          image_tag "Disney.png", class: "better-streaming-logo"
-                        when 'mubi'
-                          image_tag "mubi.png", class: "better-streaming-logo"
-                        when 'netflix'
-                          image_tag "Netflix.png", class: "better-streaming-logo"
-                        when 'prime'
-                          image_tag "Amazon Prime.png", class: "better-streaming-logo"
-                        when 'hbo'
-                          image_tag "HBO Max.png", class: "better-streaming-logo"
-                        when 'hulu'
-                          image_tag "Hulu.png", class: "better-streaming-logo"
-                        when 'peacock'
-                          image_tag "Peacock.png", class: "better-streaming-logo"
-                        when 'youtube'
-                          image_tag "YouTube.png", class: "better-streaming-logo"
-                        when 'wow'
-                          image_tag "wow.png", class: "better-streaming-logo"
-                        end
-                      %>
-                      <% options.each do |option| %>
-                        <% if option['type'] == 'subscription' %>
-                          <% has_subscription = true %>
-                          <% link = option['link'] %>
-                          <% price = option['price'] %>
-                          <% availability_quality = option['quality'] %>
-                          <% availability_text = "Subscription (#{availability_quality}):" %>
-                          <% if link.present? && !subscriptions.include?(platform)  %>
-                            <div class="platform">
-                              <%= link_to image, link, target: "_blank" %>
-                              <br>
-                              <%= link_to "Watch", link, target: "_blank", class: "watch-button" %>
-                            </div>
-                            <% subscriptions << platform %>
-                          <% end %>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                <% end %>
+          <div class="section gap-5">
+              <div>
+              <p>Watch:</p>
               </div>
+              <% subscriptions = [] %>
+              <% streaming_info.each do |platform, options| %>
+                <% if options.any? { |option| option['type'] == 'subscription' } %>
+                  <% image = "#{platform}.png" %>
+                  <% options.each do |option| %>
+                    <% if option['type'] == 'subscription' %>
+                      <% link = option['link'] %>
+                      <% price = option['price'] %>
+                      <% availability_quality = option['quality'] %>
+                      <% availability_text = "Subscription (#{availability_quality}):" %>
+                      <% if link.present? && !subscriptions.include?(platform) %>
+                        <div class="platform">
+                          <%= link_to image_tag(image, class: 'streaming-logo2'), link, target: "_blank" %>
+                        </div>
+                        <% subscriptions << platform %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
             </div>
-          <% end %>
-          <div class="section gap-3">
-            <div class="d-flex flex-wrap my-4 gap-3">
+          <br>
+          <div class="section gap-5">
+              <div>
+              <p>Rent:</p>
+              </div>
               <% rentals = [] %>
-              <% streaming_info.each do |country, platforms| %>
-                <% platforms.each do |platform, options| %>
-                  <% if options.any? { |option| option['type'] == 'rent' } %>
-                    <% image = case platform
-                      when 'apple'
-                        image_tag "Apple.png", class: "better-streaming-logo"
-                      when 'disney'
-                        image_tag "Disney.png", class: "better-streaming-logo"
-                      when 'mubi'
-                        image_tag "mubi.png", class: "better-streaming-logo"
-                      when 'netflix'
-                        image_tag "Netflix.png", class: "better-streaming-logo"
-                      when 'prime'
-                        image_tag "Amazon Prime.png", class: "better-streaming-logo"
-                      when 'hbo'
-                        image_tag "HBO Max.png", class: "better-streaming-logo"
-                      when 'hulu'
-                        image_tag "Hulu.png", class: "better-streaming-logo"
-                      when 'peacock'
-                        image_tag "Peacock.png", class: "better-streaming-logo"
-                      when 'youtube'
-                        image_tag "YouTube.png", class: "better-streaming-logo"
-                      when 'wow'
-                        image_tag "wow.png", class: "better-streaming-logo"
-                      end
-                    %>
-                    <% options.each do |option| %>
-                      <% if option['type'] == 'rent' %>
-                        <% has_rent = true %>
-                        <% link = option['link'] %>
-                        <% price = option['price'] %>
-                        <% if link.present? && !rentals.include?(platform) %>
-                          <div class="platform">
-                            <%= image %>
-                            <br>
-                            <% if price.present? %>
-                              <%= link_to "Rent (#{price['formatted']})", link, target: "_blank", class: "watch-button" %>
-                            <% else %>
-                              <%= link_to "Rent", link, target: "_blank", class: "watch-button" %>
-                            <% end %>
-                          </div>
-                          <% rentals << platform %>
-                        <% end %>
+              <% streaming_info.each do |platform, options| %>
+                <% if options.any? { |option| option['type'] == 'rent' } %>
+                  <% image = "#{platform}.png" %>
+                  <% options.each do |option| %>
+                    <% if option['type'] == 'rent' %>
+                      <% link = option['link'] %>
+                      <% price = option['price'] %>
+                      <% if link.present? && !rentals.include?(platform) %>
+                        <div class="platform">
+                          <%= link_to image_tag(image, class: 'streaming-logo2'), link, target: "_blank" %>
+                        </div>
+                        <% rentals << platform %>
                       <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
               <% end %>
-            </div>
           </div>
-          <div class="section gap-3">
-            <div class="d-flex flex-wrap my-4 gap-3">
+          <br>
+          <div class="section gap-5">
+              <div>
+              <p>Buy:</p>
+              </div>
               <% purchases = [] %>
-              <% streaming_info.each do |country, platforms| %>
-                <% platforms.each do |platform, options| %>
-                  <% if options.any? { |option| option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') } %>
-                    <% image = case platform
-                      when 'apple'
-                        image_tag "Apple.png", class: "better-streaming-logo"
-                      when 'disney'
-                        image_tag "Disney.png", class: "better-streaming-logo"
-                      when 'mubi'
-                        image_tag "mubi.png", class: "better-streaming-logo"
-                      when 'netflix'
-                        image_tag "Netflix.png", class: "better-streaming-logo"
-                      when 'prime'
-                        image_tag "Amazon Prime.png", class: "better-streaming-logo"
-                      when 'hbo'
-                        image_tag "HBO Max.png", class: "better-streaming-logo"
-                      when 'hulu'
-                        image_tag "Hulu.png", class: "better-streaming-logo"
-                      when 'peacock'
-                        image_tag "Peacock.png", class: "better-streaming-logo"
-                      when 'youtube'
-                        image_tag "YouTube.png", class: "better-streaming-logo"
-                      when 'wow'
-                        image_tag "wow.png", class: "better-streaming-logo"
-                      end
-                    %>
-                    <% options.each do |option| %>
-                      <% if option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') %>
-                        <% has_buy = true %>
-                        <% link = option['link'] %>
-                        <% price = option['price'] %>
-                        <% if option['type'] == 'buy' && link.present? && !purchases.include?(platform) %>
-                          <div class="platform">
-                            <%= image %>
-                            <br>
-                            <% if price.present? %>
-                              <%= link_to "Buy (#{price['formatted']})", link, target: "_blank", class: "watch-button" %>
-                            <% else %>
-                              <%= link_to "Buy", link, target: "_blank", class: "watch-button" %>
-                            <% end %>
-                          </div>
-                          <% purchases << platform %>
-                        <% end %>
+              <% streaming_info.each do |platform, options| %>
+                <% if options.any? { |option| option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') } %>
+                  <% image = "#{platform}.png" %>
+                  <% options.each do |option| %>
+                    <% if option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') %>
+                      <% link = option['link'] %>
+                      <% price = option['price'] %>
+                      <% if option['type'] == 'buy' && link.present? && !purchases.include?(platform) %>
+                        <div class="platform">
+                          <%= link_to image_tag(image, class: 'streaming-logo2'), link, target: "_blank" %>
+                        </div>
+                        <% purchases << platform %>
                       <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             </div>
-          </div>
         <% end %>
         <br>
         <br>
-        <p>
-          <%= image_tag "bazzy_avatar.png", alt: "cutest mascot in the world", class: "bazzy-display", id: "bazzy-index" %>
-        </p>
       </div>
     </div>
-
     <div class="col-lg-4">
       <div class="sticky-poster">
         <%= link_to image_tag(@recommendation.image, alt: "#{@recommendation.movie_name} Poster"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>

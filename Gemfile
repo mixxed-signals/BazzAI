@@ -84,3 +84,6 @@ gem "ruby-openai"
 
 gem "sidekiq"
 gem "sidekiq-failures", "~> 1.0"
+
+gem 'byebug'
+gem 'redis'

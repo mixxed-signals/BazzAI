@@ -87,6 +87,7 @@ GEM
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
+    byebug (11.1.3)
     capybara (3.39.1)
       addressable
       matrix
@@ -211,6 +212,8 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    redis (5.0.6)
+      redis-client (>= 0.9.0)
     redis-client (0.14.1)
       connection_pool
     regexp_parser (2.8.0)
@@ -308,6 +311,7 @@ DEPENDENCIES
   autoprefixer-rails
   bootsnap
   bootstrap (~> 5.2)
+  byebug
   capybara
   debug
   devise
@@ -319,6 +323,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.5)
   rails-controller-testing
+  redis
   rspec-rails (~> 5.0)
   ruby-openai
   sassc-rails

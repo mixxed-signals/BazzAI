@@ -92,9 +92,23 @@ class RecommendationsController < ApplicationController
     # @more_recommendations = create_more_like_this_openai_request(@query)
   end
 
+  def destroy
+    @recommendation = Recommendation.find(params[:id])
+    @recommendation.destroy
+    redirect_to search_result_path(@recommendation.query)
+  end
+
   def show
     @recommendation = Recommendation.find(params[:id])
     get_streaming_availability(@recommendation.imdbID)
+    @watch_list = WatchList.find_by_id(1)
+
+    if @watch_list
+      @watch_list = WatchList.find(1)
+    else
+      @watch_list = WatchList.new
+    end
+    @watch_list.user = current_user
   end
 
   private
@@ -155,8 +169,6 @@ class RecommendationsController < ApplicationController
     prompt += "Enjoy your #{query.medium.downcase} and let me know how you liked my recommendations!\n"
     prompt
   end
-
-
 
   def create_more_like_this_prompt(query, mood)
     my_prompt = "Can you recommend me 3 more #{query.medium} like #{@recommendations.last.movie_name}?"
@@ -340,8 +352,8 @@ class RecommendationsController < ApplicationController
 
   def create_openai_request(query)
     mood = MOOD[query.happiness]
-    # response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
-    response = OpenaiService.new(create_prompt(query, mood)).call
+    response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
+    # response = OpenaiService.new(create_prompt(query, mood)).call
     create_recomedation(create_response_hash(response), query.id)
   end
 

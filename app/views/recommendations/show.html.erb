@@ -56,7 +56,6 @@
           <% end %>
           <% if subscriptions_present %>
             <div class="section gap-3">
-              Subscriptions:
               <div class="d-flex flex-wrap my-4 gap-3">
                 <% subscriptions = [] %>
                 <% streaming_info.each do |country, platforms| %>
@@ -96,7 +95,7 @@
                             <div class="platform">
                               <%= link_to image, link, target: "_blank" %>
                               <br>
-                              <%= link_to "Watch Now", link, target: "_blank", class: "text-decoration-none text-white" %>
+                              <%= link_to "Watch", link, target: "_blank", class: "watch-button" %>
                             </div>
                             <% subscriptions << platform %>
                           <% end %>
@@ -109,7 +108,6 @@
             </div>
           <% end %>
           <div class="section gap-3">
-            Rentals:
             <div class="d-flex flex-wrap my-4 gap-3">
               <% rentals = [] %>
               <% streaming_info.each do |country, platforms| %>
@@ -148,9 +146,9 @@
                             <%= image %>
                             <br>
                             <% if price.present? %>
-                              <%= link_to "Rent Now (#{price['formatted']})", link, target: "_blank", class: "watch-button" %>
+                              <%= link_to "Rent (#{price['formatted']})", link, target: "_blank", class: "watch-button" %>
                             <% else %>
-                              <%= link_to "Rent Now", link, target: "_blank", class: "watch-button" %>
+                              <%= link_to "Rent", link, target: "_blank", class: "watch-button" %>
                             <% end %>
                           </div>
                           <% rentals << platform %>
@@ -201,9 +199,9 @@
                             <%= image %>
                             <br>
                             <% if price.present? %>
-                              <%= link_to "Buy Now (#{price['formatted']})", link, target: "_blank", class: "watch-button" %>
+                              <%= link_to "Buy (#{price['formatted']})", link, target: "_blank", class: "watch-button" %>
                             <% else %>
-                              <%= link_to "Buy Now", link, target: "_blank", class: "watch-button" %>
+                              <%= link_to "Buy", link, target: "_blank", class: "watch-button" %>
                             <% end %>
                           </div>
                           <% purchases << platform %>

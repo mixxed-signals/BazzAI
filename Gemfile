@@ -80,8 +80,6 @@ group :test do
   gem 'rails-controller-testing'
 end
 
-
-gem "dotenv-rails"
 gem "ruby-openai"
 
 gem "sidekiq"

@@ -141,7 +141,7 @@
     <div data-controller="movie-search">
       <div class="form-group">
         <%= form.label :recent_movie, "Search for a movie:" %>
-        <%= form.text_field :search_movie, class: 'form-control', data: { action: 'keyup->movie-search#handleInput' } %>
+        <%= form.text_field :search_movie, class: 'form-control', data: { action: 'keyup->movie-search#handleInput', movie_search_target: 'search' } %>
       </div>
       <br>
       <div class="search-boxes-container" data-movie-search-target="results">
@@ -180,16 +180,14 @@
     <%= form.fields_for :streaming_platform do |streaming_platform_form| %>
       <div class="row">
         <div class="row">
-          <div class="row">
-            <% Query::STREAMING_PLATFORMS.each do |streaming_platform| %>
-              <div class="streaming-item col-md-1 mb-4">
-                <%= streaming_platform_form.check_box streaming_platform.to_sym, { class: "streaming-selector d-none", disabled: false}, streaming_platform %>
-                <label for="query_streaming_platform_<%= streaming_platform %>">
-                  <%= image_tag "#{streaming_platform}.png", class: "streaming-logo" %>
-                </label>
-              </div>
-            <% end %>
-          </div>
+          <% Query::STREAMING_PLATFORMS.each do |streaming_platform| %>
+            <div class="streaming-item col-md-1 mb-4">
+              <%= streaming_platform_form.check_box streaming_platform.to_sym, { class: "streaming-selector d-none", disabled: false}, streaming_platform %>
+              <label for="query_streaming_platform_<%= streaming_platform %>">
+                <%= image_tag "#{streaming_platform}.png", class: "streaming-logo" %>
+              </label>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>

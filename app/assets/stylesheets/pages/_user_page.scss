@@ -1,0 +1,35 @@
+.left-button {
+  left: -16px;
+}
+
+.right-button {
+  right: -16px;
+}
+
+.slider-button {
+  border: 1px solid #f3f3f3;
+  background: linear-gradient(90deg, $pink 0%, $yellow 100%);
+  color: #f3f3f3;
+
+  border-radius: 9999px;
+  font-size: 24px;
+
+  padding: 4px 16px;
+
+  position: absolute;
+  z-index: 9999;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: .4;
+  }
+}
+
+.w-unset {
+  width: unset;
+}

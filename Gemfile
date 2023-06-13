@@ -83,3 +83,6 @@ end
 
 gem "dotenv-rails"
 gem "ruby-openai"
+
+gem "sidekiq"
+gem "sidekiq-failures", "~> 1.0"

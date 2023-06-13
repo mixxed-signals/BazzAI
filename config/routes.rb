@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   get '/search/:id/recommendations', to: 'recommendations#index', as: 'search_result'
   get '/search/:id/recommendations/:id', to: 'recommendations#show', as: 'search_result_details'
 
-  # resources :recommendations, only: [:search, :index, :show]
+  get '/userpage', to: 'pages#user_page', as: 'watchlist'
 end

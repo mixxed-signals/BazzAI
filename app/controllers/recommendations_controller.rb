@@ -94,7 +94,6 @@ class RecommendationsController < ApplicationController
   def show
     @recommendation = Recommendation.find(params[:id])
     get_streaming_availability(@recommendation.imdbID)
-    # platform_image(platform)
   end
 
   private
@@ -208,192 +207,110 @@ def get_streaming_availability(imdbID)
   # end
   # @data = JSON.parse(response.body)
   @data = {
-  "result" => {
-  "type" => "movie",
-  "title" => "The Dark Knight",
-  "overview" => "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
-  "streamingInfo" => {
-    "de" => {
-      "hbo" => [
-        {
-          "type" => "subscription",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-        }
-      ],
-      "netflix" => [
-        {
-          "type" => "subscription",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-        }
-      ],
-      "disney" => [
-        {
-          "type" => "subscription",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-        }
-      ],
-      # "hulu" => [
-      #   {
-      #     "type" => "subscription",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-      #   }
-      # ],
-      "wow" => [
-        {
-          "type" => "subscription",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-        }
-      ],
-      # "mubi" => [
-      #   {
-      #     "type" => "subscription",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-      #   }
-      # ],
-      # "hbo" => [
-      #   {
-      #     "type" => "buy",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-      #   }
-      # ],
-      # "netflix" => [
-      #   {
-      #     "type" => "buy",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-      #   }
-      # ],
-      # "disney" => [
-      #   {
-      #     "type" => "buy",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-      #   }
-      # ],
-      "hulu" => [
-        {
-          "type" => "buy",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-        }
-      ],
-      "wow" => [
-        {
-          "type" => "buy",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-        }
-      ],
-      "mubi" => [
-        {
-          "type" => "buy",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-        }
-      ],
-      # "hbo" => [
-      #   {
-      #     "type" => "rent",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-      #   }
-      # ],
-      # "netflix" => [
-      #   {
-      #     "type" => "rent",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-      #   }
-      # ],
-      # "disney" => [
-      #   {
-      #     "type" => "rent",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
-      #   }
-      # ],
-      # "hulu" => [
-      #   {
-      #     "type" => "rent",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-      #   }
-      # ],
-      # "wow" => [
-      #   {
-      #     "type" => "rent",
-      #     "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-      #   }
-      # ],
-      "apple" => [
-        {
-          "type" => "rent",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-        }
-      ],
-      "prime" => [
-        {
-          "type" => "rent",
-          "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
-        }
-      ]
-    }
-  },
-  "cast" => ["Christian Bale", "Heath Ledger", "Michael Caine", "Gary Oldman", "Aaron Eckhart", "Maggie Gyllenhaal", "Morgan Freeman"],
-  "year" => 2008,
-  "advisedMinimumAudienceAge" => 12,
-  "imdbId" => "tt0468569",
-  "imdbRating" => 90,
-  "imdbVoteCount" => 2714996,
-  "tmdbId" => 155,
-  "tmdbRating" => 85,
-  "originalTitle" => "The Dark Knight",
-  "backdropPath" => "/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
-  "backdropURLs" => {
-    "1280" => "https://image.tmdb.org/t/p/w1280/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
-    "300" => "https://image.tmdb.org/t/p/w300/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
-    "780" => "https://image.tmdb.org/t/p/w780/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
-    "original" => "https://image.tmdb.org/t/p/original/dqK9Hag1054tghRQSqLSfrkvQnA.jpg"
-  },
-  "genres" => [
-    {"id" => 28, "name" => "Action"},
-    {"id" => 80, "name" => "Crime"},
-    {"id" => 18, "name" => "Drama"}
-  ],
-  "originalLanguage" => "en",
-  "countries" => ["GB", "US"],
-  "directors" => ["Christopher Nolan"],
-  "runtime" => 152,
-  "youtubeTrailerVideoId" => "kmJLuwP3MbY",
-  "youtubeTrailerVideoLink" => "https://www.youtube.com/watch?v=kmJLuwP3MbY",
-  "posterPath" => "/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-  "posterURLs" => {
-    "154" => "https://image.tmdb.org/t/p/w154/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "185" => "https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "342" => "https://image.tmdb.org/t/p/w342/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "500" => "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "780" => "https://image.tmdb.org/t/p/w780/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "92" => "https://image.tmdb.org/t/p/w92/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    "original" => "https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
-  },
-  "tagline" => "Welcome to a world without rules."
-}}
-end
+    "result" => {
+    "type" => "movie",
+    "title" => "The Dark Knight",
+    "overview" => "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
+    "streamingInfo" => {
+      "de" => {
+        "hbo" => [
+          {
+            "type" => "subscription",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
+          }
+        ],
+        "netflix" => [
+          {
+            "type" => "subscription",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
+          }
+        ],
+        "disney" => [
+          {
+            "type" => "subscription",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
+          }
+        ],
 
-def platform_image(platform)
-  case platform
-    when 'apple'
-        "Apple.png"
-    when 'disney'
-        "Disney.png"
-    when 'mubi'
-        "mubi.png"
-    when 'netflix'
-        "Netflix.png"
-    when 'prime'
-        "Amazon Prime.png"
-    when 'hbo'
-        "HBO Max.png"
-    when 'hulu'
-        "Hulu.png"
-    when 'peacock'
-        "Peacock.png"
-    when 'youtube'
-        "YouTube.png"
-    when 'wow'
-        "wow.png"
-  end
+        "wow" => [
+          {
+            "type" => "subscription",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}",
+          }
+        ],
+
+        "hulu" => [
+          {
+            "type" => "buy",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
+          }
+        ],
+        "wow" => [
+          {
+            "type" => "buy",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
+          }
+        ],
+        "mubi" => [
+          {
+            "type" => "buy",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
+          }
+        ],
+ 
+        "apple" => [
+          {
+            "type" => "rent",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
+          }
+        ],
+        "prime" => [
+          {
+            "type" => "rent",
+            "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
+          }
+        ]
+      }
+    },
+    "cast" => ["Christian Bale", "Heath Ledger", "Michael Caine", "Gary Oldman", "Aaron Eckhart", "Maggie Gyllenhaal", "Morgan Freeman"],
+    "year" => 2008,
+    "advisedMinimumAudienceAge" => 12,
+    "imdbId" => "tt0468569",
+    "imdbRating" => 90,
+    "imdbVoteCount" => 2714996,
+    "tmdbId" => 155,
+    "tmdbRating" => 85,
+    "originalTitle" => "The Dark Knight",
+    "backdropPath" => "/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
+    "backdropURLs" => {
+      "1280" => "https://image.tmdb.org/t/p/w1280/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
+      "300" => "https://image.tmdb.org/t/p/w300/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
+      "780" => "https://image.tmdb.org/t/p/w780/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
+      "original" => "https://image.tmdb.org/t/p/original/dqK9Hag1054tghRQSqLSfrkvQnA.jpg"
+    },
+    "genres" => [
+      {"id" => 28, "name" => "Action"},
+      {"id" => 80, "name" => "Crime"},
+      {"id" => 18, "name" => "Drama"}
+    ],
+    "originalLanguage" => "en",
+    "countries" => ["GB", "US"],
+    "directors" => ["Christopher Nolan"],
+    "runtime" => 152,
+    "youtubeTrailerVideoId" => "kmJLuwP3MbY",
+    "youtubeTrailerVideoLink" => "https://www.youtube.com/watch?v=kmJLuwP3MbY",
+    "posterPath" => "/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    "posterURLs" => {
+      "154" => "https://image.tmdb.org/t/p/w154/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "185" => "https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "342" => "https://image.tmdb.org/t/p/w342/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "500" => "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "780" => "https://image.tmdb.org/t/p/w780/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "92" => "https://image.tmdb.org/t/p/w92/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+      "original" => "https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+    },
+    "tagline" => "Welcome to a world without rules."}
+  }
 end
 
   def create_response_hash(response)

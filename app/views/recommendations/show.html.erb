@@ -122,8 +122,7 @@
                       </div>
                       <% purchases << platform %>
                     <% end %>
-                  </div>
-                  <% purchases << platform %>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
@@ -138,18 +137,5 @@
         <%= link_to image_tag(@recommendation.image, alt: "#{@recommendation.movie_name} Poster"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
       </div>
     </div>
-  <% end %>
-  <br>
-  <br>
-  <p>
-    <%= image_tag "bazzy_avatar.png", alt: "cutest mascot in the world", class: "bazzy-display", id: "bazzy-index" %>
-  </p>
-</div>
-</div>
-<div class="col-lg-4">
-  <div class="sticky-poster">
-    <%= link_to image_tag(@recommendation.image, alt: "#{@recommendation.movie_name} Poster"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
   </div>
-</div>
-</div>
 </div>

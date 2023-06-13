@@ -257,7 +257,7 @@ def get_streaming_availability(imdbID)
             "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
           }
         ],
- 
+
         "apple" => [
           {
             "type" => "rent",

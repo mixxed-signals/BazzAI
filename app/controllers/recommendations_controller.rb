@@ -179,23 +179,23 @@ class RecommendationsController < ApplicationController
       director: data['Director'],
       writer: data['Writer'],
       actors: data['Actors'],
-      trailer_link: get_trailer_link(data['imdbID']),
+      # trailer_link: get_trailer_link(data['imdbID']),
       rotten_score: '99%', # We need to fix this
       imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
       query_id: query
     )
   end
 
-  def get_trailer_link(imdb_id)
-    url = "https://api.kinocheck.de/movies?imdb_id=#{imdb_id}&categories=trailer"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    data = JSON.parse(response)
-    data['trailer']&.fetch('youtube_video_id', nil) { |trailer| "https://www.youtube.com/embed/#{trailer['youtube_video_id']}" }
-  rescue StandardError => e
-    Rails.logger.error("Error fetching movie details: #{e.message}")
-    nil
-  end
+  # def get_trailer_link(imdb_id)
+  #   url = "https://api.kinocheck.de/movies?imdb_id=#{imdb_id}&categories=trailer"
+  #   uri = URI(url)
+  #   response = Net::HTTP.get(uri)
+  #   data = JSON.parse(response)
+  #   data['trailer']&.fetch('youtube_video_id', nil) { |trailer| "https://www.youtube.com/embed/#{trailer['youtube_video_id']}" }
+  # rescue StandardError => e
+  #   Rails.logger.error("Error fetching movie details: #{e.message}")
+  #   nil
+  # end
 
 def get_streaming_availability(imdbID)
   # url = URI("https://streaming-availability.p.rapidapi.com/v2/get/basic?country=de&imdb_id=#{imdbID}&output_language=en")
@@ -257,7 +257,7 @@ def get_streaming_availability(imdbID)
             "link" => "https://www.netflix.com/title/70079583/#{SecureRandom.hex(8)}"
           }
         ],
- 
+
         "apple" => [
           {
             "type" => "rent",

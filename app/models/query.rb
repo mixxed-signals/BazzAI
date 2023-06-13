@@ -3,5 +3,5 @@ class Query < ApplicationRecord
   has_many :recommendations
   MEDIUMS = ["Movie", "TV Show"]
   AUDIENCE = ["Just Me", "Couple", "Family"]
-  STREAMING_PLATFORMS = ["Netflix", "Hulu", "Amazon Prime", "HBO Max", "Disney", "Apple", "Peacock", "YouTube"]
+  STREAMING_PLATFORMS = ["netflix", "hulu", "prime", "hbo", "disney", "apple", "peacock", "youtube", "wow", "mubi"]
 end

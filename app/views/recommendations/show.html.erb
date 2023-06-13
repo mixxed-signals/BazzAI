@@ -55,9 +55,9 @@
             <% break if subscriptions_present %>
           <% end %>
           <% if subscriptions_present %>
-            <div class="section">
+            <div class="section gap-3">
               Subscriptions:
-              <div class="d-flex flex-wrap my-4">
+              <div class="d-flex flex-wrap my-4 gap-3">
                 <% subscriptions = [] %>
                 <% streaming_info.each do |country, platforms| %>
                   <% platforms.each do |platform, options| %>
@@ -108,20 +108,9 @@
               </div>
             </div>
           <% end %>
-          <% rentals_present = false %>
-          <% streaming_info.each do |country, platforms| %>
-            <% platforms.each do |platform, options| %>
-              <% if options.any? { |option| option['type'] == 'rental' } %>
-                <% rentals_present = true %>
-                <% break %>
-              <% end %>
-            <% end %>
-            <% break if rentals_present %>
-          <% end %>
-          <% if rentals_present %>
-          <div class="section">
+          <div class="section gap-3">
             Rentals:
-            <div class="d-flex flex-wrap my-4">
+            <div class="d-flex flex-wrap my-4 gap-3">
               <% rentals = [] %>
               <% streaming_info.each do |country, platforms| %>
                 <% platforms.each do |platform, options| %>
@@ -173,19 +162,8 @@
               <% end %>
             </div>
           </div>
-          <% purchases_present = false %>
-          <% streaming_info.each do |country, platforms| %>
-            <% platforms.each do |platform, options| %>
-              <% if options.any? { |option| option['type'] == 'purchase' } %>
-                <% purchases_present = true %>
-                <% break %>
-              <% end %>
-            <% end %>
-            <% break if purchases_present %>
-          <% end %>
-          <% if purchases_present %>
-          <div class="section">
-            <div class="d-flex flex-wrap my-4">
+          <div class="section gap-3">
+            <div class="d-flex flex-wrap my-4 gap-3">
               <% purchases = [] %>
               <% streaming_info.each do |country, platforms| %>
                 <% platforms.each do |platform, options| %>

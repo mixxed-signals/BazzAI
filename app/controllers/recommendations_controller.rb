@@ -75,10 +75,12 @@ class RecommendationsController < ApplicationController
     @query.medium = "movie and tv show" if @query.medium.nil?
     @query.user = current_user
     if @query.save
+      IndexLoadingJob.perform_later(@query, current_user.id)
+      flash[:notice] = "Your query is being processed"
       redirect_to search_result_path(@query)
-      create_openai_request(@query)
     else
       render :search
+      flash[:notice] = "Recommendation failed"
     end
   end
 
@@ -204,7 +206,7 @@ class RecommendationsController < ApplicationController
       # trailer_link: get_trailer_link(data['imdbID']),
       rotten_score: '99%', # We need to fix this
       imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
-      query_id: query
+      query_id: query.id
     )
   end
 
@@ -359,7 +361,7 @@ class RecommendationsController < ApplicationController
   end
 
   def create_more_like_this_openai_request(query)
-    mood = MOOD[@query.happiness]
+    mood = MOOD[query.happiness]
     response = OpenaiService.new(create_more_like_this_prompt(query, mood)).call
     create_recomedation(create_response_hash(response), query.id)
   end

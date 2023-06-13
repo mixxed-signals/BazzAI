@@ -54,7 +54,7 @@ class RecommendationsController < ApplicationController
     "Melancholic",
     "Bummed Out",
     "Pensive",
-    "Meh",
+    "Okay",
     "Chill",
     "Neutral",
     "Happy",
@@ -116,41 +116,43 @@ class RecommendationsController < ApplicationController
 
   def create_prompt(query, mood)
     prompt_parts = [
-      "Show me a list of 10 actual #{query.medium}s. Just display the titles in a hash format like:{\"#{query.medium}1\":\"#{query.medium} name\", ...}.",
-      "Always list existing #{query.medium}s, NEVER your preference.",
-      "Always use double quotion to wrap the #{query.medium} name but use single quotes in the #{query.medium} names.",
-      "Never put the #{query.medium} year or episode.",
-      "Use this information about me:",
-      ("I want to spend #{query.time} minutes watching a #{query.medium}" if query.time.present? && query.time != 70),
-      ("I like #{query.genre} #{query.medium}s." if query.genre.present?),
-      ("I want a #{query.medium} that makes me feel: #{mood}." if mood.present?),
-      ("I'm going to watch this #{query.medium} with my partner." if query.audience == "Couple"),
-      ("I'm going to watch this #{query.medium} with my family." if query.audience == "Family"),
-      ("I'm going to watch this #{query.medium} by myself." if query.audience == "Just me"),
-      ("I want to watch a #{query.medium} where I don't have to concentrate too much." if query.intensity.present? && query.intensity < 4),
-      ("I want to watch a #{query.medium} where I have to concentrate a lot." if query.intensity.present? && query.intensity > 7),
-      ("I am more in the mood for something experimental." if query.novelty.present? && query.novelty > 7),
-      ("I am more in the mood for something mainstream." if query.novelty.present? && query.novelty < 4),
-      ("I really enjoyed #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3} and would like to watch something similar now." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?),
-      ("Take them into account but don't suggest them to me again." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?),
-      ("Other information about myself and my day to filter this #{query.medium}: #{query.other}." if query.other.present?),
-      ("I have access to these streaming platforms: #{query.streaming_platform}." if query.streaming_platform.present?),
-      ("Please make use of all of the information I provided to you and don't just focus on one aspect.")
+      "Show me a list of 10 real #{query.medium}s. Just display the titles in a hash format like: { '#{query.medium}1': 'Movie name', ... }.",
+      "Always list existing #{query.medium}s, NOT your preference.",
+      "Remember to use double quotation marks to wrap the #{query.medium} name, but use single quotation marks within the #{query.medium} names.",
+      "Do NOT include the #{query.medium} year or episode information.",
+      "Here's some information about me:",
+      ("I want to spend around #{query.time} minutes watching a #{query.medium}." if query.time.present? && query.time != 70),
+      ("I enjoy #{query.genre} #{query.medium}s." if query.genre.present?),
+      ("I'm in the mood for a #{query.medium} that makes me feel #{mood}." if mood.present?),
+      ("I'm planning to watch this #{query.medium} with my partner." if query.audience == "Couple"),
+      ("I'm planning to watch this #{query.medium} with my family." if query.audience == "Family"),
+      ("I'm planning to watch this #{query.medium} by myself." if query.audience == "Just me"),
+      ("I prefer a #{query.medium} where I don't have to concentrate too much." if query.intensity.present? && query.intensity < 4),
+      ("I prefer a #{query.medium} that requires deep concentration." if query.intensity.present? && query.intensity > 7),
+      ("I'm in the mood for something more experimental." if query.novelty.present? && query.novelty > 7),
+      ("I'm in the mood for something more mainstream." if query.novelty.present? && query.novelty < 4),
+      ("I really enjoyed watching #{query.recent_movie1}, #{query.recent_movie2}, and #{query.recent_movie3}. It would be great to find something similar now." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?),
+      ("Consider my previous movie choices, but don't suggest them to me again." if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?),
+      ("Here's some additional information about myself and my day that can help you filter this #{query.medium}: #{query.other}." if query.other.present?),
+      ("I have access to the following streaming platforms: #{query.streaming_platform}." if query.streaming_platform.present?),
+      ("Please take into account all the information I provided and consider multiple aspects."),
     ]
     prompt_parts.compact.join("\n")
   end
 
+
   def create_display_prompt(query, mood)
     prompt = ""
-    prompt += "Hiiii <3! Looks like you're searching for a #{query.medium.downcase} recommendation.\n" if query.medium.present?
-    prompt += "Since you're a bit short on time, I've got some shorter movies lined up for you.\n" if query.time.present? && query.time < 90 && query.medium == "Movie"
-    prompt += "Since you have plenty of time on your hands, I've picked out some longer movies for you.\n" if query.time.present? && query.time > 90 && query.medium == "Movie"
-    prompt += "I've tried my best to find movies that you can enjoy together with your partner.\n" if query.audience == "Couple"
-    prompt += "I've tried my best to find movies that you can enjoy with your whole family.\n" if query.audience == "Family"
-    prompt += "I've tried my best to find movies that you can enjoy all by yourself.\n" if query.audience == "Just me"
-    prompt += "You're in the mood for #{query.genre.downcase} and feeling #{mood.downcase}.\n" if query.genre.present? && mood.present?
-    prompt += "I've discovered some more experimental movies that might satisfy your craving for novelty.\n" if query.novelty.present? && query.novelty > 7
-    prompt += "Some of the movies I choose for you share some similarities with #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
+    prompt += "Hiiii! Looks like you're searching for a #{query.medium.downcase} recommendation.\n" if query.medium.present?
+    prompt += "Since you're a bit short on time, I've got some shorter #{query.medium.downcase}s lined up for you.\n" if query.time.present? && query.time < 90 && query.medium == "Movie"
+    prompt += "Since you have plenty of time on your hands, I've picked out some longer #{query.medium.downcase}s for you.\n" if query.time.present? && query.time > 90 && query.medium == "Movie"
+    prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy together with your partner.\n" if query.audience == "Couple"
+    prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy with your whole family.\n" if query.audience == "Family"
+    prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy all by yourself.\n" if query.audience == "Just me"
+    prompt += "You're in the mood for #{query.genre.downcase} and I get the sense that you're feeling #{mood.downcase}.\n" if query.genre.present? && mood.present?
+    prompt += "I've discovered some more experimental #{query.medium.downcase}s that might satisfy your craving for novelty.\n" if query.novelty.present? && query.novelty > 7
+    prompt += "Some of the #{query.medium.downcase}s I choose for you share some similarities with #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
+    prompt += "Enjoy your #{query.medium.downcase} and let me know how you liked my recommendations!\n"
     prompt
   end
 

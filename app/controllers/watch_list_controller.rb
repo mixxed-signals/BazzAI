@@ -1,6 +1,5 @@
 class WatchListController < ApplicationController
   def create
-    recommendation = Recommendation.find(params[:recommendation_id])
     watch_list = WatchList.new(user: current_user)
 
     if watch_list.save

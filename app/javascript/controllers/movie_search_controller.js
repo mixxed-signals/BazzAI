@@ -2,14 +2,14 @@ import { Controller } from '@hotwired/stimulus';
 
 const omdbapiUrl = 'http://www.omdbapi.com/';
 const omdbapiKey = 'adf1f2d7';
-const numberCounters = ['one', 'two', 'three'];
+const cardOrder = [false, false, false];
 let counter = 0;
 
 const createMovieCard = (movie) => {
   let poster = movie.Poster;
-  if (poster === "N/A") {
+  if (poster === 'N/A') {
     poster =
-      "https://cdn.discordapp.com/attachments/1105433122998325278/1116723284348772453/Group_46.png";
+      'https://cdn.discordapp.com/attachments/1105433122998325278/1116723284348772453/Group_46.png';
   }
   return `
   <div class="search-boxes-container-results-card" data-action='click->movie-search#selectMovie'>
@@ -51,6 +51,8 @@ export default class extends Controller {
 
   connect() {
     this.resultsTarget.innerHTML = '';
+    this.searchTarget.value = '';
+    counter = 0;
   }
 
   handleInput(event) {
@@ -64,30 +66,59 @@ export default class extends Controller {
   }
 
   selectMovie(event) {
-    event.currentTarget.classList.add('selected');
-    counter += 1;
-
     const image = event.currentTarget.querySelector('img').src;
     const title = event.currentTarget.querySelector('p').innerHTML;
     const dbTitle = event.currentTarget.querySelector('input').value;
 
-    this.recents = [this.recentOneTarget, this.recentTwoTarget, this.recentThreeTarget];
-    this.selecteds = [this.selectedOneTarget, this.selectedTwoTarget, this.selectedThreeTarget];
-
-    this.recents[counter - 1].value = dbTitle;
-    this.selecteds[counter - 1].querySelector('img').src = image;
-    this.selecteds[counter - 1].querySelector('p').innerHTML = title;
+    if (counter === 0) {
+      this.selectedOneTarget.querySelector('img').src = image;
+      this.selectedOneTarget.querySelector('p').innerHTML = title;
+      this.selectedOneTarget.querySelector('input').value = dbTitle;
+      this.selectedOneTarget.classList.add('selected');
+      cardOrder[0] = true;
+      counter++;
+    } else if (counter === 1) {
+      this.selectedTwoTarget.querySelector('img').src = image;
+      this.selectedTwoTarget.querySelector('p').innerHTML = title;
+      this.selectedTwoTarget.querySelector('input').value = dbTitle;
+      this.selectedTwoTarget.classList.add('selected');
+      cardOrder[1] = true;
+      counter++;
+    } else if (counter === 2) {
+      this.selectedThreeTarget.querySelector('img').src = image;
+      this.selectedThreeTarget.querySelector('p').innerHTML = title;
+      this.selectedThreeTarget.querySelector('input').value = dbTitle;
+      this.selectedThreeTarget.classList.add('selected');
+      cardOrder[2] = true;
+    }
   }
 
   removeMovie(event) {
     const selected = event.currentTarget;
 
-    const image = selected.querySelector('img');
-    const title = selected.querySelector('p');
-
-    counter -= 1;
-    image.src =
-      "https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png";
-    title.innerHTML = 'Pick a movie';
+    if (selected.id === 'selected-one') {
+      this.selectedOneTarget.querySelector('img').src =
+        'https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png';
+      this.selectedOneTarget.querySelector('p').innerHTML = 'Pick a movie';
+      this.selectedOneTarget.querySelector('input').value = '';
+      this.selectedOneTarget.classList.remove('selected');
+      cardOrder[0] = false;
+      counter--;
+    } else if (selected.id === 'selected-two') {
+      this.selectedTwoTarget.querySelector('img').src =
+        'https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png';
+      this.selectedTwoTarget.querySelector('p').innerHTML = 'Pick a movie';
+      this.selectedTwoTarget.querySelector('input').value = '';
+      this.selectedTwoTarget.classList.remove('selected');
+      cardOrder[0] = false;
+      counter--;
+    } else if (selected.id === 'selected-three') {
+      this.selectedThreeTarget.querySelector('img').src =
+        'https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png';
+      this.selectedThreeTarget.querySelector('p').innerHTML = 'Pick a movie';
+      this.selectedThreeTarget.querySelector('input').value = '';
+      this.selectedThreeTarget.classList.remove('selected');
+      cardOrder[0] = false;
+    }
   }
 }

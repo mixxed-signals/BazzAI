@@ -1,24 +1,14 @@
 <%= render "shared/navbar" %>
 <div class="container my-4 min-vh-100 align-content-center">
   <div class="row">
-    <% if @recommendation.trailer_link.present? %>
+    <% unless @data['result']['youtubeTrailerVideoId'].nil?  %>
       <div class="col-lg-12 mb-4">
         <div class="banner trailer">
           <div class="trailer-content">
-            <iframe src="<%=@recommendation.trailer_link%>" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/<%=@data['result']['youtubeTrailerVideoId']%>" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
-    <% elsif %>
-      <div class="col-lg-12 mb-4">
-        <div class="banner trailer">
-          <div class="trailer-content">
-            <iframe src="<%="https://www.youtube.com/embed/#{@data['result']['youtubeTrailerVideoId']}"%>" frameborder="0" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    <% else %>
-      <div></div>
     <% end %>
     <div class="col-lg-8">
       <div class="recommendation-content">

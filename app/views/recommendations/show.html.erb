@@ -1,7 +1,7 @@
 <%= render "shared/navbar" %>
 <div class="container my-4 min-vh-100 align-content-center">
   <div class="row">
-    <% unless @data['result']['youtubeTrailerVideoId'].nil?  %>
+    <% unless @data['result']['youtubeTrailerVideoId'].nil? %>
       <div class="col-lg-12 mb-4">
         <div class="banner trailer">
           <div class="trailer-content">
@@ -45,79 +45,94 @@
         <br>
         <% streaming_info = @data['result']['streamingInfo']['de'] %>
         <% if streaming_info.present? %>
-          <div class="section gap-5">
-            <div>
-              <p>Watch:</p>
-            </div>
-            <% subscriptions = [] %>
-            <% streaming_info.each do |platform, options| %>
-              <% if options.any? { |option| option['type'] == 'subscription' } %>
-                <% image = "#{platform}.png" %>
-                <% options.each do |option| %>
-                  <% if option['type'] == 'subscription' %>
-                    <% link = option['link'] %>
-                    <% price = option['price'] %>
-                    <% availability_quality = option['quality'] %>
-                    <% availability_text = "Subscription (#{availability_quality}):" %>
-                    <% if link.present? && !subscriptions.include?(platform) %>
-                      <div class="platform">
-                        <%= link_to image_tag(image, class: 'streaming-logo2'), link, target: "_blank" %>
-                      </div>
-                      <% subscriptions << platform %>
+          <% subscriptions = [] %>
+          <% rentals = [] %>
+          <% purchases = [] %>
+          <% subscription_platforms = [] %>
+          <% rental_platforms = [] %>
+          <% purchase_platforms = [] %>
+          <% streaming_info.each do |platform, options| %>
+            <% if options.any? { |option| option['type'] == 'subscription' } %>
+              <% subscriptions << platform %>
+            <% end %>
+            <% if options.any? { |option| option['type'] == 'rent' } %>
+              <% rentals << platform %>
+            <% end %>
+            <% if options.any? { |option| option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') } %>
+              <% purchases << platform %>
+            <% end %>
+          <% end %>
+          <% if subscriptions.any? %>
+            <div class="section gap-5">
+              <div>
+                <p>Watch:</p>
+              </div>
+              <% streaming_info.each do |platform, options| %>
+                <% if subscriptions.include?(platform) %>
+                  <% options.each do |option| %>
+                    <% if option['type'] == 'subscription' %>
+                      <% link = option['link'] %>
+                      <% price = option['price'] %>
+                      <% availability_quality = option['quality'] %>
+                      <% availability_text = "Subscription (#{availability_quality}):" %>
+                      <% if link.present? && !rental_platforms.include?(platform) %>
+                        <div class="platform">
+                          <%= link_to image_tag("#{platform}.png", class: 'streaming-logo2'), link, target: "_blank" %>
+                        </div>
+                        <% subscription_platforms << platform %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          </div>
-          <br>
-          <div class="section gap-5">
-            <div>
-              <p>Rent:</p>
             </div>
-            <% rentals = [] %>
-            <% streaming_info.each do |platform, options| %>
-              <% if options.any? { |option| option['type'] == 'rent' } %>
-                <% image = "#{platform}.png" %>
-                <% options.each do |option| %>
-                  <% if option['type'] == 'rent' %>
-                    <% link = option['link'] %>
-                    <% price = option['price'] %>
-                    <% if link.present? && !rentals.include?(platform) %>
-                      <div class="platform">
-                        <%= link_to image_tag(image, class: 'streaming-logo2'), link, target: "_blank" %>
-                      </div>
-                      <% rentals << platform %>
+          <% end %>
+          <% if rentals.any? %>
+            <br>
+            <div class="section gap-5">
+              <div>
+                <p>Rent:</p>
+              </div>
+              <% streaming_info.each do |platform, options| %>
+                <% if rentals.include?(platform) %>
+                  <% options.each do |option| %>
+                    <% if option['type'] == 'rent' %>
+                      <% link = option['link'] %>
+                      <% if link.present? && !rental_platforms.include?(platform) %>
+                        <div class="platform">
+                          <%= link_to image_tag("#{platform}.png", class: 'streaming-logo2'), link, target: "_blank" %>
+                        </div>
+                        <% rental_platforms << platform %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          </div>
-          <br>
-          <div class="section gap-5">
-            <div>
-              <p>Buy:</p>
             </div>
-            <% purchases = [] %>
-            <% streaming_info.each do |platform, options| %>
-              <% if options.any? { |option| option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') } %>
-                <% image = "#{platform}.png" %>
-                <% options.each do |option| %>
-                  <% if option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') %>
-                    <% link = option['link'] %>
-                    <% price = option['price'] %>
-                    <% if option['type'] == 'buy' && link.present? && !purchases.include?(platform) %>
-                      <div class="platform">
-                        <%= link_to image_tag(image, class: 'streaming-logo2'), link, target: "_blank" %>
-                      </div>
-                      <% purchases << platform %>
+          <% end %>
+          <% if purchases.any? %>
+            <br>
+            <div class="section gap-5">
+              <div>
+                <p>Buy:</p>
+              </div>
+              <% streaming_info.each do |platform, options| %>
+                <% if purchases.include?(platform) %>
+                  <% options.each do |option| %>
+                    <% if option['type'] == 'buy' || (option['type'] == 'addon' && platform == 'prime') %>
+                      <% link = option['link'] %>
+                      <% if link.present? && !purchase_platforms.include?(platform) %>
+                        <div class="platform">
+                          <%= link_to image_tag("#{platform}.png", class: 'streaming-logo2'), link, target: "_blank" %>
+                        </div>
+                        <% purchase_platforms << platform %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         <% end %>
         <br>
         <br>

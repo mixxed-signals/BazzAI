@@ -1,0 +1,60 @@
+<%= render "shared/navbar" %>
+<div class="d-flex align-items-center justify-content-center flex-column container min-vh-100 w-100 p-0">
+  <div>
+    <div class="container d-flex flex-column w-100 position-relative">
+      <div data-controller="cards-slider" class="d-flex align-items-center justify-content-start overflow-hidden w-100 gap-3 py-4">
+        <button data-action="click->cards-slider#leftSlide" class="left-button slider-button" disabled="true"><%= '<' %></button>
+        <div data-cards-slider-target="slide" class="d-flex align-items-center justify-content-start gap-3 py-4 position-relative" style="transform: translateX(0px);">
+          <% @querys.each do |query| %>
+            <a href="#query<%= query.id %>" class="clash-card barbarian">
+              <div class="clash-card__image clash-card__image--barbarian">
+                <%= image_tag "bazzy_avatar.png", alt: "Bazzy" %>
+              </div>
+              <div class="clash-card__level clash-card__level--barbarian">Query <%= query.id %></div>
+              <div class="clash-card__unit-name"><%= query.medium ? query.medium : "Movie" %></div>
+              <div class="clash-card__unit-description">
+                <p>
+                  <%= query.other != '' ? query.other : "In the next time, write a description :("%>
+                </p>
+              </div>
+              <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+                <div class="one-third">
+                  <div class="stat"><%= query.time %></div>
+                  <div class="stat-value">Minutes</div>
+                </div>
+                <div class="one-third">
+                  <div class="stat"><%= query.intensity %>/10</div>
+                  <div class="stat-value">Intensity</div>
+                </div>
+                <div class="one-third no-border">
+                  <div class="stat"><%= query.novelty %>/10</div>
+                  <div class="stat-value">Novelty</div>
+                </div>
+              </div>
+            </a>
+          <% end %>
+        </div>
+        <button data-action="click->cards-slider#rightSlide" class="right-button slider-button"><%= '>' %></button>
+      </div>
+    </div>
+    <h3>This is your previous Movies recommendation:</h3>
+    <hr/>
+    <div class="container d-flex flex-column w-100 position-relative">
+      <% @querys.each do |query| %>
+        <h3>Query: <%= query.id %> of <%= @querys.length %></h3>
+        <hr/>
+        <div data-controller="cards-slider" class="d-flex align-items-center justify-content-start overflow-hidden w-100 gap-3 py-4">
+          <button data-action="click->cards-slider#leftSlide" class="left-button slider-button" disabled="true"><%= '<' %></button>
+          <div id="query<%= query.id %>" data-cards-slider-target="slide" class="d-flex align-items-center justify-content-start gap-3 py-4 position-relative" style="transform: translateX(0px);">
+            <% @recommendations.each do |recommendation| %>
+              <% if recommendation.query_id == query.id %>
+                <%= render "pages/movie_card", movie: recommendation %>
+              <% end %>
+            <% end %>
+          </div>
+          <button data-action="click->cards-slider#rightSlide" class="right-button slider-button"><%= '>' %></button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

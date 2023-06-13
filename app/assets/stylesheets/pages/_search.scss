@@ -58,7 +58,7 @@ body {
     margin: 0;
     padding: .5rem;
 
-    min-height: 320px;
+    min-height: 350px;
     max-width: 220px;
     width: 100%;
 
@@ -80,7 +80,9 @@ body {
   .search-boxes-container-results-card {
     align-items: center;
     justify-content: center;
-    min-height: 220px;
+  }
+  .selected {
+    justify-content: flex-start;
   }
 }
 

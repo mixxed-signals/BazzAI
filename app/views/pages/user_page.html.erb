@@ -8,17 +8,19 @@
           <div data-cards-slider-target="slide" class="d-flex align-items-center justify-content-start gap-3 py-4 position-relative" style="transform: translateX(0px);">
             <% @querys.each do |query| %>
               <a href="#query<%= query.id %>" class="clash-card barbarian">
-                <div class="clash-card__image clash-card__image--barbarian">
+                <div class="clash-card__image clash-card__image--barbarian w-100">
                   <%= image_tag "bazzy_avatar.png", alt: "Bazzy" %>
                 </div>
-                <div class="clash-card__level clash-card__level--barbarian">Query <%= query.id %></div>
-                <div class="clash-card__unit-name"><%= query.medium ? query.medium : "Movie / TV Show" %></div>
-                <div class="clash-card__unit-description">
-                  <p>
-                    <%= query.other != '' ? query.other : "In the next time, write a description :("%>
-                  </p>
+                <div class="d-flex flex-column align-items-center justify-content-start" style="min-height:200px">
+                  <div class="clash-card__level clash-card__level--barbarian w-100">Query <%= query.id %></div>
+                  <div class="clash-card__unit-name text-capitalize w-100"><%= query.medium ? query.medium : "Movie / TV Show" %></div>
+                  <div class="clash-card__unit-description w-100">
+                    <p>
+                      <%= query.other != '' ? query.other : "In the next time, write a description :("%>
+                    </p>
+                  </div>
                 </div>
-                <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+                <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix w-100">
                   <div class="one-third">
                     <div class="stat"><%= query.time %></div>
                     <div class="stat-value">Minutes</div>

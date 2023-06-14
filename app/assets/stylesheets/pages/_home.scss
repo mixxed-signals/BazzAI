@@ -196,6 +196,8 @@
         cursor: pointer;
         color: #fff;
         transition: background-color 0.3s ease;
+        border-color: transparent;
+        transition: border-color 10s ease-in-out;
       }
 
       .button:hover {

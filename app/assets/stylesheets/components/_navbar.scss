@@ -94,3 +94,19 @@
     font-weight: 600;
   }
 }
+
+.new-search-button {
+  color: #ffffff;
+  padding: 6px 12px;
+  font-weight: 400;
+  border-radius: 9999px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 900;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    font-weight: 600;
+    color: #ffffff;
+  }
+}

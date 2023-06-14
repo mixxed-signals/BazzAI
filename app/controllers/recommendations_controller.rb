@@ -101,14 +101,19 @@ class RecommendationsController < ApplicationController
   def show
     @recommendation = Recommendation.find(params[:id])
     get_streaming_availability(@recommendation.imdbID)
-    @watch_list = WatchList.find_by_id(1)
+  end
 
-    if @watch_list
-      @watch_list = WatchList.find(1)
+  def add_recommendations
+    @recommendation = Recommendation.find(params[:id])
+    @watch_list = WatchList.find_by_id(1)
+    @watch_list ||= WatchList.new(user: current_user)
+    @recommendation.watch_lists << @watch_list
+
+    if @recommendation.save
+      @watch_list.save
     else
-      @watch_list = WatchList.new
+      flash[:alert] = "Something went wrong. Please try again."
     end
-    @watch_list.user = current_user
   end
 
   private
@@ -155,7 +160,6 @@ class RecommendationsController < ApplicationController
     ]
     prompt_parts.compact.join("\n")
   end
-
 
   def create_display_prompt(query, mood)
     prompt = ""

@@ -22,7 +22,13 @@
     max-width: unset;
     min-width: 600px;
     min-height: 400px;
+
+    &-watch-list {
+      max-width: 700px;
+    }
   }
+
+
 
   &-delete-button {
     background: rgb(255, 255, 255);

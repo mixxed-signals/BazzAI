@@ -46,7 +46,7 @@
         <div data-controller="cards-slider" class="d-flex align-items-center justify-content-start overflow-hidden w-100 gap-3 py-4">
           <button data-action="click->cards-slider#leftSlide" class="left-button slider-button" disabled="true"><%= '<' %></button>
           <div data-cards-slider-target="slide" class="d-flex align-items-center justify-content-start gap-3 py-4 position-relative" style="transform: translateX(0px);">
-            <% @watch_list.each do |movie| %>
+            <% @watch_list.reverse.each do |movie| %>
               <%= render "pages/movie_card", movie: movie, watch_list: true %>
             <% end %>
           </div>
@@ -56,9 +56,19 @@
       <h3>This is your previous Movies recommendation:</h3>
       <hr/>
       <div class="container d-flex flex-column w-100 position-relative">
-        <% @querys.each do |query| %>
+        <% @querys.each_with_index do |query,index| %>
           <h3>Query: <%= query.id %> of <%= @querys.length %></h3>
           <hr/>
+          <div class="prompt-container">
+            <div class="bazzy-display">
+              <%= image_tag "bazzy_avatar.png", alt: "Show case of BazzAI", id: "bazzy-index" %>
+            </div>
+            <div class="typewriter-container">
+              <div style="font-family: 'poppins'; font-size: 18px">
+                <%= @display_prompts[index] %>
+              </div>
+            </div>
+          </div>
           <div data-controller="cards-slider" class="d-flex align-items-center justify-content-start overflow-hidden w-100 gap-3 py-4">
             <button data-action="click->cards-slider#leftSlide" class="left-button slider-button" disabled="true"><%= '<' %></button>
             <div id="query<%= query.id %>" data-cards-slider-target="slide" class="d-flex align-items-center justify-content-start gap-3 py-4 position-relative" style="transform: translateX(0px);">
@@ -72,6 +82,7 @@
           </div>
         <% end %>
       </div>
+      <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "add-button add-button-log-out" %>
     </div>
   </div>
 <% else %>

@@ -48,6 +48,8 @@ body {
     flex-direction: column;
     gap: .5rem;
 
+    cursor: pointer;
+
     background: rgba(241, 241, 241, 0.3);
     border: 1px solid #ebebeb;
     backdrop-filter: blur(30px);

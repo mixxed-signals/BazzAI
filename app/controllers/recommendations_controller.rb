@@ -101,6 +101,12 @@ class RecommendationsController < ApplicationController
   def show
     @recommendation = Recommendation.find(params[:id])
     get_streaming_availability(@recommendation.imdbID)
+
+    @watch_list_movies = WatchList.where(user: current_user)
+    @watch_list = RecommendationWatchList.where(watch_list: @watch_list_movies)
+    @watch_list = @watch_list.map { |watch_list| watch_list.recommendation }
+    @watch_list = @watch_list.filter { |recommendation| recommendation.movie_name == @recommendation.movie_name }
+
   end
 
   def add_recommendations
@@ -341,7 +347,11 @@ class RecommendationsController < ApplicationController
   end
 
   def create_response_hash(response)
-    JSON.parse(response)
+    if JSON.parse(response)
+      return JSON.parse(response)
+    else
+      return { movie1: "Spirited Away", movie2: "Your Name", movie3: "Princess Mononoke", movie4: "Attack on Titan", movie6: "Serial Experiments Lain", movie5: "Death Note", movie7: "Perfect Blue", movie8: "Neon Genesis Evangelion", movie9: "FLCL", movie10: "Akira"}
+    end
   end
 
   def create_omdb_request(movie_name)

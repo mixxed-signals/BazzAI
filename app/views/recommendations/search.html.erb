@@ -86,10 +86,10 @@
       </div>
       <hr class="divider">
       <h5>How do you feel?</h5>
-      <%# Mood %>
+      <%# Mood Status Quo%>
       <div class=" w-100">
         <div class="d-flex align-items-center justify-content-start gap-4">
-          <h6>Mood</h6>
+          <h6>Current Mood</h6>
           <div class="help-icon mb-2">
             <i class="fa-solid fa-circle-question"></i>
             <div class="help-text">Tell us how you're feeling on a happiness scale going from "Miserable" to "Over the Moon"</div>
@@ -103,6 +103,24 @@
           </div>
         </div>
       </div>
+      <%# Mood Desired%>
+      <div class=" w-100">
+        <div class="d-flex align-items-center justify-content-start gap-4">
+          <h6>Desired Mood</h6>
+          <div class="help-icon mb-2">
+            <i class="fa-solid fa-circle-question"></i>
+            <div class="help-text">Tell us how you want to feel on a happiness scale going from "Miserable" to "Over the Moon"</div>
+          </div>
+        </div>
+        <div class="form-group d-flex flex-column flex-md-row align-items-center gap-3 w-100" data-controller="slider">
+          <%= form.range_field :desired_happiness, min: 0, max: 10, data: { action: "change->slider#updateValue", slider_target: "input" } %>
+          <div>
+            <span data-slider-target="output" class="text-center" style="display: inline-block"></span>
+            <span>/ 10</span>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
       <%# Intensity %>
       <div class=" w-100">
         <div class="d-flex align-items-center justify-content-start gap-4">

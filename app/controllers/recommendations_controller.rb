@@ -49,18 +49,18 @@ class RecommendationsController < ApplicationController
   ].freeze
 
   MOOD = [
-    "Depressed",
     "Sad",
-    "Melancholic",
-    "Bummed Out",
-    "Pensive",
+    "Sad",
+    "Sad",
+    "Sad",
+    "Sad",
     "Okay",
-    "Chill",
-    "Neutral",
     "Happy",
-    "Excited",
-    "Thrilled",
-    "Over the Moon"
+    "Happy",
+    "Happy",
+    "Happy",
+    "Happy",
+    "Happy"
   ]
 
   def search
@@ -86,9 +86,10 @@ class RecommendationsController < ApplicationController
     @query = Query.find(params[:id])
     @query.medium = "movie and tv show" if @query.medium.nil?
     @mood = MOOD[@query.happiness]
-    @display_prompt = create_display_prompt(@query, @mood)
+    @desired_mood = MOOD[@query.desired_happiness]
+    @display_prompt = create_display_prompt(@query, @mood, @desired_mood)
     @recommendations = Recommendation.where(query_id: @query.id)
-    # @more_prompt = create_more_like_this_prompt(@query, @mood)
+    # @more_prompt = create_more_like_this_prompt(@query, @mood, @desired_mood)
     # @more_recommendations = create_more_like_this_openai_request(@query)
   end
 
@@ -120,7 +121,7 @@ class RecommendationsController < ApplicationController
 
   def query_params
     params.require(:query).permit(
-      :user_id, :time, :year_after, :year_before, :year_option, :happiness,
+      :user_id, :time, :year_after, :year_before, :year_option, :happiness, :desired_happiness,
       :intensity, :novelty, :recent_movie1, :recent_movie2, :recent_movie3,
       :other, :audience, :medium
     ).tap do |query_params|
@@ -133,7 +134,7 @@ class RecommendationsController < ApplicationController
     params.reject { |_, value| value == "0" }.keys.join(", ")
   end
 
-  def create_prompt(query, mood)
+  def create_prompt(query, mood, desired_mood)
     prompt_parts = [
       "Show me a list of 10 real #{query.medium}s. Just display the titles in a hash format like: { \"#{query.medium}1\": \"#{query.medium} name\", ... }.",
       "Always list existing #{query.medium}s, NOT your preference.",
@@ -142,7 +143,9 @@ class RecommendationsController < ApplicationController
       "Here's some information about me:",
       ("I want to spend around #{query.time} minutes watching a #{query.medium}." if query.time.present? && query.time != 70 && query.time != 120),
       ("I enjoy #{query.genre} #{query.medium}s." if query.genre.present?),
-      ("I'm in the mood for a #{query.medium} that makes me feel #{mood}." if mood.present?),
+      ("I'm currently feeling #{mood} and I'm in the mood for a #{query.medium} that makes me feel #{desired_mood}." if (query.desired_happiness.present? && query.happiness.present?) && ((query.desired_happiness < 4 || query.desired_happiness > 7) && (query.happiness < 4 || query.happiness > 7))),
+      ("I'm currently feeling #{mood}" if (mood.present? && (query.happiness < 4 || query.happiness > 7))),
+      ("I want to feel #{desired_mood}." if (desired_mood.present? && (query.desired_happiness < 4 || query.desired_happiness > 7))),
       ("I'm planning to watch this #{query.medium} with my partner." if query.audience == "Couple"),
       ("I'm planning to watch this #{query.medium} with my family." if query.audience == "Family"),
       ("I'm planning to watch this #{query.medium} by myself." if query.audience == "Just me"),
@@ -159,9 +162,10 @@ class RecommendationsController < ApplicationController
       "Show me a list of 10 real #{query.medium}s. Just display the titles in a hash format like: { \"#{query.medium}1\": \"#{query.medium} name\", ... }.",
     ]
     prompt_parts.compact.join("\n")
+    p prompt_parts.compact.join("\n")
   end
 
-  def create_display_prompt(query, mood)
+  def create_display_prompt(query, mood, desired_mood)
     prompt = ""
     prompt += "Hiiii! Looks like you're searching for a #{query.medium.downcase} recommendation.\n" if query.medium.present?
     prompt += "Since you're a bit short on time, I've got some shorter #{query.medium.downcase}s lined up for you.\n" if query.time.present? && query.time < 90 && query.medium == "Movie"
@@ -169,6 +173,11 @@ class RecommendationsController < ApplicationController
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy together with your partner.\n" if query.audience == "Couple"
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy with your whole family.\n" if query.audience == "Family"
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy all by yourself.\n" if query.audience == "Just me"
+    prompt += "You're in the mood for #{query.genre.downcase}." if query.genre.present? && mood.nil? && desired_mood.nil?
+    prompt += "You're in the mood for #{query.genre.downcase} and I get the sense that you're feeling #{mood.downcase} and want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if query.genre.present? && mood.present? && desired_mood.present?
+    prompt += "I get the sense that you're feeling #{mood.downcase}.\n" if mood.present? && desired_mood.nil?
+    prompt += "I get the sense that you want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if desired_mood.present? && mood.nil?
+    prompt += "I get the sense that you feel #{mood.downcase} and want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if desired_mood.present? && mood.present?
     prompt += "You're in the mood for #{query.genre.downcase} and I get the sense that you're feeling #{mood.downcase}.\n" if query.genre.present? && mood.present?
     prompt += "I've discovered some more experimental #{query.medium.downcase}s that might satisfy your craving for novelty.\n" if query.novelty.present? && query.novelty > 7
     prompt += "Some of the #{query.medium.downcase}s I choose for you share some similarities with #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
@@ -358,14 +367,16 @@ class RecommendationsController < ApplicationController
 
   def create_openai_request(query)
     mood = MOOD[query.happiness]
+    desired_mood = MOOD[query.desired_happiness]
     # response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
-    response = OpenaiService.new(create_prompt(query, mood)).call
+    response = OpenaiService.new(create_prompt(query, mood, desired_mood)).call
     create_recomedation(create_response_hash(response), query.id)
   end
 
   def create_more_like_this_openai_request(query)
     mood = MOOD[@query.happiness]
-    response = OpenaiService.new(create_more_like_this_prompt(query, mood)).call
+    desired_mood = MOOD[@query.desired_happiness]
+    response = OpenaiService.new(create_more_like_this_prompt(query, mood, desired_mood)).call
     create_recomedation(create_response_hash(response), query.id)
   end
 end

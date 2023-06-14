@@ -137,10 +137,12 @@
     </div>
     <div class="col-lg-4">
       <div class="sticky-poster">
-        <%= link_to image_tag(@recommendation.image, alt: "#{@recommendation.movie_name} Poster"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
-      </div>
-      <div class="my-5" style="display: flex">
-        <%= link_to "Add \"#{@recommendation.movie_name}\" to your watch list", add_recommendations_to_watch_list_path, data: {turbo_method: :update}, class: "add-button" %>
+        <div class="">
+          <%= link_to image_tag(@recommendation.image, alt: "#{@recommendation.movie_name} Poster"), "https://www.imdb.com/title/#{@recommendation.imdbID}", target: "_blank" %>
+        </div>
+        <div class="mt-2" style="display: flex">
+          <%= link_to "Add to your watch list", add_recommendations_to_watch_list_path, data: {turbo_method: :update}, class: "add-button" %>
+        </div>
       </div>
     </div>
   </div>

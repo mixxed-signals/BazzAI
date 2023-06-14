@@ -3,7 +3,8 @@ import { Controller } from '@hotwired/stimulus';
 // Connects to data-controller="view-more"
 export default class extends Controller {
   static targets = ['cards', 'more', 'all', 'remove'];
-  more() {
+  more(event) {
+    event.preventDefault();
     this.moreTarget.classList.add('d-none');
     this.allTarget.classList.remove('d-none');
     this.cardsTargets.forEach((element, index) => {
@@ -12,7 +13,8 @@ export default class extends Controller {
       }
     });
   }
-  all() {
+  all(event) {
+    event.preventDefault();
     this.allTarget.classList.add('d-none');
     this.moreTarget.classList.add('d-none');
     this.cardsTargets.forEach((element) => {
@@ -20,6 +22,7 @@ export default class extends Controller {
     });
   }
   remove(event) {
+    event.preventDefault();
     const index = parseInt(event.target.dataset.index);
     const cardToRemove = this.cardsTargets[index];
     cardToRemove.remove();

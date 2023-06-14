@@ -1,67 +1,130 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+    @import url('https://fonts.googleapis.com/css?family=Gravitas+One|Poppins:100,200,300,400,500,600,700,800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Berkshire+Swash&family=Dancing+Script&family=Pompiere&display=swap');
 
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
+    body {
+      padding: 0;
+      margin: 0;
+    }
 
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    .error-page {
+      background-image: linear-gradient(90deg,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.8) 100%), url("/images/background-image.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
+    }
 
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    .container {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      height: 100vh;
+    }
+
+    .container h1 {
+      font-size: 130px;
+      color: pink;
+      line-height: 1em;
+      letter-spacing: -0.08em;
+      transition: all 0.2s ease-in-out;
+      text-shadow: 0 1px 0 #ef3e17, 0 2px 0 #ec3810, 0 3px 0 #e3360f, 0 4px 0 #d9330f, 0 5px 0 #cf310e, 0 6px 0 #c62f0d, 0 7px 0 #bc2d0d, 0 8px 0 #b32a0c, 0 0 5px rgba(252, 46, 0, 0.05), 0 -1px 3px rgba(252, 46, 0, 0.2), 0 9px 9px rgba(252, 46, 0, 0.3), 0 12px 12px rgba(252, 46, 0, 0.3), 0 15px 15px rgba(252, 46, 0, 0.3);
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .container h2 {
+      font-family: "Gravitas One", "Helvetica", "sans-serif";
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.2;
+      color: white;
+      text-shadow: 2px 2px 0px #E74F6A;
+      scroll-behavior: smooth !important;
+      box-sizing: border-box;
+      text-align: center;
+      margin-left: 250px;
+      margin-right: 250px;
+      margin-top: -40px;
+
+    }
+
+    .home-page-buttons-container {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .magic-button {
+      background: linear-gradient(90deg, #E74F6A 0%, #ffc0cb 100%);
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      border: none;
+
+      font-weight: 500;
+      font-size: 24px;
+
+      color: #ffffff;
+
+      margin-top: 50px;
+      padding: 35px 50px;
+      transition: background 0.2s ease-in-out;
+
+      animation-name: jump;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+
+      text-decoration: none;
+      font-family: "poppins";
+    }
+
+
+
+    .magic-button:hover {
+      background: linear-gradient(180deg, #e74f6a 0%, pink 100%);
+      color: white;
+      font-weight: 600;
+      box-shadow: 1px 4px 12px rgba(228, 28, 28, 1);
+    }
+
+    @keyframes jump {
+     0% {
+      transform: translateY(0);
+     }
+     50% {
+      transform: translateY(-20px);
+     }
+     100% {
+      transform: translateY(0);
+     }
+    }
   </style>
 </head>
 
-<body class="rails-default-error-page">
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <div>
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
+<body>
+  <div class="error-page d-flex flex-column justify-content-center align-items-center min-vh-100 bg-dark">
+    <div class="container">
+      <h1>Oops! Page Not Found (404)</h1>
+      <h2 class="text-center font-weight-bold mb-0">The page you are looking for could not be found. It may have been
+        moved, deleted, or never existed.</h2>
+      <div class="home-page-buttons-container">
+        <a class="magic-button" href="/">Back To The Homepage</a>
+      </div>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
   </div>
 </body>
+
 </html>

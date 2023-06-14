@@ -173,6 +173,7 @@
         width: 100px;
         height: auto;
         margin-right: 10px;
+        border-radius: 15px;
       }
 
       .h7 {
@@ -188,20 +189,19 @@
 
       .button {
         font-size: 8px;
+        padding: 0 5px ;
         background-color: transparent;
-        border: 1px solid #ddd;
+        border: none;
+        box-shadow: none;
         border-radius: 50px;
         padding: 1px 10px;
         margin-right: 10px;
         cursor: pointer;
         color: #fff;
-        transition: background-color 0.3s ease;
-        border-color: transparent;
-        transition: border-color 10s ease-in-out;
       }
 
       .button:hover {
-        background-color: #ddd;
+        border: #fff solid 1px;
       }
     }
   }

@@ -43,13 +43,21 @@ $border-radius-size: 14px;
 .clash-card {
   background: white;
   width: 300px;
-  display: inline-block;
+  min-height: 550px;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   margin: 16px;
   border-radius: $border-radius-size + 5;
   position: relative;
   text-align: center;
   box-shadow: -1px 15px 30px -12px black;
   text-decoration: none;
+
+
 }
 
 .clash-card__image {

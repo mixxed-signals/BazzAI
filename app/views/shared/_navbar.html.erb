@@ -5,7 +5,7 @@
         <h1 class="logo1 font-size-30">Movie Mate</h1>
       <% end %>
       <% if action_name == 'show' %>
-        <%= link_to search_result_path(@recommendation.query.id), class: "back-button" do %>
+        <%= link_to :back, class: "back-button" do %>
           <i class="fa-solid fa-arrow-left"></i>
         <% end %>
       <% end %>

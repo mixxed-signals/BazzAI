@@ -1,6 +1,6 @@
 class WatchList < ApplicationRecord
   belongs_to :user
-  belongs_to :recommendation
+  has_many :recommendation
 
   validates :user, presence: true
 end

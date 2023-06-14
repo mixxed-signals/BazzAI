@@ -11,5 +11,5 @@ Rails.application.routes.draw do
 
   get '/userpage', to: 'pages#user_page', as: 'watchlist'
 
-  post '/watch_lists/:id/add_recommendations', to: 'watch_lists#add_recommendations', as: 'add_recommendations_to_watch_list'
+  post '/watch_list/:id/add_recommendations', to: 'watch_list#add_recommendations', as: 'add_recommendations_to_watch_list'
 end

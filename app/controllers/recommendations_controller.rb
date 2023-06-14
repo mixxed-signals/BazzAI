@@ -101,14 +101,6 @@ class RecommendationsController < ApplicationController
   def show
     @recommendation = Recommendation.find(params[:id])
     get_streaming_availability(@recommendation.imdbID)
-    @watch_list = WatchList.find_by_id(1)
-
-    if @watch_list
-      @watch_list = WatchList.find(1)
-    else
-      @watch_list = WatchList.new
-    end
-    @watch_list.user = current_user
   end
 
   private
@@ -151,6 +143,7 @@ class RecommendationsController < ApplicationController
       ("Here's some additional information about myself and my day that can help you filter this #{query.medium}: #{query.other}." if query.other.present?),
       ("I have access to the following streaming platforms: #{query.streaming_platform}." if query.streaming_platform.present?),
       ("Please take into account all the information I provided and consider multiple aspects."),
+      "Show me a list of 10 real #{query.medium}s. Just display the titles in a hash format like: { \"#{query.medium}1\": \"#{query.medium} name\", ... }.",
     ]
     prompt_parts.compact.join("\n")
   end

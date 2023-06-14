@@ -89,8 +89,6 @@ class RecommendationsController < ApplicationController
     @desired_mood = MOOD[@query.desired_happiness]
     @display_prompt = create_display_prompt(@query, @mood, @desired_mood)
     @recommendations = Recommendation.where(query_id: @query.id)
-    # @more_prompt = create_more_like_this_prompt(@query, @mood, @desired_mood)
-    # @more_recommendations = create_more_like_this_openai_request(@query)
   end
 
   def destroy
@@ -191,11 +189,6 @@ class RecommendationsController < ApplicationController
     prompt
   end
 
-  def create_more_like_this_prompt(query, mood)
-    my_prompt = "Can you recommend me 3 more #{query.medium} like #{@recommendations.last.movie_name}?"
-    return my_prompt
-  end
-
   def create_recomedation(response, query)
     p response
     response.each do |_key, value|
@@ -221,23 +214,10 @@ class RecommendationsController < ApplicationController
       director: data['Director'],
       writer: data['Writer'],
       actors: data['Actors'],
-      # trailer_link: get_trailer_link(data['imdbID']),
-      rotten_score: '99%', # We need to fix this
       imdb_score: data['imdbRating'].present? ? data['imdbRating'] : nil,
       query_id: query
     )
   end
-
-  # def get_trailer_link(imdb_id)
-  #   url = "https://api.kinocheck.de/movies?imdb_id=#{imdb_id}&categories=trailer"
-  #   uri = URI(url)
-  #   response = Net::HTTP.get(uri)
-  #   data = JSON.parse(response)
-  #   data['trailer']&.fetch('youtube_video_id', nil) { |trailer| "https://www.youtube.com/embed/#{trailer['youtube_video_id']}" }
-  # rescue StandardError => e
-  #   Rails.logger.error("Error fetching movie details: #{e.message}")
-  #   nil
-  # end
 
   def get_streaming_availability(imdbID)
     # url = URI("https://streaming-availability.p.rapidapi.com/v2/get/basic?country=de&imdb_id=#{imdbID}&output_language=en")
@@ -380,13 +360,6 @@ class RecommendationsController < ApplicationController
     desired_mood = MOOD[query.desired_happiness]
     # response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
     response = OpenaiService.new(create_prompt(query, mood, desired_mood)).call
-    create_recomedation(create_response_hash(response), query.id)
-  end
-
-  def create_more_like_this_openai_request(query)
-    mood = MOOD[@query.happiness]
-    desired_mood = MOOD[@query.desired_happiness]
-    response = OpenaiService.new(create_more_like_this_prompt(query, mood, desired_mood)).call
     create_recomedation(create_response_hash(response), query.id)
   end
 end

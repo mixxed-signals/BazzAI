@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_142534) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_094630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_142534) do
     t.index ["user_id"], name: "index_queries_on_user_id"
   end
 
+  create_table "recommendation_watch_lists", force: :cascade do |t|
+    t.bigint "recommendation_id", null: false
+    t.bigint "watch_list_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recommendation_id"], name: "index_recommendation_watch_lists_on_recommendation_id"
+    t.index ["watch_list_id"], name: "index_recommendation_watch_lists_on_watch_list_id"
+  end
+
   create_table "recommendations", force: :cascade do |t|
     t.string "movie_name"
     t.bigint "query_id", null: false
@@ -58,12 +67,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_142534) do
     t.string "director"
     t.string "writer"
     t.string "actors"
-    t.float "rotten_score"
-    t.float "imdb_score"
+    t.string "rotten_score"
+    t.string "imdb_score"
     t.string "trailer_link"
     t.string "year"
+    t.bigint "watch_list_id"
     t.index ["query_id"], name: "index_recommendations_on_query_id"
     t.index ["user_id"], name: "index_recommendations_on_user_id"
+    t.index ["watch_list_id"], name: "index_recommendations_on_watch_list_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,16 +91,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_142534) do
 
   create_table "watch_lists", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "recommendation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["recommendation_id"], name: "index_watch_lists_on_recommendation_id"
     t.index ["user_id"], name: "index_watch_lists_on_user_id"
   end
 
   add_foreign_key "queries", "users"
+  add_foreign_key "recommendation_watch_lists", "recommendations"
+  add_foreign_key "recommendation_watch_lists", "watch_lists"
   add_foreign_key "recommendations", "queries"
   add_foreign_key "recommendations", "users"
-  add_foreign_key "watch_lists", "recommendations"
+  add_foreign_key "recommendations", "watch_lists"
   add_foreign_key "watch_lists", "users"
 end

@@ -1,6 +1,5 @@
 <% if movie['movie_name'] != nil %>
-<div class="movie-card movie-card-user-page">
-  <%# <button class="movie-card-delete-button">X</button> %>
+<div class="movie-card movie-card-user-page <%= watch_list ? 'movie-card-user-page-watch-list' : '' %>">
   <%= image_tag movie['image'] && movie['image'] != 'N/A' ? movie['image'] : '', alt: movie['movie_name']  %>
   <div class="movie-card-infos-container">
     <h1 class="movie-card-infos-container-title"><%= movie['movie_name'] %> ( <%= movie['year'] %> )</h1>

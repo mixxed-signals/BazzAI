@@ -7,12 +7,14 @@ class PagesController < ApplicationController
   def user_page
     @user = current_user
     @querys = Query.where(user: current_user)
+
     @recommendations = Recommendation.where(query: @querys)
 
     @display_prompts = create_display_prompt(@querys, @mood)
 
     @watch_list_movies = WatchList.where(user: current_user)
     @watch_list = RecommendationWatchList.where(watch_list: @watch_list_movies)
+
     @watch_list = @watch_list.map { |watch_list| watch_list.recommendation }
   end
 

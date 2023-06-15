@@ -57,7 +57,7 @@
       <hr/>
       <div class="container d-flex flex-column w-100 position-relative">
         <% @querys.reverse.each_with_index do |query,index| %>
-          <h3>Query: <%= query.id %> of <%= @querys.length %></h3>
+          <h3>Query: <%= @querys.length - index %> of <%= @querys.length %></h3>
           <hr/>
           <div class="prompt-container">
             <div class="bazzy-display">

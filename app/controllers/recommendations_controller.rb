@@ -112,7 +112,7 @@ class RecommendationsController < ApplicationController
 
   def add_recommendations
     @recommendation = Recommendation.find(params[:id])
-    @watch_list = WatchList.find_by_id(1)
+    @watch_list = WatchList.find_by_id(user: current_user)
     @watch_list ||= WatchList.new(user: current_user)
     @recommendation.watch_lists << @watch_list
 

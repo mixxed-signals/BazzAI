@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 const alert = (movieName) => `
 <div class="add-button mt-3">
   <a href="/user" class="text-decoration-none">
-    <p class="m-0 text-white">${movieName} is added to your <strong class="font-weight-bold">watch list</strong></p>
+    <p class="m-0 text-white">${movieName} was added to your <strong class="font-weight-bold">watch list</strong></p>
   </a>
 </div>
 `

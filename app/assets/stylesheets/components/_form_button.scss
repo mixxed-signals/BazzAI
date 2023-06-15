@@ -82,12 +82,14 @@
   border: none;
 }
 
+
 .streaming-item {
   display: inline-block;
   margin-right: 1rem;
   display: flex;
   align-items: center;
 }
+
 
 .streaming-logo {
   margin-right: 0.5rem;
@@ -98,6 +100,17 @@
   transition: filter 0.3s ease;
 }
 
+
+.section {
+  border-radius: 20px;
+  display: flex;
+  margin: 20px 0;
+  align-items: center;
+  &:hover .streaming-logo{
+    background-color: rgba(0, 0, 0, 0.8);
+    filter: grayscale(0%);
+  }
+}
 .streaming-selector {
   position: absolute;
   /* transform: scale(0); */
@@ -119,4 +132,5 @@
 
 .streaming-selector:checked + label .streaming-logo {
   filter: none;
+  scale: 1.2;
 }

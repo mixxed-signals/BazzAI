@@ -169,7 +169,7 @@ class RecommendationsController < ApplicationController
 
   def create_display_prompt(query, mood, desired_mood)
     prompt = ""
-    prompt += "Hiiii! Looks like you're searching for a #{query.medium.downcase} recommendation.\n" if query.medium.present?
+    prompt += "Hi! Looks like you're searching for a #{query.medium.downcase} recommendation.\n" if query.medium.present?
     prompt += "Since you're a bit short on time, I've got some shorter #{query.medium.downcase}s lined up for you.\n" if query.time.present? && query.time < 90 && query.medium == "Movie"
     prompt += "Since you have plenty of time on your hands, I've picked out some longer #{query.medium.downcase}s for you.\n" if query.time.present? && query.time > 90 && query.medium == "Movie"
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy together with your partner.\n" if query.audience == "Couple"
@@ -187,17 +187,16 @@ class RecommendationsController < ApplicationController
     prompt
   end
 
-  def create_recomedation(response, query)
-    p response
+  def create_recommendation(response, query)
     response.each do |_key, value|
       data = create_omdb_request(value)
       next if data.nil?
 
-      create_recomedation_class(data, query)&.tap(&:save)
+      create_recommendation_class(data, query)&.tap(&:save)
     end
   end
 
-  def create_recomedation_class(data, query)
+  def create_recommendation_class(data, query)
     Recommendation.new(
       user: current_user,
       movie_name: data['Title'],
@@ -358,6 +357,6 @@ class RecommendationsController < ApplicationController
     desired_mood = MOOD[query.desired_happiness]
     # response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
     response = OpenaiService.new(create_prompt(query, mood, desired_mood)).call
-    create_recomedation(create_response_hash(response), query.id)
+    create_recommendation(create_response_hash(response), query.id)
   end
 end

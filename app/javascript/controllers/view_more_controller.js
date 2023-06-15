@@ -22,7 +22,6 @@ export default class extends Controller {
     });
   }
   remove(event) {
-
     const index = parseInt(event.target.dataset.index);
     const cardToRemove = this.cardsTargets[index];
     cardToRemove.remove();

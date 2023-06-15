@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 
-const omdbapiUrl = 'http://www.omdbapi.com/';
+const omdbapiUrl = 'https://www.omdbapi.com/';
 const omdbapiKey = 'b02e181b';
 const cardOrder = [false, false, false];
 let counter = 0;
@@ -57,6 +57,7 @@ export default class extends Controller {
 
   async handleInput(event) {
     try {
+      console.log(createUrl(event.target.value));
       const response = await fetch(createUrl(event.target.value));
       const data = await response.json();
 

@@ -8,8 +8,9 @@
           <div data-cards-slider-target="slide" class="d-flex align-items-center justify-content-start gap-3 py-4 position-relative" style="transform: translateX(0px);">
             <% @querys.each do |query| %>
               <a href="#query<%= query.id %>" class="clash-card barbarian">
-                <div class="clash-card__image clash-card__image--barbarian w-100">
-                  <%= image_tag "bazzy_avatar.png", alt: "Bazzy" %>
+              <% @image = Recommendation.find(query.recommendation_ids[0]).image %>
+                <div class="clash-card__image clash-card__image--barbarian w-100" style="position: relative; align-items: center; display: flex; justify-content: center; flex-direction: column; height: 230px; margin-bottom: 35px; border-top-left-radius: $border-radius-size; border-top-right-radius: $border-radius-size; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<%= @image %>'); background-size: cover;">
+                  <%= image_tag "bazzy_avatar.png", alt: "Bazzy", style: "width: 300px; position: absolute;" %>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-start" style="min-height:200px">
                   <div class="clash-card__level clash-card__level--barbarian w-100">Query <%= query.id %></div>

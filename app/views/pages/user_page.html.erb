@@ -15,9 +15,36 @@
                   <div class="clash-card__level clash-card__level--barbarian w-100">Query <%= index + 1 %></div>
                   <div class="clash-card__unit-name text-capitalize w-100"><%= query.medium ? query.medium : "Movie / TV Show" %></div>
                   <div class="clash-card__unit-description w-100">
-                    <p>
-                      <%= query.other != '' ? query.other : "Next time, tell us more about yourself :("%>
-                    </p>
+                    <div>
+                      <div class="clash-card__level clash-card__level--barbarian w-100">Genre:</div>
+                      <div class="d-flex flex-wrap my-1 align-items-start justify-content-center gap-1">
+                        <% if query.genre.split(', ').length > 0 %>
+                          <% query.genre.split(', ').each_with_index do |genre, index| %>
+                            <% if index < 2 %>
+                              <span class="genre-button-query">
+                                <%= genre %>
+                              </span>
+                            <% end %>
+                          <% end %>
+                        <% else %>
+                          <span class="genre-button-query">
+                            No Genres
+                          </span>
+                        <% end %>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="clash-card__level clash-card__level--barbarian w-100">Date:</div>
+                      <div class="d-flex flex-wrap my-1 align-items-center justify-content-center gap-2">
+                        <span class="">
+                          <%= query.year_after %>
+                        </span>
+                        To
+                        <span class="">
+                          <%= query.year_before %>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix w-100">

@@ -16,7 +16,7 @@
                   <div class="clash-card__unit-name text-capitalize w-100"><%= query.medium ? query.medium : "Movie / TV Show" %></div>
                   <div class="clash-card__unit-description w-100">
                     <p>
-                      <%= query.other != '' ? query.other : "In the next time, write a description :("%>
+                      <%= query.other != '' ? query.other : "Next time, tell us more about yourself :("%>
                     </p>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
           <button data-action="click->cards-slider#rightSlide" class="right-button slider-button"><%= '>' %></button>
         </div>
       </div>
-      <h3>This is your amazing Watch list:</h3>
+      <h3>Your Watchlist:</h3>
       <hr/>
       <div class="container d-flex flex-column w-100 position-relative">
         <div data-controller="cards-slider" class="d-flex align-items-center justify-content-start overflow-hidden w-100 gap-3 py-4">
@@ -53,7 +53,7 @@
           <button data-action="click->cards-slider#rightSlide" class="right-button slider-button"><%= '>' %></button>
         </div>
       </div>
-      <h3>This is your previous Movies recommendation:</h3>
+      <h3>Your Previous Recommendations:</h3>
       <hr/>
       <div class="container d-flex flex-column w-100 position-relative">
         <% @querys.each_with_index do |query,index| %>
@@ -87,7 +87,7 @@
   </div>
 <% else %>
   <div class="container p-0">
-    <h1>No querys yet</h1>
+    <h1>No queries yet</h1>
   </div>
 <% end %>
 </div>

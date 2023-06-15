@@ -55,14 +55,19 @@ export default class extends Controller {
     counter = 0;
   }
 
-  handleInput(event) {
-    fetch(createUrl(event.target.value))
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.Search)
-          return (this.resultsTarget.innerHTML = createContent(data));
+  async handleInput(event) {
+    try {
+      const response = await fetch(createUrl(event.target.value));
+      const data = await response.json();
+
+      if (data.Search) {
+        this.resultsTarget.innerHTML = createContent(data);
+      } else {
         this.resultsTarget.innerHTML = '';
-      });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   selectMovie(event) {

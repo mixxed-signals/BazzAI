@@ -10,7 +10,6 @@ export default class extends Controller {
   updateValue() {
     const sliderValue = this.inputTarget.value;
     const outputTarget = this.outputTarget;
-    console.log("Slider value:", sliderValue);
     outputTarget.textContent = sliderValue;
   }
 }

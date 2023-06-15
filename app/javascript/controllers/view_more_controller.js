@@ -22,7 +22,7 @@ export default class extends Controller {
     });
   }
   remove(event) {
-    event.preventDefault();
+
     const index = parseInt(event.target.dataset.index);
     const cardToRemove = this.cardsTargets[index];
     cardToRemove.remove();
@@ -52,5 +52,26 @@ export default class extends Controller {
       this.moreTarget.classList.add('d-none');
       return;
     }
+  }
+
+  submit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const url = form.getAttribute('action');
+    const method = form.getAttribute('method');
+
+    fetch(url, {
+      method: method,
+      headers: { Accept: 'text/vnd.turbo-stream.html' },
+    })
+      .then((response) => response.text())
+      .then((html) => {
+        const turboFrame = form.closest('turbo-frame');
+        turboFrame.innerHTML = html;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

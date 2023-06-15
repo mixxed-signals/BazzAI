@@ -94,7 +94,6 @@ class RecommendationsController < ApplicationController
   def destroy
     @recommendation = Recommendation.find(params[:id])
     @recommendation.destroy
-    redirect_to search_result_path(@recommendation.query)
   end
 
   def show
@@ -105,7 +104,6 @@ class RecommendationsController < ApplicationController
     @watch_list = RecommendationWatchList.where(watch_list: @watch_list_movies)
     @watch_list = @watch_list.map { |watch_list| watch_list.recommendation }
     @watch_list = @watch_list.filter { |recommendation| recommendation.movie_name == @recommendation.movie_name }
-
   end
 
   def add_recommendations

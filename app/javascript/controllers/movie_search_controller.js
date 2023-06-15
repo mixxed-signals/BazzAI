@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 const omdbapiUrl = 'http://www.omdbapi.com/';
-const omdbapiKey = 'adf1f2d7';
+const omdbapiKey = 'b02e181b';
 const cardOrder = [false, false, false];
 let counter = 0;
 

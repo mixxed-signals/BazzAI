@@ -53,6 +53,8 @@ export default class extends Controller {
   connect() {
   }
   fakeSubmit(event) {
+    console.log(event.target);
+    // debugger
     this.contentTarget.innerHTML = loadingContainer
     window.scrollTo(0, 0);
   }

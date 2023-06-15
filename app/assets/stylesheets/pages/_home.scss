@@ -64,6 +64,21 @@
       width: 490px; /* Adjust the width as desired */
       height: auto;
       margin-bottom: -47px;
+      z-index: 10;
+
+      &:hover {
+        animation: jumpAnimation 0.8s ease-in-out 3;
+      }
+
+      @keyframes jumpAnimation {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-60px);
+        }
+      }
+
     }
 
     .left-container {

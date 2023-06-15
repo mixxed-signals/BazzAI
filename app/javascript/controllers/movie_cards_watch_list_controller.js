@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 const alert = () => `
   <a href="/user" class="movie-card-button movie-card-button-watch-list">
-    Added to your <strong class="font-weight-bold">watch list</strong>
+    Added to your watch list
   </a>
 `
 

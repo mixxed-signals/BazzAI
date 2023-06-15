@@ -14,7 +14,7 @@
             <% @watch_list.each do |movie_watch_list| %>
               <% if movie_watch_list.recommendation.movie_name == @recommendations[index].movie_name %>
                 <a href="/user" class="movie-card-button movie-card-button-watch-list">
-                  Is in your <strong class="font-weight-bold">watch list</strong>
+                  Is on your watch list
                 </a>
                 <% movie_added = true %>
                 <% break %>

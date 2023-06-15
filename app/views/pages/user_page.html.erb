@@ -55,7 +55,7 @@
       </div>
       <h3>Your Previous Recommendations:</h3>
       <hr/>
-      <div class="container d-flex flex-column w-100 position-relative">
+      <div class="container d-flex flex-column w-100 position-relative gap-3">
         <% @querys.reverse.each_with_index do |query,index| %>
           <h3>Query: <%= @querys.length - index %> of <%= @querys.length %></h3>
           <hr/>
@@ -80,6 +80,7 @@
             </div>
             <button data-action="click->cards-slider#rightSlide" class="right-button slider-button"><%= '>' %></button>
           </div>
+          <%= link_to "View query page", "/search/#{query.id}/recommendations", class: 'add-button add-button-log-out' %>
         <% end %>
       </div>
       <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "add-button add-button-log-out" %>

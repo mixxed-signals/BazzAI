@@ -7,7 +7,7 @@
       <p class="movie-card-infos-container-description"><%= movie['synopsis'] && movie['synopsis'] != 'N/A' ? movie['synopsis'] : "The #{ movie['movie_name'] } no have description for now!" %></p>
       <div class="movie-card-infos-container-buttons-container">
         <%= link_to "Learn more", "/search/#{@query.id}/recommendations/#{movie.id}", class: "movie-card-infos-container-buttons-container-button"%>
-
+        <%= link_to "Add to your watch list", add_recommendations_to_watch_list_path(search_id: params[:id], id: movie.id), remote: true , data: {turbo_method: :post, action: ""}, class: "movie-card-infos-container-buttons-container-button" %>
       </div>
     </div>
   </div>

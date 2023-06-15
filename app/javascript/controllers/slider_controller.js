@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["value", "output", "input"];
@@ -10,6 +10,11 @@ export default class extends Controller {
   updateValue() {
     const sliderValue = this.inputTarget.value;
     const outputTarget = this.outputTarget;
-    outputTarget.textContent = sliderValue;
+
+    if (sliderValue === "120") {
+      outputTarget.textContent = "120+ min";
+    } else {
+      outputTarget.textContent = sliderValue + " min";
+    }
   }
 }

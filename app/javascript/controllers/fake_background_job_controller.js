@@ -8,7 +8,7 @@ const loadingContainer = `
       </div>
       <div data-controller="typewriter" class="typewriter-container">
         <div data-typewriter-target="text">
-          Hi there! It's your furry companion, Bazzy, the intelligent AI robot. I'm working tirelessly to find the perfect recommendation for you, tailoring it to your unique preferences and interests. Trust me, it'll be worth the wait! Sit back, relax, and let the anticipation build. Thank you for your patience and trust in my capabilities. Get ready for an unforgettable experience handcrafted with love by yours truly, Bazzy!
+          Hi there! It's your furry AI companion, Bazzy. I'm working tirelessly to find the perfect recommendation for you, tailoring it to your unique preferences and interests. Trust me, it'll be worth the wait!
         </div>
       </div>
     </div>

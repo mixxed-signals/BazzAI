@@ -28,8 +28,6 @@
     }
   }
 
-
-
   &-delete-button {
     background: rgb(255, 255, 255);
 
@@ -79,9 +77,10 @@
       font-weight: normal;
     }
     &-buttons-container {
+      align-items: center;
       display: flex;
       justify-content: flex-start;
-      gap: .5rem;
+      gap: 0.5rem;
       width: 100%;
 
       &-button {
@@ -102,7 +101,7 @@
         text-decoration: none;
 
         margin: 0;
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
 
         position: relative;
         z-index: 2;
@@ -116,7 +115,49 @@
           color: white;
           border: pink 1px solid;
         }
+
+        &-query-page {
+          max-width: 200px;
+        }
       }
     }
+  }
+}
+
+.movie-card-button {
+  border-radius: 40px;
+  border: white 1px solid;
+
+  box-sizing: border-box;
+
+  color: white;
+
+  display: block;
+
+  font-family: Poppins, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-align: center;
+
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  position: relative;
+  z-index: 2;
+
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-image: linear-gradient(to left, $pink 0%, $yellow 100%);
+    font-weight: 600;
+    color: white;
+    border: pink 1px solid;
+  }
+
+  &-watch-list {
+
   }
 }

@@ -6,7 +6,27 @@
       <h1 class="movie-card-infos-container-title"><%= movie['movie_name'] %> ( <%= movie['year'] %> )</h1>
       <p class="movie-card-infos-container-description"><%= movie['synopsis'] && movie['synopsis'] != 'N/A' ? movie['synopsis'] : "The #{ movie['movie_name'] } no have description for now!" %></p>
       <div class="movie-card-infos-container-buttons-container">
-        <%= link_to "Learn more", "/search/#{@query.id}/recommendations/#{movie.id}", class: "movie-card-infos-container-buttons-container-button"%>
+        <%= link_to "Learn more", "/search/#{@query.id}/recommendations/#{movie.id}", class: "movie-card-button"%>
+        <div data-controller="movie-cards-watch-list" data-movie-cards-watch-list-target="text" class="" style="display: flex">
+          <input type="hidden" value="<%= movie.movie_name %>" data-add-watch-list-target="movie">
+          <% if @watch_list.present? %>
+            <% movie_added = false %>
+            <% @watch_list.each do |movie_watch_list| %>
+              <% if movie_watch_list.recommendation.movie_name == @recommendations[index].movie_name %>
+                <a href="/user" class="movie-card-button movie-card-button-watch-list">
+                  Is in your <strong class="font-weight-bold">watch list</strong>
+                </a>
+                <% movie_added = true %>
+                <% break %>
+              <% end %>
+            <% end %>
+            <% unless movie_added %>
+              <%= link_to "Add to your watch list", add_recommendations_to_watch_list_path(search_id: params[:id], id: movie.id), remote: true , data: {turbo_method: :post, action: "click->movie-cards-watch-list#acceptPopUp"}, class: "movie-card-button movie-card-button-watch-list" %>
+            <% end %>
+          <% else %>
+            <%= link_to "Add to your watch list", add_recommendations_to_watch_list_path(search_id: params[:id], id: movie.id), remote: true , data: {turbo_method: :post, action: "click->add-watch-list#acceptPopUp"}, class: "movie-card-button movie-card-button-watch-list" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

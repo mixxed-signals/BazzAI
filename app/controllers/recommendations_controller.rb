@@ -89,10 +89,8 @@ class RecommendationsController < ApplicationController
     @desired_mood = MOOD[@query.desired_happiness]
     @display_prompt = create_display_prompt(@query, @mood, @desired_mood)
     @recommendations = Recommendation.where(query_id: @query.id)
-
     @watch_list_movies = WatchList.where(user: current_user)
     @watch_list = RecommendationWatchList.where(watch_list: @watch_list_movies)
-    @watch_list = @watch_list.map { |watch_list| watch_list.recommendation }
   end
 
   def destroy

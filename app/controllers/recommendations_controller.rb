@@ -177,14 +177,12 @@ class RecommendationsController < ApplicationController
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy together with your partner.\n" if query.audience == "Couple"
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy with your whole family.\n" if query.audience == "Family"
     prompt += "I've tried my best to find #{query.medium.downcase}s that you can enjoy all by yourself.\n" if query.audience == "Just me"
-    prompt += "You're in the mood for #{query.genre.downcase}." if query.genre.present? && mood.nil? && desired_mood.nil?
-    prompt += "You're in the mood for #{query.genre.downcase} and I get the sense that you're feeling #{mood.downcase} and want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if query.genre.present? && mood.present? && desired_mood.present?
+    prompt += "I get the sense that you're feeling #{mood.downcase} and want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if mood.present? && desired_mood.present?
     prompt += "I get the sense that you're feeling #{mood.downcase}.\n" if mood.present? && desired_mood.nil?
     prompt += "I get the sense that you want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if desired_mood.present? && mood.nil?
-    prompt += "I get the sense that you feel #{mood.downcase} and want to feel #{desired_mood.downcase}. I hope I can help you with that.\n" if desired_mood.present? && mood.present?
-    prompt += "You're in the mood for #{query.genre.downcase} and I get the sense that you're feeling #{mood.downcase}.\n" if query.genre.present? && mood.present?
     prompt += "I've discovered some more experimental #{query.medium.downcase}s that might satisfy your craving for novelty.\n" if query.novelty.present? && query.novelty > 7
-    prompt += "Some of the #{query.medium.downcase}s I choose for you share some similarities with #{query.recent_movie1}, #{query.recent_movie2}, #{query.recent_movie3}.\n" if query.recent_movie1.present? || query.recent_movie2.present? || query.recent_movie3.present?
+    prompt += "Some of the #{query.medium.downcase}s I choose for you share some similarities with #{query.recent_movie1}.\n" if query.recent_movie1.present?
+    prompt += "Some of the #{query.medium.downcase}s I choose for you share some similarities with #{query.recent_movie1} and #{query.recent_movie2}.\n" if query.recent_movie1.present? && query.recent_movie2.present?
     prompt += "Enjoy your #{query.medium.downcase} and let me know how you liked my recommendations!\n"
     prompt
   end

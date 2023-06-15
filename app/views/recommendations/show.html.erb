@@ -20,7 +20,7 @@
           </strong>
         </p>
         <br>
-        <p><strong>Genres:</strong></p>
+        <p style="font-size: 25px;"><strong>Genres:</strong></p>
         <div class="d-flex flex-wrap my-4">
           <% @recommendation.genre.split(',').each do |genre| %>
             <div class="p-1">
@@ -28,8 +28,8 @@
             </div>
           <% end %>
         </div>
-        <p><strong>Runtime:</strong> <%= @recommendation.runtime %></p>
-        <p><strong>imdB Score:</strong>
+        <p style="font-size: 25px;"><strong>Runtime:</strong> <%= @recommendation.runtime %></p>
+        <p style="font-size: 25px;"><strong>imdB Score:</strong>
           <% @recommendation.imdb_score.to_i.times do %>
             ⭐️
           <% end %>
@@ -38,13 +38,13 @@
           <% end %>
           (<%= @recommendation.imdb_score %> out of 10)
         </p>
-        <p><strong>Synopsis:</strong> <%= @recommendation.synopsis %></p>
-        <p><strong>Director(s):</strong> <%= @recommendation.director %></p>
-        <p><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
-        <p><strong>Actors:</strong> <%= @recommendation.actors %></p>
-        <p><strong>Awards:</strong> <%= @recommendation.awards %></p>
+        <p style="font-size: 25px;"><strong>Synopsis:</strong> <%= @recommendation.synopsis %></p>
+        <p style="font-size: 25px;"><strong>Director(s):</strong> <%= @recommendation.director %></p>
+        <p style="font-size: 25px;"><strong>Writer(s):</strong> <%= @recommendation.writer %></p>
+        <p style="font-size: 25px;"><strong>Actors:</strong> <%= @recommendation.actors %></p>
+        <p style="font-size: 25px;"><strong>Awards:</strong> <%= @recommendation.awards %></p>
         <div class="d-flex flex-column">
-          <p><strong>Available on:</strong></p>
+          <p style="font-size: 25px;"><strong>Available on:</strong></p>
           <% streaming_info = @data['result']['streamingInfo']['de'] %>
           <% if streaming_info.present? %>
             <% subscriptions = [] %>
@@ -67,7 +67,7 @@
             <% if subscriptions.any? %>
               <div class="section gap-5">
                 <div class="streaming-category">
-                  <p>Watch:</p>
+                  <p style="font-size: 25px;">Watch:</p>
                 </div>
                 <% streaming_info.each do |platform, options| %>
                   <% if subscriptions.include?(platform) %>
@@ -92,7 +92,7 @@
             <% if rentals.any? %>
               <div class="section gap-5">
                 <div>
-                  <p>Rent:</p>
+                  <p style="font-size: 25px;">Rent:</p>
                 </div>
                 <% streaming_info.each do |platform, options| %>
                   <% if rentals.include?(platform) %>
@@ -114,7 +114,7 @@
             <% if purchases.any? %>
               <div class="section gap-5">
                 <div>
-                  <p>Buy:</p>
+                  <p style="font-size: 25px;">Buy:</p>
                 </div>
                 <% streaming_info.each do |platform, options| %>
                   <% if purchases.include?(platform) %>

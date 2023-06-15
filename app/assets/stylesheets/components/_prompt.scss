@@ -18,11 +18,15 @@
   border: 1px solid rgb(250, 247, 247);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  padding: 10px 0px;
+  padding: 10px 20px;
   font-family: 'Merienda';
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: rgb(220, 207, 207);
+
+  p {
+    margin: 0;
+  }
 }
 
 .prompt-container {

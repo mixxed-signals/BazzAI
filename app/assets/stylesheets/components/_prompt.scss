@@ -3,6 +3,24 @@
   width: 150px;
   height: 150px;
 }
+.bazzy-display-jump {
+  flex-shrink: 0; /* Prevent shrinking */
+  width: 150px;
+  height: 150px;
+
+
+  animation: jumpAnimation 0.8s ease-in-out infinite;
+
+
+  @keyframes jumpAnimation {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
 
 #bazzy-index {
   width: 100%;

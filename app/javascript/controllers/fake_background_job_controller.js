@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 const loadingContainer = `
 <div class="container my-2 p-0 min-vh-100">
     <div class="prompt-container">
-      <div class="bazzy-display">
+      <div class="bazzy-display-jump">
         <img alt="Show case of BazzAI" id="bazzy-index" src="/assets/bazzy_avatar-7da12086e56e24cb0264b41a60efcf36f7c4c639f1ffaeaa6869a8f0c0dc9d8a.png">
       </div>
       <div data-controller="typewriter" class="typewriter-container">

@@ -1,12 +1,12 @@
 <%= render "shared/navbar" %>
-<div class="container p-0">
+<div class="container p-0" data-controller="fake-background-job" data-fake-background-job-target="content">
   <div class="main-container">
     <br>
     <%# <h5>Guide Bazzy with your mood, available time, and genre preferences.</h5> %>
     <h5>Let Bazzy curate your perfect movie or TV show - all in a few clicks</h5>
     <br>
     <hr class="divider">
-    <%= form_with(model: @query, url: search_path, method: :post) do |form| %>
+    <%= form_with(model: @query, url: search_path, method: :post, data: {action: "submit->fake-background-job#fakeSubmit"}) do |form| %>
       <%# Medium %>
       <h5>Choose a medium:</h5>
       <br>

@@ -1,0 +1,56 @@
+.movie-card-infos-container-loading {
+  overflow: hidden;
+}
+
+.container-loading {
+  overflow: hidden;
+  position: relative;
+  background-color: #b9b9b9;
+
+  border-radius: 4px;
+
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    animation: loading 1.3s infinite;
+  }
+
+  &-image {
+    max-width: 200px;
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+  }
+  &-title {
+    max-width: 450px;
+    width: 100%;
+    height: 30px;
+  }
+  &-description {
+    max-width: 440px;
+    width: 90%;
+    height: 80px;
+  }
+  &-button {
+    max-width: 140px;
+    width: 50%;
+    height: 42px;
+    border-radius: 9999px;
+  }
+}
+
+@keyframes loading {
+  100% {
+    transform: translateX(100%);
+  }
+}

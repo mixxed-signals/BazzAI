@@ -85,8 +85,9 @@
         </div>
       </div>
       <hr class="divider">
-      <h5>How do you feel?</h5>
       <%# Mood Status Quo%>
+      <h5>How do you feel?</h5>
+      <br>
       <div class=" w-100">
         <div class="d-flex align-items-center justify-content-start gap-4">
           <h6>Current Mood</h6>
@@ -109,7 +110,7 @@
           <h6>Desired Mood</h6>
           <div class="help-icon mb-2">
             <i class="fa-solid fa-circle-question"></i>
-            <div class="help-text">Tell us how you want to feel on a happiness scale going from "Miserable" to "Over the Moon"</div>
+            <div class="help-text">Tell us how you would like to feel on a happiness scale going from "Miserable" to "Over the Moon"</div>
           </div>
         </div>
         <div class="form-group d-flex flex-column flex-md-row align-items-center gap-3 w-100" data-controller="slider">
@@ -157,7 +158,7 @@
       </div>
       <%# Recent Movies %>
       <hr class="divider">
-      <h5>Any movies you recently enjoyed?</h5>
+      <h5>Something similar to: </h5>
       <%# Movie search start %>
       <div data-controller="movie-search">
         <div class="form-group">
@@ -173,14 +174,14 @@
             <%= form.text_field :recent_movie1, value: "", class: "d-none", data: { target: "movie-search.recentOne" } %>
             <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
             <p class="search-boxes-container-results-card-infos">
-              Pick a movie
+              Think of a movie or Tv show
             </p>
           </div>
           <div class="search-boxes-container-results-card" data-movie-search-target="selectedTwo" data-action="click->movie-search#removeMovie" id="selected-two">
             <%= form.text_field :recent_movie2, value: "", class: "d-none", data: { target: "movie-search.recentTwo" } %>
             <img src="https://cdn.discordapp.com/attachments/1105433122998325278/1116395162105552946/bazzy_avatar.png" class="search-boxes-container-results-card-image" />
             <p class="search-boxes-container-results-card-infos">
-              Just start to type..
+              Just start to type...
             </p>
           </div>
           <div class="search-boxes-container-results-card" data-movie-search-target="selectedThree" data-action="click->movie-search#removeMovie" id="selected-three">
@@ -200,22 +201,24 @@
       <br>
       <%= form.fields_for :streaming_platform do |streaming_platform_form| %>
         <div class="row">
-          <div class="row">
-            <% Query::STREAMING_PLATFORMS.each do |streaming_platform| %>
-              <div class="streaming-item col-md-1 mb-4">
-                <%= streaming_platform_form.check_box streaming_platform.to_sym, { class: "streaming-selector d-none", disabled: false}, streaming_platform %>
-                <label for="query_streaming_platform_<%= streaming_platform %>">
-                  <%= image_tag "#{streaming_platform}.png", class: "streaming-logo" %>
-                </label>
-              </div>
-            <% end %>
+          <div class="section">
+            <div class="row">
+              <% Query::STREAMING_PLATFORMS.each do |streaming_platform| %>
+                <div class="streaming-item col-md-1 mb-4">
+                  <%= streaming_platform_form.check_box streaming_platform.to_sym, { class: "streaming-selector d-none", disabled: false}, streaming_platform %>
+                  <label for="query_streaming_platform_<%= streaming_platform %>">
+                    <%= image_tag "#{streaming_platform}.png", class: "streaming-logo" %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
       <%# Other %>
       <hr class="divider">
       <h5>Anything else we should know?</h5>
-      <p>Feel free to write your heart out</p>
+      <p style="font-size: 20px;">Feel free to write your heart out</p>
       <br>
       <div class="form-group">
         <%= form.text_area :other, class: "form-text-area" %>

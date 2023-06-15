@@ -57,7 +57,6 @@ export default class extends Controller {
 
   async handleInput(event) {
     try {
-      console.log(createUrl(event.target.value));
       const response = await fetch(createUrl(event.target.value));
       const data = await response.json();
 

@@ -10,7 +10,6 @@ export default class extends Controller {
   updateSelectedCount() {
     const maxSelections = 5;
     const selectedCount = this.selectedCheckboxes.length;
-    console.log(this.selectedCheckboxes.length);
 
     if (selectedCount > maxSelections) {
       this.uncheckLastSelectedCheckboxes(selectedCount - maxSelections);

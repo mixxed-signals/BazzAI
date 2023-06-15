@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["text"];
 
   connect() {
-    console.log("Typewriter controller connected...");
     this.animateText();
   }
 

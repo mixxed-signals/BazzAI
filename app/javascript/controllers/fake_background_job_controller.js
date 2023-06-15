@@ -8,7 +8,7 @@ const loadingContainer = `
       </div>
       <div data-controller="typewriter" class="typewriter-container">
         <div data-typewriter-target="text">
-          Hey, bazzy in creating your recomendations, it might take a while...
+          Hi, I'm Bazzy! I'm thinking about your recommendations... It might take me a while...
         </div>
       </div>
     </div>

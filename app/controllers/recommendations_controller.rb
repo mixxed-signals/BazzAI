@@ -3,74 +3,14 @@ class RecommendationsController < ApplicationController
   X_RAPIDAPI_KEY = ENV['X_RAPIDAPI_KEY']
   X_RAPIDAPI_HOST = ENV['X_RAPIDAPI_HOST']
 
-  GENRES = [
-    "Acclaimed",
-    "Action",
-    "Adventure",
-    "Animation",
-    "Anime",
-    "Biography",
-    "Classic",
-    "Comedy",
-    "Crime",
-    "Cult",
-    "Documentary",
-    "Drama",
-    "Experimental",
-    "Family",
-    "Fantasy",
-    "Film-Noir",
-    "Gangster",
-    "History",
-    "Horror",
-    "Independent",
-    "International",
-    "Music",
-    "Mystery",
-    "Musical",
-    "Noir",
-    "Psychological",
-    "Queer",
-    "Reality",
-    "Romance",
-    "Rom-Com",
-    "Satire",
-    "Sci-Fi",
-    "Space",
-    "Sports",
-    "Spy",
-    "Superhero",
-    "Supernatural",
-    "Suspense",
-    "Thriller",
-    "True Crime",
-    "Western",
-    "Youth"
-  ].freeze
-
-  MOOD = [
-    "Sad",
-    "Sad",
-    "Sad",
-    "Sad",
-    "Sad",
-    "Okay",
-    "Happy",
-    "Happy",
-    "Happy",
-    "Happy",
-    "Happy",
-    "Happy"
-  ]
-
   def search
-    @genres = GENRES
+    @genres = Query::GENRES
     @user = current_user
     @query = Query.new
   end
 
   def create
-    @genres = GENRES
+    @genres = Query::GENRES
     @query = Query.new(query_params)
     @query.medium = "movie and tv show" if @query.medium.nil?
     @query.user = current_user
@@ -85,8 +25,8 @@ class RecommendationsController < ApplicationController
   def index
     @query = Query.find(params[:id])
     @query.medium = "movie and tv show" if @query.medium.nil?
-    @mood = MOOD[@query.happiness]
-    @desired_mood = MOOD[@query.desired_happiness]
+    @mood = Query::MOOD[@query.happiness]
+    @desired_mood = Query::MOOD[@query.desired_happiness]
     @display_prompt = create_display_prompt(@query, @mood, @desired_mood)
     @recommendations = Recommendation.where(query_id: @query.id)
     @watch_list_movies = WatchList.where(user: current_user)
@@ -353,8 +293,8 @@ class RecommendationsController < ApplicationController
   end
 
   def create_openai_request(query)
-    mood = MOOD[query.happiness]
-    desired_mood = MOOD[query.desired_happiness]
+    mood = Query::MOOD[query.happiness]
+    desired_mood = Query::MOOD[query.desired_happiness]
     # response = '{ "movie1": "Spirited Away", "movie2": "Your Name", "movie3": "Princess Mononoke", "movie4": "Attack on Titan", "movie6": "Serial Experiments Lain", "movie5": "Death Note", "movie7": "Perfect Blue", "movie8": "Neon Genesis Evangelion", "movie9": "FLCL", "movie10": "Akira"}'
     response = OpenaiService.new(create_prompt(query, mood, desired_mood)).call
     create_recommendation(create_response_hash(response), query.id)

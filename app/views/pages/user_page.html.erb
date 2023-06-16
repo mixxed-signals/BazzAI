@@ -13,7 +13,7 @@
                   <%= image_tag "bazzy_avatar.png", alt: "Bazzy", style: "width: 300px; position: absolute;" %>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-start" style="min-height:200px">
-                  <div class="clash-card__level clash-card__level--barbarian w-100">Query <%= index + 1 %></div>
+                  <div class="clash-card__level clash-card__level--barbarian w-100">Search <%= index + 1 %></div>
                   <div class="clash-card__unit-name text-capitalize w-100"><%= query.medium ? query.medium : "Movie / TV Show" %></div>
                   <div class="clash-card__unit-description w-100">
                     <div>
@@ -86,7 +86,7 @@
       <hr/>
       <div class="container d-flex flex-column w-100 position-relative gap-3">
         <% @querys.reverse.each_with_index do |query,index| %>
-          <h3>Query: <%= @querys.length - index %> of <%= @querys.length %></h3>
+          <h3>Bazzy's Picks: <%= @querys.length - index %> of <%= @querys.length %></h3>
           <hr/>
           <div class="prompt-container">
             <div class="bazzy-display">
@@ -117,7 +117,7 @@
   </div>
 <% else %>
   <div class="container p-0">
-    <h1>No queries yet</h1>
+    <h1>No searches yet</h1>
   </div>
 <% end %>
 </div>
